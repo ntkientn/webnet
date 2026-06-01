@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Trung Kien | Software Project Manager Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 py-4 px-6">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="text-lg font-bold tracking-wider text-indigo-400">NTK<span class="text-slate-400">.PM</span>
+                <span class="text-slate-400">  
+                    <a class="text-slate-300 text-xs font-mono transition">:  +84 94 909 4444  •  </a>  <a href="mailto:kien.working@gmail.com" class="text-slate-300 hover:text-indigo-400 text-xs font-mono transition">kien.working@gmail.com</a>  •  <a href="https://www.linkedin.com/in/ntkien/" target="_blank" class="text-slate-300 hover:text-indigo-400 text-xs font-mono transition">linkedin.com/in/ntkien  </a> 
+                </span>
+
+            </div>
+            <div class="flex items-center gap-4 md:gap-6 text-sm">
+                <a href="#about" data-i18n="nav-about" class="hover:text-indigo-400 transition">About</a>
+                <a href="#experience" data-i18n="nav-exp" class="hover:text-indigo-400 transition">Experience</a>
+                <a href="#contact" data-i18n="nav-contact" class="hover:text-indigo-400 transition">Contact</a>
+                
+                <div class="h-4 w-px bg-slate-800"></div>
+                
+                <!-- Nút chuyển đổi ngôn ngữ (Mặc định hiển thị chữ VI để chuyển sang Tiếng Việt) -->
+                <button onclick="toggleLang()" id="lang-btn" class="bg-slate-900 border border-slate-700 hover:border-indigo-500 text-slate-200 px-2.5 py-1 rounded text-xs font-semibold transition cursor-pointer">
+                    VI
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="about" class="max-w-5xl mx-auto px-6 pt-12 pb-20 md:py-24 flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+        <!-- Nội dung text bên trái -->
+        <div class="flex-1 space-y-5 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs px-3 py-1 rounded-full font-medium">
+                <i class="fa-solid fa-award"></i> <span id="pmp-tag" data-i18n="pmp-tag">PMP® Certified (Issued Nov 11, 2025)</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black tracking-tight text-slate-100">
+                Nguyen Trung Kien
+            </h1>
+            <p id="hero-title" data-i18n="hero-title" class="text-lg md:text-xl text-indigo-400 font-medium">Project Manager / Agile Delivery Lead</p>
+            <div id="hero-desc" data-i18n="hero-desc" class="text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl">
+                <!-- Nội dung Tiếng Anh mặc định sẽ được Javascript chèn vào đây khi load trang -->
+            </div>
+            <div class="flex flex-wrap justify-center md:justify-start gap-2 pt-1">
+                <span class="bg-slate-900 border border-slate-800 text-xs px-3 py-1.5 rounded text-slate-400">PMP Framework</span>
+                <span class="bg-slate-900 border border-slate-800 text-xs px-3 py-1.5 rounded text-slate-400">Agile / Scrum Delivery</span>
+                <span class="bg-slate-900 border border-slate-800 text-xs px-3 py-1.5 rounded text-slate-400">IoT Solutions</span>
+                <span class="bg-slate-900 border border-slate-800 text-xs px-3 py-1.5 rounded text-slate-400">Vendor Management</span>
+            </div>
+        </div>
+
+        <!-- Ảnh cá nhân bên phải - Bố cục nhỏ, tinh tế -->
+        <div class="w-36 h-36 md:w-44 md:h-44 shrink-0 relative">
+            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full blur-sm opacity-40"></div>
+            <img src="1763567708968 copy.jpg" alt="Nguyen Trung Kien" class="w-full h-full object-cover rounded-full border-2 border-slate-800 relative z-10 shadow-xl">
+        </div>
+    </section>
+
+    <!-- CORE METRICS (Đã đồng bộ số liệu theo CV) -->
+    <section class="bg-slate-900/40 border-y border-slate-900 py-10 px-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="space-y-1">
+                <div class="text-2xl md:text-3xl font-black text-indigo-400">6+</div>
+                <div data-i18n="metric-1" class="text-xs uppercase tracking-wider text-slate-500">Years PM Experience</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-2xl md:text-3xl font-black text-purple-400">PMP®</div>
+                <div data-i18n="metric-2" class="text-xs uppercase tracking-wider text-slate-500">Global Certification</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-2xl md:text-3xl font-black text-pink-400">10 Years</div>
+                <div data-i18n="metric-3" class="text-xs uppercase tracking-wider text-slate-500">Years Technical Core</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-2xl md:text-3xl font-black text-emerald-400">Global</div>
+                <div data-i18n="metric-4" class="text-xs uppercase tracking-wider text-slate-500">Global Markets</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE EXPERIENCE -->
+    <section id="experience" class="max-w-4xl mx-auto px-6 py-20">
+        <h2 data-i18n="exp-heading" class="text-2xl font-bold text-slate-200 mb-12 flex items-center gap-3">
+            <i class="fa-solid fa-briefcase text-indigo-500"></i> Experience & Key Projects
+        </h2>
+        
+        <div class="border-l-2 border-slate-800 ml-4 space-y-12 relative">
+            <!-- Project Manager Role -->
+            <div class="relative pl-8">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-indigo-500 ring-4 ring-slate-950"></div>
+                <span data-i18n="role1-time" class="text-xs text-indigo-400 font-semibold uppercase tracking-wider">Project Manager</span>
+                <h3 data-i18n="role1-title" class="text-lg font-bold text-slate-200 mt-1">Project Management & Vendor Management</h3>
+                <p data-i18n="role1-desc" class="text-sm text-slate-400 leading-relaxed mt-2">
+                    Directly coordinating and taking full responsibility for delivering tech projects, integrated hardware & software solutions. Working closely with leading vendors and strategic partners (e.g., Salesforce solutions partner Isonic, manufacturing partner Dien Quang).
+                </p>
+                <!-- Key Projects thực tế -->
+                <div class="mt-4 space-y-4 pl-3 border-l border-slate-800">
+                    <div>
+                        <strong class="text-xs text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-camera text-[10px] text-indigo-400"></i> AI Camera Time Attendance
+                        </strong>
+                        <p data-i18n="proj1-desc" class="text-xs text-slate-500 mt-0.5">Managed and deployed the AI Camera Time Attendance solution, seamlessly integrating edge-data with core enterprise resource planning (ERP) systems.</p>
+                    </div>
+                    <div>
+                        <strong class="text-xs text-slate-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-seedling text-[10px] text-indigo-400"></i> Smart Swiftlet Farm IoT
+                        </strong>
+                        <p data-i18n="proj2-desc" class="text-xs text-slate-500 mt-0.5">Coordinated IoT solutions applied in smart agriculture, dynamically automating climate parameters and acoustics control for smart swiftlet farming.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Background Role -->
+            <div class="relative pl-8">
+                <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-950"></div>
+                <span data-i18n="role2-time" class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Technical Foundation</span>
+                <h3 data-i18n="role2-title" class="text-lg font-bold text-slate-300 mt-1">Software Developer & QA/QC Engineer</h3>
+                <p data-i18n="role2-desc" class="text-sm text-slate-400 leading-relaxed mt-2">
+                    Strong technical background built over years of working as a software developer and quality assurance/control engineer. This background serves as a vital bridge for precise task estimation, deep system risk assessment, and efficient collaboration with engineering teams.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-900">
+        <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-8 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="space-y-2 text-center md:text-left">
+                <h2 data-i18n="contact-heading" class="text-2xl font-bold text-slate-200">Professional Networking</h2>
+                <p data-i18n="contact-sub" class="text-sm text-slate-400 max-w-md">Feel free to explore my full career trajectory and connect with me directly on LinkedIn.</p>
+                <a href="https://www.linkedin.com/in/ntkien/" target="_blank" class="inline-flex items-center gap-2 text-xs text-indigo-400 hover:underline pt-2">
+                    <i class="fa-brands fa-linkedin text-sm"></i> linkedin.com/in/ntkien
+                </a>
+            </div>
+
+            <!-- Khối thông tin liên hệ -->
+            <div class="w-full md:w-auto bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-3 min-w-[280px]">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-indigo-500/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <span class="block text-[10px] text-slate-500 uppercase font-bold">Email</span>
+                        <a href="mailto:kien.working@gmail.com" class="text-slate-300 hover:text-indigo-400 text-xs font-mono transition">kien.working@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded bg-emerald-500/10 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <span data-i18n="contact-phone" class="block text-[10px] text-slate-500 uppercase font-bold">Phone</span>
+                        <a href="tel:+84949094444" class="text-slate-300 hover:text-emerald-400 text-xs font-mono transition">(+84) 94 909 4444</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-8 text-xs text-slate-600 border-t border-slate-900/60">
+        <p>© 2026 Nguyen Trung Kien. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT XỬ LÝ SONG NGỮ (MẶC ĐỊNH: ENGLISH) -->
+    <script>
+        const i18nData = {
+            en: {
+                "nav-about": "About",
+                "nav-exp": "Experience",
+                "nav-contact": "Contact",
+                "pmp-tag": "PMP® Certified (Issued Nov 11, 2025)",
+                "hero-title": "Project Manager / Agile Delivery Lead",
+                "hero-desc": `
+                    <div class="space-y-3 text-left">
+                        <p><strong>PMP® Certified Project Manager</strong> with <strong>6+ years</strong> leading software projects across web & mobile applications, system integrations, and B2B platforms – backed by <strong>10 years</strong> as a Software Developer and QA/QC Lead.</p>
+                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm text-slate-400">
+                            <li><strong>Versatile Experience:</strong> Hands-on expertise in both product and outsourced environments (Fixed-Price, T&M contracts).</li>
+                            <li><strong>Data-driven & Goal-oriented:</strong> Adept at tailoring Agile, Waterfall, and Hybrid methodologies to lead cross-functional teams and deliver tangible business value.</li>
+                            <li><strong>Strong Technical Core:</strong> Enabling rapid technology adoption, deep technical analysis, and effective leadership of technical discussions – perfectly bridging business requirements and engineering execution.</li>
+                            <li><strong>Global Communication:</strong> Professional working proficiency in English, collaborating seamlessly with clients/partners from the US, EU, Japan, Singapore, and China.</li>
+                        </ul>
+                        <p class="text-xs pt-2 italic text-indigo-300">"Seeking a long-term role in a stable, growth-oriented organization where I can take ownership of project delivery and contribute sustainable value to the business."</p>
+                    </div>
+                `,
+                "metric-1": "Years PM Experience",
+                "metric-2": "Global Certification",
+                "metric-3": "Years Technical Core",
+                "metric-4": "Global Markets",
+                "exp-heading": "Experience & Key Projects",
+                "role1-time": "Project Manager",
+                "role1-title": "Project Management & Vendor Management",
+                "role1-desc": "Directly coordinating and taking full responsibility for delivering tech projects, integrated hardware & software solutions. Working closely with leading vendors and strategic partners (e.g., Salesforce solutions partner Isonic, manufacturing partner Dien Quang).",
+                "proj1-desc": "Managed and deployed the AI Camera Time Attendance solution, seamlessly integrating edge-data with core enterprise resource planning (ERP) systems.",
+                "proj2-desc": "Coordinated IoT solutions applied in smart agriculture, dynamically automating climate parameters and acoustics control for smart swiftlet farming.",
+                "role2-time": "Technical Foundation",
+                "role2-title": "Software Developer & QA/QC Engineer",
+                "role2-desc": "Strong technical background built over years of working as a software developer and quality assurance/control engineer. This background serves as a vital bridge for precise task estimation, deep system risk assessment, and efficient collaboration with engineering teams.",
+                "contact-heading": "Professional Networking",
+                "contact-sub": "Feel free to explore my full career trajectory and connect with me directly on LinkedIn.",
+                "contact-phone": "Phone"
+            },
+            vi: {
+                "nav-about": "Giới thiệu",
+                "nav-exp": "Kinh nghiệm",
+                "nav-contact": "Liên hệ",
+                "pmp-tag": "Chứng chỉ PMP® (Cấp ngày 11/11/2025)",
+                "hero-title": "Project Manager / Agile Delivery Lead",
+                "hero-desc": `
+                    <div class="space-y-3 text-left">
+                        <p> Chuyên gia Quản trị Dự án đạt chứng chỉ <strong>PMP®</strong> với hơn <strong>6 năm kinh nghiệm</strong> dẫn dắt các dự án phần mềm đa dạng từ ứng dụng Web & Mobile, tích hợp hệ thống, đến các nền tảng B2B – được bảo chứng bởi <strong>10 năm vững chắc</strong> trong vai trò Software Developer và QA/QC Lead.</p>
+                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm text-slate-400">
+                            <li><strong>Kinh nghiệm thực chiến phong phú:</strong> Am hiểu sâu sắc cả môi trường làm sản phẩm (Product) lẫn gia công (Outsourcing) với các mô hình hợp đồng linh hoạt (Fixed-Price, T&M).</li>
+                            <li><strong>Quản trị theo mục tiêu & Dữ liệu:</strong> Nhạy bén trong việc tùy biến các phương pháp Agile, Waterfall, hoặc Hybrid để điều phối đội ngũ liên chức năng (Cross-functional) và hiện thực hóa giá trị kinh doanh.</li>
+                            <li><strong>Nền tảng kỹ thuật chuyên sâu:</strong> Thúc đẩy khả năng tiếp thu công nghệ nhanh chóng, phân tích kỹ thuật chuyên sâu và làm chủ các buổi thảo luận technical – đóng vai trò cầu nối vững chắc giữa yêu cầu kinh doanh và năng lực thực thi kỹ thuật.</li>
+                            <li><strong>Năng lực tiếng Anh chuyên nghiệp:</strong> Làm việc trực tiếp và hiệu quả với các đối tác/khách hàng quốc tế đến từ Mỹ (US), Châu Âu (EU), Nhật Bản, Singapore và Trung Quốc.</li>
+                        </ul>
+                        <p class="text-xs pt-2 italic text-indigo-300">"Đang tìm kiếm một lộ trình gắn bó dài hạn tại một tổ chức ổn định và chú trọng tăng trưởng – nơi tôi có thể chịu trách nhiệm toàn diện về chất lượng bàn giao dự án và đóng góp giá trị bền vững cho doanh nghiệp."</p>
+                    </div>
+                `,
+                "metric-1": "Năm Quản Lý Dự Án",
+                "metric-2": "Chứng Chỉ Quốc Tế",
+                "metric-3": "Năm Kỹ Thuật Gốc",
+                "metric-4": "Thị Trường Quốc Tế",
+                "exp-heading": "Kinh nghiệm & Dự án thực tế",
+                "role1-time": "Project Manager",
+                "role1-title": "Quản lý Dự án & Quản lý Đối tác",
+                "role1-desc": "Trực tiếp điều phối và chịu trách nhiệm bàn giao các dự án công nghệ, giải pháp tích hợp phần cứng và phần mềm, làm việc chặt chẽ với các nhà cung cấp, đối tác chiến lược hàng đầu (như đối tác giải pháp Salesforce Isonic, sản xuất Điện Quang).",
+                "proj1-desc": "Quản lý và vận hành triển khai giải pháp Camera AI chấm công thông minh, tích hợp trực tiếp dữ liệu với hệ thống quản trị nguồn lực doanh nghiệp (ERP).",
+                "proj2-desc": "Điều phối giải pháp IoT ứng dụng trong nông nghiệp thông minh, kiểm soát tự động các thông số khí hậu môi trường và hệ thống âm thanh nhà yến.",
+                "role2-time": "Technical Foundation",
+                "role2-title": "Software Developer & QA/QC",
+                "role2-desc": "Nền tảng kỹ thuật vững chắc qua nhiều năm đảm nhiệm vai trò kỹ sư lập trình phần mềm và kiểm thử chất lượng sản phẩm. Đây là bước đệm quan trọng giúp tối ưu hóa khả năng ước lượng khối lượng công việc (Estimation), hiểu sâu rủi ro hệ thống và làm việc hiệu quả với đội ngũ kỹ thuật.",
+                "contact-heading": "Kết nối chuyên nghiệp",
+                "contact-sub": "Anh/Chị có thể tham khảo chi tiết quá trình làm việc và kết nối trực tiếp với tôi qua mạng lưới LinkedIn.",
+                "contact-phone": "Điện thoại"
+            }
+        };
+
+        // Đặt ngôn ngữ mặc định ban đầu là 'en' (English)
+        let currentLang = 'en';
+
+        function updateLanguageDOM() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18nData[currentLang][key]) {
+                    el.innerHTML = i18nData[currentLang][key];
+                }
+            });
+            // Nếu trang hiện tại là EN -> Nút menu sẽ hiển thị 'VI' (Đề xuất chuyển sang Tiếng Việt) và ngược lại
+            document.getElementById('lang-btn').innerText = currentLang === 'en' ? 'VI' : 'EN';
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'vi' : 'en';
+            updateLanguageDOM();
+        }
+        
+        // Khởi tạo trang web ngay khi load xong dữ liệu
+        updateLanguageDOM();
+    </script>
+</body>
+</html>
