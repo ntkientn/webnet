@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Trung Kien | Software Project Manager Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+    
+<body class="bg-[#0b0f19] text-slate-300 font-sans antialiased selection:bg-indigo-500 selection:text-white text-[17px] md:text-lg relative overflow-x-hidden">
+    
+    <!-- HIGH-TECH DYNAMIC BACKGROUND (Giữ hiệu ứng v1.2) -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_40%,#000_60%,transparent_100%)] z-0 pointer-events-none opacity-25"></div>
+    <div class="absolute top-[-5%] left-[-5%] w-[60rem] h-[60rem] rounded-full bg-indigo-500/12 blur-[140px] z-0 pointer-events-none"></div>
+    <div class="absolute top-[25%] right-[-10%] w-[50rem] h-[50rem] rounded-full bg-purple-500/10 blur-[140px] z-0 pointer-events-none"></div>
+    <div class="absolute bottom-[10%] left-[-10%] w-[45rem] h-[45rem] rounded-full bg-emerald-500/8 blur-[120px] z-0 pointer-events-none"></div>
+
+    <!-- NAVBAR -->
+    <nav class="sticky top-0 z-50 bg-[#0b0f19]/80 backdrop-blur-xl border-b border-slate-800/60 py-3.5 px-4 md:px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center gap-3 md:gap-0">
+            
+            <!-- CLEAN CONTACT INFO (Giữ màu dịu mắt v1.1) -->
+            <div class="text-slate-300 text-[11px] md:text-xs tracking-tight text-center md:text-left border-b border-slate-800/50 pb-2 md:pb-0 md:border-none">
+                <span class="text-slate-400">Contact: </span>
+                <a href="tel:+84949094444" class="text-slate-300 hover:text-indigo-400 transition inline-block mx-0.5">(+84) 94 909 4444</a>
+                <span class="text-slate-500 mx-1.5">•</span>
+                <a href="mailto:kien.working@gmail.com" class="text-slate-300 hover:text-indigo-400 transition inline-block mx-0.5">kien.working@gmail.com</a>
+                <span class="text-slate-500 mx-1.5">•</span>
+                <a href="https://www.linkedin.com/in/ntkien/" target="_blank" class="text-slate-300 hover:text-indigo-400 transition inline-block mx-0.5">linkedin.com/in/ntkien</a>
+            </div>
+            
+            <!-- NAVIGATION & LANGUAGE TOGGLE -->
+            <div class="flex justify-between md:justify-end items-center gap-4 text-xs md:text-sm">
+                <div class="flex items-center gap-4 md:gap-6 font-medium tracking-wide text-slate-300 mx-auto md:mx-0">
+                    <a href="#about" data-i18n="nav-about" class="hover:text-indigo-400 transition relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-indigo-400 after:transition-all py-1">Giới thiệu</a>
+                    <a href="#experience" data-i18n="nav-exp" class="hover:text-indigo-400 transition relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-indigo-400 after:transition-all py-1">Kinh nghiệm</a>
+                    <a href="#contact" data-i18n="nav-contact" class="hover:text-indigo-400 transition relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 hover:after:w-full after:bg-indigo-400 after:transition-all py-1">Liên hệ</a>
+                </div>
+                
+                <div class="h-4 w-px bg-slate-800 hidden md:block"></div>
+                
+                <button onclick="toggleLang()" id="lang-btn" class="bg-slate-900 border border-slate-700 hover:border-indigo-400 hover:bg-indigo-950/50 text-slate-200 px-3 py-1 rounded-md text-[11px] font-bold transition cursor-pointer shrink-0 shadow-md">
+                    EN
+                </button>
+            </div>
+            
+        </div>
+    </nav>
+    
+    <!-- HERO SECTION -->
+    <section id="about" class="max-w-5xl mx-auto px-6 pt-12 pb-16 md:pt-20 md:pb-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12 relative z-10">
+        <div class="flex-1 space-y-6 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 bg-indigo-500/15 border border-indigo-400/30 text-indigo-400 text-xs px-3 py-1 rounded-md font-medium shadow-sm">
+                <i class="fa-solid fa-award"></i> <span id="pmp-tag" data-i18n="pmp-tag">PMP® Certified - </span>
+                <p id="hero-title" data-i18n="hero-title" class="text-indigo-400 font-medium">Project Manager</p>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-100 leading-tight">
+                Hi, I'm <span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-sm">Nguyen Trung Kien</span>
+            </h1>
+            <div id="hero-desc" data-i18n="hero-desc" class="text-sm md:text-base text-slate-400 leading-relaxed max-w-2xl">
+                <!-- Chèn động qua JS -->
+            </div>
+            
+            <!-- TAGS WITH HIGH-CONTRAST INTERACTIVE GLOW EFFECTS (Giữ design hiệu ứng v1.2) -->
+            <div class="flex flex-wrap justify-center md:justify-start gap-2 pt-2">
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">PMP Framework</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">Product & Outsourcing</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">IoT & Smart Solutions</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">Digital Transformation</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">B2B Platforms</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">Data-driven</span>
+                <span class="bg-slate-900/80 backdrop-blur-sm border border-slate-700/60 text-xs px-3 py-1.5 rounded-md text-slate-400 transition-all duration-300 hover:scale-105 hover:border-indigo-400 hover:text-indigo-300 hover:shadow-[0_0_18px_rgba(99,102,241,0.35)] cursor-default">Agile/Hybrid/Waterfall</span>
+            </div>
+        </div>
+
+        <!-- Ảnh cá nhân (Design hình khối nghệ thuật v1.2) -->
+        <div class="w-40 h-40 md:w-52 md:h-52 shrink-0 relative group">
+            <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-[2rem_2rem_4rem_2rem] blur opacity-60 group-hover:opacity-90 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 bg-[#0b0f19] rounded-[2rem_2rem_4rem_2rem] scale-[0.97] z-10"></div>
+            <img src="avatar.jpg" alt="Nguyen Trung Kien" class="w-full h-full object-cover rounded-[2rem_2rem_4rem_2rem] border border-slate-700 relative z-20 shadow-2xl scale-[0.94] transition-all duration-500">
+        </div>
+    </section>
+
+    <!-- CORE METRICS - ORIGINAL BAND STYLE (Giữ bố cục 5 chỉ số v1.2, chỉnh lại font) -->
+    <section class="relative z-10 w-full bg-slate-900/40 border-y border-slate-800/80 backdrop-blur-md py-8 my-12">
+        <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
+            <div class="space-y-1">
+                <div class="text-2xl md:text-3xl font-black text-indigo-400 drop-shadow-sm">6+ Years</div>
+                <div data-i18n="metric-1" class="text-[10px] uppercase tracking-widest font-bold text-slate-500">PM Experience</div>
+            </div>
+            <div class="space-y-1 border-l border-slate-800/60 sm:border-l">
+                <div class="text-2xl md:text-3xl font-black text-purple-400 drop-shadow-sm">PMP®</div>
+                <div data-i18n="metric-2" class="text-[10px] uppercase tracking-widest font-bold text-slate-500">Global Certification</div>
+            </div>
+            <div class="space-y-1 border-l border-slate-800/60 max-sm:border-l-0">
+                <div class="text-2xl md:text-3xl font-black text-pink-400 drop-shadow-sm">10 Years</div>
+                <div data-i18n="metric-3" class="text-[10px] uppercase tracking-widest font-bold text-slate-500">Dev & QA/QC</div>
+            </div>
+            <div class="space-y-1 border-l border-slate-800/60 max-md:border-l-0 max-sm:border-l">
+                <div class="text-2xl md:text-3xl font-black text-emerald-400 drop-shadow-sm">Global</div>
+                <div data-i18n="metric-4" class="text-[10px] uppercase tracking-widest font-bold text-slate-500">Cross-border Delivery</div>
+            </div>
+            <div class="space-y-1 border-l border-slate-800/60 max-md:col-span-2 max-md:border-l-0 max-md:pt-4 md:pt-0">
+                <div class="text-2xl md:text-3xl font-black text-amber-400 drop-shadow-sm">20+</div>
+                <div data-i18n="metric-5" class="text-[10px] uppercase tracking-widest font-bold text-slate-500">Projects Delivered</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE EXPERIENCE -->
+    <section id="experience" class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+        <h2 data-i18n="exp-heading" class="text-2xl font-bold text-slate-200 mb-12 flex items-center gap-3 tracking-tight">
+            <i class="fa-solid fa-briefcase text-indigo-400 text-xl"></i> Experience & Key Achievements
+        </h2>
+        
+        <!-- KEY ACHIEVEMENTS (5 blocks thành tựu từ v1.2 với hover effects mượt mà) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-20">
+            <!-- Achievement 1 -->
+            <div class="backdrop-blur-md bg-slate-900/50 border border-slate-800 p-5 rounded-xl flex gap-4 items-start transition-all duration-300 hover:-translate-y-1 hover:bg-slate-900/80 hover:border-indigo-400/50 hover:shadow-[0_10px_30px_rgba(99,102,241,0.12)] group">
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/20 shrink-0 flex items-center justify-center text-indigo-400 text-sm group-hover:bg-indigo-500/30"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="space-y-1">
+                    <h4 data-i18n="ach1-title" class="text-xs uppercase tracking-widest font-bold text-indigo-400">Successful Delivery</h4>
+                    <p data-i18n="ach1-desc" class="text-xs md:text-sm text-slate-300 leading-relaxed">Delivered 20+ projects across Digital Transformation, Smart IoT, Healthcare, B2B platforms, Data Warehouse, eCommerce, Banking, F&B, and EdTech domains.</p>
+                </div>
+            </div>
+
+            <!-- Achievement 2 -->
+            <div class="backdrop-blur-md bg-slate-900/50 border border-slate-800 p-5 rounded-xl flex gap-4 items-start transition-all duration-300 hover:-translate-y-1 hover:bg-slate-900/80 hover:border-purple-400/50 hover:shadow-[0_10px_30px_rgba(168,85,247,0.12)] group">
+                <div class="w-9 h-9 rounded-lg bg-purple-500/20 shrink-0 flex items-center justify-center text-purple-400 text-sm group-hover:bg-purple-500/30"><i class="fa-solid fa-chess-knight"></i></div>
+                <div class="space-y-1">
+                    <h4 data-i18n="ach2-title" class="text-xs uppercase tracking-widest font-bold text-purple-400">Strategic Leadership</h4>
+                    <p data-i18n="ach2-desc" class="text-xs md:text-sm text-slate-300 leading-relaxed">Led multiple parallel projects as sole PM at Aura Intelligent Living, delivering Smart Home/IoT solutions and MVP healthcare products, while supporting presales and client engagement.</p>
+                </div>
+            </div>
+
+            <!-- Achievement 3 -->
+            <div class="backdrop-blur-md bg-slate-900/50 border border-slate-800 p-5 rounded-xl flex gap-4 items-start transition-all duration-300 hover:-translate-y-1 hover:bg-slate-900/80 hover:border-emerald-400/50 hover:shadow-[0_10px_30px_rgba(16,185,129,0.12)] group">
+                <div class="w-9 h-9 rounded-lg bg-emerald-500/20 shrink-0 flex items-center justify-center text-emerald-400 text-sm group-hover:bg-emerald-500/30"><i class="fa-solid fa-rocket"></i></div>
+                <div class="space-y-1">
+                    <h4 data-i18n="ach3-title" class="text-xs uppercase tracking-widest font-bold text-emerald-400">Commercial Product Launch</h4>
+                    <p data-i18n="ach3-desc" class="text-xs md:text-sm text-slate-300 leading-relaxed">Delivered Smart Farm IoT solution for Nikodo in ~6 months, completing pilot deployment at 2 farms and enabling product launch (Nov 2024).</p>
+                </div>
+            </div>
+
+            <!-- Achievement 4 -->
+            <div class="backdrop-blur-md bg-slate-900/50 border border-slate-800 p-5 rounded-xl flex gap-4 items-start transition-all duration-300 hover:-translate-y-1 hover:bg-slate-900/80 hover:border-amber-400/50 hover:shadow-[0_10px_30px_rgba(245,158,11,0.12)] group">
+                <div class="w-9 h-9 rounded-lg bg-amber-500/20 shrink-0 flex items-center justify-center text-amber-400 text-sm group-hover:bg-amber-500/30"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="space-y-1">
+                    <h4 data-i18n="ach4-title" class="text-xs uppercase tracking-widest font-bold text-amber-400">Digital Transformation</h4>
+                    <p data-i18n="ach4-desc" class="text-xs md:text-sm text-slate-300 leading-relaxed">Led the delivery of core apps and systems within Pizza 4P’s digital ecosystem, sustaining operations across 20+ restaurants during COVID-19 and providing business data insights to support leadership decision-making.</p>
+                </div>
+            </div>
+
+            <!-- Achievement 5 -->
+            <div class="backdrop-blur-md bg-slate-900/50 border border-slate-800 p-5 rounded-xl flex gap-4 items-start md:col-span-2 transition-all duration-300 hover:-translate-y-1 hover:bg-slate-900/80 hover:border-pink-400/50 hover:shadow-[0_10px_30px_rgba(236,72,153,0.12)] group">
+                <div class="w-9 h-9 rounded-lg bg-pink-500/20 shrink-0 flex items-center justify-center text-pink-400 text-sm group-hover:bg-pink-500/30"><i class="fa-solid fa-gears"></i></div>
+                <div class="space-y-1">
+                    <h4 data-i18n="ach5-title" class="text-xs uppercase tracking-widest font-bold text-pink-400">Operational Excellence</h4>
+                    <p data-i18n="ach5-desc" class="text-xs md:text-sm text-slate-300 leading-relaxed">Managed platforms including Orderex (B2B, Singapore) and AlphaPlus (real-time exam, U.S.). Led teams to maintain high-availability infrastructure, ensured zero critical incidents during peak periods for 14,000+ users of AlphaPlus, and >99% success rate for 100+ daily transactions on Orderex.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- EXPERIENCE DETAIL TRACK -->
+        <div class="border-l-2 border-slate-800 ml-4 space-y-12 relative">
+            
+            <!-- ====== SECTION 1: PROJECT MANAGEMENT EXPERIENCE ====== -->
+            <div class="relative pl-8 group">
+                <div class="absolute -left-[11px] top-2 w-5 h-5 rounded-full bg-indigo-500 ring-4 ring-[#0b0f19] z-10 transition-all duration-300 group-hover:scale-125 shadow-[0_0_10px_rgba(99,102,241,0.6)]">
+                    <div class="absolute inset-0 rounded-full bg-indigo-300 animate-pulse scale-110"></div>
+                </div>
+                
+                <span data-i18n="role1-time" class="text-xs text-indigo-400 font-bold uppercase tracking-wider bg-indigo-950/60 border border-indigo-900 px-2 py-0.5 rounded">Project Management Track</span>
+                <h3 data-i18n="role1-title" class="text-base md:text-lg font-bold text-slate-200 mt-2 tracking-tight">Project Management - Digital Transformation - B2B Platforms - Strategic Leadership</h3>
+                
+                <p data-i18n="role1-desc" class="text-sm text-slate-400 leading-relaxed mt-2.5">
+                    Directly coordinating and taking full responsibility for delivering tech projects, integrated hardware & software solutions. Working closely with leading vendors and strategic partners (e.g., Salesforce solutions partner Isonic, manufacturing partner Dien Quang).
+                </p>
+
+                <!-- 5 CÔNG TY CỦA V1.2 -->
+                <div class="mt-5 space-y-4 pl-1">
+                    
+                    <!-- Aura & Oriza -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-chess-knight text-[10px]"></i> Aura & Oriza • Strategic Leadership & Product Launch
+                        </strong>
+                        <p data-i18n="hist-aura" class="text-xs md:text-sm text-slate-300 mt-2 leading-relaxed">
+                            Served as a strategic PM, driving parallel Smart Home/IoT solutions and smart agriculture innovations (Smart Swiftlet Farm); accelerated MVP-to-market product delivery.
+                        </p>
+                    </div>
+
+                    <!-- Manifera -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-network-wired text-[10px]"></i> Manifera • Enterprise B2B Platforms
+                        </strong>
+                        <p data-i18n="hist-manifera" class="text-xs md:text-sm text-slate-300 mt-2 leading-relaxed">
+                            Managed international B2B digital commerce solutions (e.g., Orderex platform in Singapore), enhancing transactional performance and overseeing Data Warehouse infrastructure.
+                        </p>
+                    </div>
+
+                    <!-- TechVSI -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-code-branch text-[10px]"></i> TechVSI • Software Outbound Services
+                        </strong>
+                        <p data-i18n="hist-techvsi" class="text-xs md:text-sm text-slate-300 mt-2 leading-relaxed">
+                            Led software outsourcing delivery teams, maintaining strict timeline, budget, and scope control under diverse engagement frameworks (Fixed-Price, T&M).
+                        </p>
+                    </div>
+
+                    <!-- Pizza 4P's -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-chart-pie text-[10px]"></i> Pizza 4P’s • Digital Transformation
+                        </strong>
+                        <p data-i18n="hist-pizza" class="text-xs md:text-sm text-slate-300 mt-2 leading-relaxed">
+                            Spearheaded core system digital transformation within the F&B ecosystem, sustaining resilient chain operations through pandemic constraints and enabling data-driven leadership insights.
+                        </p>
+                    </div>
+
+                    <!-- Appable -->
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/40 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-indigo-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-gears text-[10px]"></i> Appable • MVP Products & Operational Excellence
+                        </strong>
+                        <p data-i18n="hist-appable" class="text-xs md:text-sm text-slate-300 mt-2 leading-relaxed">
+                            Delivered high-quality MVP products across Healthcare, EdTech, and F&B domains; managed high-availability infrastructure (AlphaPlus, U.S.) achieving zero critical incidents during peak usage.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ====== SECTION 2: TECHNICAL FOUNDATION ROLE ====== -->
+            <div class="relative pl-8 group">
+                <div class="absolute -left-[10px] top-2 w-5 h-5 rounded-full bg-slate-700 ring-4 ring-[#0b0f19] z-10 transition-all duration-300 group-hover:bg-slate-500 shadow-inner"></div>
+                
+                <span data-i18n="role2-time" class="text-xs text-slate-400 font-bold uppercase tracking-wider bg-slate-800/80 border border-slate-700 px-2 py-0.5 rounded">Technical Foundation</span>
+                <h3 data-i18n="role2-title" class="text-base md:text-lg font-bold text-slate-300 mt-2 tracking-tight">Software Developer & QA/QC Engineer</h3>
+                
+                <p data-i18n="role2-desc" class="text-sm text-slate-400 leading-relaxed mt-2.5">
+                    Strong technical background built over years of working as a software developer and quality assurance/control engineer. This background serves as a vital bridge for precise task estimation, deep system risk assessment, and efficient collaboration with engineering teams.
+                </p>
+                
+                <!-- Chi tiết phần Technical Background -->
+                <div class="mt-5 space-y-4 pl-1">
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-slate-600 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-bug text-[10px] text-slate-500"></i> QA/QC Role
+                        </strong>
+                        <p data-i18n="tech-back-qa-appable" class="text-xs md:text-sm text-slate-300 mt-2.5 leading-relaxed">• 2017-2018: QA Lead at Appable. Built and led the QA team, established test strategy, workflows, and quality standards across multiple products (eCommerce, CMS, data analytics engines).</p>
+                        <p data-i18n="tech-back-qa-abtel" class="text-xs md:text-sm text-slate-300 mt-2.5 leading-relaxed">• 2013-2016: QC Lead at ABTEL (Q-mobile). Managed quality for ODM production of mobile models (feature/Windows/Android phone), collaborated with Chinese OEM partners across hardware, firmware, packaging, and product launch under Q-mobile brand. Supported product rollout to retail (thegioididong.com) and overseas markets (Mozambique, Campuchia, Peru, Haiti...).</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 backdrop-blur-sm transition-all duration-300 hover:border-slate-600 hover:bg-slate-900/80 shadow-sm">
+                        <strong class="text-xs font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wide">
+                            <i class="fa-solid fa-code text-[10px] text-slate-500"></i> Software Developer
+                        </strong>
+                        <p data-i18n="tech-back-dev-gameloft" class="text-xs md:text-sm text-slate-300 mt-2.5 leading-relaxed">• 2009-2012: Senior Programmer at GAMELOFT. Contributed to mobile game development in a global production environment, collaborating with international team of 30–40 members. Built internal tools and documentation; participated in early Android and MTK-based game development.</p>
+                        <p data-i18n="tech-back-dev-freelance" class="text-xs md:text-sm text-slate-300 mt-2.5 leading-relaxed">• 2007-2009: Freelancer. Early career experience developing PC software (C#/MS Access) and websites (PHP/MySQL, Joomla) for local businesses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="max-w-4xl mx-auto px-6 py-16 relative z-10">
+        <div class="backdrop-blur-md bg-gradient-to-br from-slate-900/80 to-[#0e1626]/60 border border-slate-800 rounded-3xl p-8 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl">
+            <div class="space-y-3 text-center md:text-left">
+                <h2 data-i18n="contact-heading" class="text-2xl font-bold tracking-tight text-slate-200">Professional Networking</h2>
+                <p data-i18n="contact-sub" class="text-xs md:text-sm text-slate-400 max-w-sm leading-relaxed">Feel free to explore my full career trajectory and connect with me directly on LinkedIn.</p>
+                <a href="https://www.linkedin.com/in/ntkien/" target="_blank" class="inline-flex items-center gap-2 text-xs text-indigo-400 hover:text-indigo-300 font-bold underline underline-offset-4 decoration-indigo-500/60 pt-1">
+                    <i class="fa-brands fa-linkedin text-sm"></i> linkedin.com/in/ntkien
+                </a>
+            </div>
+
+            <div class="w-full md:w-auto bg-slate-950/90 border border-slate-800 rounded-2xl p-5 space-y-3 min-w-[290px] shadow-2xl relative z-20">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-400 border border-indigo-500/20"><i class="fa-solid fa-envelope text-xs"></i></div>
+                    <div>
+                        <span class="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Email</span>
+                        <a href="mailto:kien.working@gmail.com" class="text-slate-300 hover:text-indigo-400 text-xs transition">kien.working@gmail.com</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3.5">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/20"><i class="fa-solid fa-phone text-xs"></i></div>
+                    <div>
+                        <span data-i18n="contact-phone" class="block text-[10px] text-slate-500 uppercase font-bold tracking-wider">Phone</span>
+                        <a href="tel:+84949094444" class="text-slate-300 hover:text-emerald-400 text-xs transition">(+84) 94 909 4444</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FUTURE EXPANSION LINKS -->
+    <section class="max-w-4xl mx-auto px-6 pb-12 relative z-10 text-center md:text-left">
+        <div class="pt-6 border-t border-slate-800/60 max-w-xl mx-auto md:mx-0">
+            <div class="text-[11px] uppercase tracking-wider text-slate-500 mb-3">
+                <i class="fa-solid fa-folder-open mr-1"></i> Connected Platforms / Hubs
+            </div>
+            <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                <a href="#" class="inline-flex items-center gap-2 bg-slate-950/60 hover:bg-indigo-950/30 border border-slate-800 hover:border-indigo-500/50 text-xs text-slate-400 hover:text-indigo-300 px-3 py-2 rounded-lg transition-all duration-300 group shadow-sm">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-indigo-400 animate-pulse"></span>
+                    <span>NewsHub</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </a>
+                <a href="#" class="inline-flex items-center gap-2 bg-slate-950/60 hover:bg-purple-950/30 border border-slate-800 hover:border-purple-500/50 text-xs text-slate-400 hover:text-purple-300 px-3 py-2 rounded-lg transition-all duration-300 group shadow-sm">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-purple-400 animate-pulse"></span>
+                    <span>Tech Blog</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-8 text-[11px] text-slate-500 border-t border-slate-800/60 relative z-10 bg-[#070a12]">
+        <p>© 2026 Nguyen Trung Kien. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT FOR MULTILINGUAL FRAMEWORK (Đã dọn sạch các thẻ class nhúng text sáng của v1.2) -->
+    <script>
+        const i18nData = {
+            en: {
+                "nav-about": "About", "nav-exp": "Experience", "nav-contact": "Contact",
+                "pmp-tag": "PMP® Certified - ", "hero-title": "Project Manager",
+                "hero-desc": `
+                    <div class="space-y-4 text-left">
+                        <p><strong>PMP® Certified Project Manager</strong> with <strong>6+ years</strong> leading software projects across web & mobile applications, B2B platforms, and system integrations in digital transformation – backed by <strong>10 years</strong> as a Software Developer and QA/QC.</p>
+                        <ul class="list-disc pl-5 space-y-1.5 text-xs md:text-sm text-slate-400 leading-relaxed">
+                            <li>Experienced in both <strong>product</strong> and <strong>outsourced</strong> environments (Fixed-Price, T&M).</li>
+                            <li><strong>Data-driven</strong>, <strong>goal-oriented</strong>, and adept at <strong>tailoring</strong> Agile, Waterfall, and Hybrid methodologies to lead cross-functional teams and deliver business value.</li>
+                            <li><strong>Technical background</strong> enabling rapid technology adoption, deep problem analysis, and effective leadership of technical discussions - bridging business requirements and engineering execution.</li>
+                            <li><strong>Global Communication:</strong> Professional working proficiency in <strong>English</strong>, collaborating seamlessly with clients/partners from the US, EU, Japan, Singapore, and China.</li>
+                        </ul>
+                        <p class="text-sm md:text-base leading-relaxed pt-3 italic text-indigo-400 font-semibold drop-shadow-sm">"Committed to delivering operational excellence and sustainable business value through end-to-end project ownership, optimized resources, and guaranteed requirement fulfillment."</p>                    
+                    </div>`,
+                "metric-1": "PM Experience", "metric-2": "Global Certification", "metric-3": "Dev & QA/QC", "metric-4": "Cross-border Delivery", "metric-5": "Projects Delivered",
+                "exp-heading": "Experience & Key Achievements", "role1-time": "Project Management Track",
+                "role1-title": "Project Management - Digital Transformation - B2B Platforms - Strategic Leadership",
+                "role1-desc": "Directly coordinating and taking full responsibility for delivering tech projects, integrated hardware & software solutions. Working closely with leading vendors and strategic partners (e.g., Salesforce solutions partner Isonic, manufacturing partner Dien Quang).",
+                "hist-aura": "Served as a strategic PM, driving parallel Smart Home/IoT solutions and smart agriculture innovations (Smart Swiftlet Farm); accelerated MVP-to-market product delivery.",
+                "hist-manifera": "Managed international B2B digital commerce solutions (e.g., Orderex platform in Singapore), enhancing transactional performance and overseeing Data Warehouse infrastructure.",
+                "hist-techvsi": "Led software outsourcing delivery teams, maintaining strict timeline, budget, and scope control under diverse engagement frameworks (Fixed-Price, T&M).",
+                "hist-pizza": "Spearheaded core system digital transformation within the F&B ecosystem, sustaining resilient chain operations through pandemic constraints and enabling data-driven leadership insights.",
+                "hist-appable": "Delivered high-quality MVP products across Healthcare, EdTech, and F&B domains; managed high-availability infrastructure (AlphaPlus, U.S.) achieving zero critical incidents during peak usage.",
+                "role2-time": "Technical Foundation", "role2-title": "Software Developer & QA/QC Engineer",
+                "role2-desc": "Strong technical background built over years of working as a software developer and quality assurance/control engineer. This background serves as a vital bridge for precise task estimation, deep system risk assessment, and efficient collaboration with engineering teams.",
+                "tech-back-qa-appable": "• 2017-2018: QA Lead at Appable. Built and led the QA team, established test strategy, workflows, and quality standards across multiple products (eCommerce, CMS, data analytics engines).",
+                "tech-back-qa-abtel": "• 2013-2016: QC Lead at ABTEL (Q-mobile). Managed quality for ODM production of mobile models (feature/Windows/Android phone), collaborated with Chinese OEM partners across hardware, firmware, packaging, and product launch under Q-mobile brand. Supported product rollout to retail (thegioididong.com) and overseas markets (Mozambique, Cambodia, Peru, Haiti...).",
+                "tech-back-dev-gameloft": "• 2009-2012: Senior Programmer at GAMELOFT. Contributed to mobile game development in a global production environment, collaborating with international team of 30–40 members. Built internal tools and documentation; participated in early Android and MTK-based game development.",
+                "tech-back-dev-freelance": "• 2007-2009: Freelancer. Early career experience developing PC software (C#/MS Access) and websites (PHP/MySQL, Joomla) for local businesses.",
+                "contact-heading": "Professional Networking", "contact-sub": "Feel free to explore my full career trajectory and connect with me directly on LinkedIn.", "contact-phone": "Phone",
+                "ach1-title": "Successful Delivery", "ach1-desc": "Delivered 20+ projects across Digital Transformation, Smart IoT, Healthcare, B2B platforms, Data Warehouse, eCommerce, Banking, F&B, and EdTech domains.",
+                "ach2-title": "Strategic Leadership", "ach2-desc": "Led multiple parallel projects as sole PM at Aura Intelligent Living, delivering Smart Home/IoT solutions and MVP healthcare products, while supporting presales and client engagement.",
+                "ach3-title": "Commercial Product Launch", "ach3-desc": "Delivered Smart Farm IoT solution for Nikodo in ~6 months, completing pilot deployment at 2 farms and enabling product launch (Nov 2024).",
+                "ach4-title": "Digital Transformation", "ach4-desc": "Led the delivery of core apps and systems within Pizza 4P’s digital ecosystem, sustaining operations across 20+ restaurants during COVID-19 and providing business data insights to support leadership decision-making.",
+                "ach5-title": "Operational Excellence", "ach5-desc": "Managed platforms including Orderex (B2B, Singapore) and AlphaPlus (real-time exam, U.S.). Led teams to maintain high-availability infrastructure, ensured zero critical incidents during peak periods for 14,000+ users of AlphaPlus, and >99% success rate for 100+ daily transactions on Orderex."
+            },
+            vi: {
+                "nav-about": "Giới thiệu", "nav-exp": "Kinh nghiệm", "nav-contact": "Liên hệ",
+                "pmp-tag": "PMP® Certified - ", "hero-title": "Project Manager",
+                "hero-desc": `
+                    <div class="space-y-4 text-left">
+                        <p>Quản Lý Dự Án chuyên nghiệp, đạt chứng chỉ <strong>PMP®</strong> với <strong>+6 năm kinh nghiệm</strong> dẫn dắt các dự án phần mềm đa dạng như ứng dụng Web & Mobile, nền tảng B2B, tích hợp các hệ thống chuyển đổi số cho doanh nghiệp – với nền tảng kỹ thuật từ <strong>10 năm</strong> làm Developer và QA/QC.</p>
+                        <ul class="list-disc pl-5 space-y-1.5 text-xs md:text-sm text-slate-400 leading-relaxed">
+                            <li>Kinh nghiệm thực chiến với cả môi trường <strong>Product</strong> lẫn <strong>Outsourcing</strong> (Fixed-Price, T&M).</li>
+                            <li>Tư duy quản trị <strong>Data-driven</strong> & <strong>Goal-oriented</strong>, nhạy bén trong việc <strong>tùy biến</strong> các phương pháp Agile, Waterfall, Hybrid để điều phối cross-functional teams hiện thực hóa giá trị kinh doanh.</li>
+                            <li><strong>Nền tảng Kỹ Thuật</strong> vững chắc giúp tiếp thu công nghệ nhanh chóng, dẫn dắt các thảo luận và phân tích kỹ thuật chuyên sâu – làm cầu nối giữa yêu cầu dự án và năng lực thực thi kỹ thuật.</li>
+                            <li><strong>Tiếng Anh chuyên nghiệp:</strong> Làm việc hiệu quả với các đối tác/khách hàng quốc tế đến từ Âu - Mỹ, Nhật Bản, Trung Quốc và Singapore.</li>
+                        </ul>
+                        <p class="text-sm md:text-base leading-relaxed pt-3 italic text-indigo-400 font-semibold drop-shadow-sm">"Cam kết hiện thực hóa sự vận hành xuất sắc và giá trị kinh doanh bền vững thông qua việc làm chủ toàn diện quy trình bàn giao, tối ưu hóa nguồn lực và đảm bảo đáp ứng mọi yêu cầu dự án."</p>
+                    </div>`,
+                "metric-1": "Kinh nghiệm PM", "metric-2": "Chứng chỉ quốc tế", "metric-3": "Dev & QA/QC", "metric-4": "Bàn giao quốc tế", "metric-5": "Dự án hoàn thành",
+                "exp-heading": "Kinh nghiệm & Thành tựu nổi bật", "role1-time": "Quản lý Dự án (PM Track)",
+                "role1-title": "Project Management - Digital Transformation - B2B Platforms - Strategic Leadership",
+                "role1-desc": "Trực tiếp điều phối và chịu trách nhiệm bàn giao các dự án công nghệ, giải pháp tích hợp phần cứng và phần mềm, làm việc chặt chẽ với các nhà cung cấp, đối tác chiến lược hàng đầu (như đối tác giải pháp Salesforce Isonic, sản xuất Điện Quang).",
+                "hist-aura": "Đảm nhiệm vai trò PM chiến lược, trực tiếp quản lý song song nhiều dự án Smart Home/IoT và giải pháp nông nghiệp thông minh (Smart Swiftlet Farm); thúc đẩy nghiên cứu và bàn giao thành công các sản phẩm thương mại ra thị trường từ giai đoạn MVP.",
+                "hist-manifera": "Quản trị và phát triển các nền tảng B2B quy mô quốc tế (như hệ thống Orderex tại thị trường Singapore), tối ưu hóa hiệu năng giao dịch và đảm bảo tính toàn vẹn của hệ thống kho dữ liệu (Data Warehouse).",
+                "hist-techvsi": "Lãnh đạo các dự án phần mềm theo mô hình dịch vụ thuê ngoài (Outsourcing), làm chủ quy trình kiểm soát tiến độ, quản lý ngân sách nghiêm ngặt thông qua các loại hình hợp đồng linh hoạt (Fixed-Price, T&M).",
+                "hist-pizza": "Dẫn dắt tiến trình số hóa toàn diện hệ sinh thái ứng dụng cốt lõi của chuỗi nhà hàng, duy trì mạch vận hành không đứt gãy xuyên suốt giai đoạn thử thách của đại dịch và kiến tạo hệ thống dữ liệu báo cáo chuyên sâu hỗ trợ ban giám đốc.",
+                "hist-appable": "Bàn giao các dòng sản phẩm MVP thuộc khối Y tế, F&B, EdTech; vận hành và duy trì hạ tầng tính sẵn sàng cao ổn định cho hàng vạn người dùng đồng thời (Zero critical incidents) trên hệ thống AlphaPlus (Mỹ).",
+                "role2-time": "Nền tảng kỹ thuật", "role2-title": "Software Developer & QA/QC Engineer",
+                "role2-desc": "Nền tảng kỹ thuật vững chắc qua nhiều năm đảm nhiệm vai trò kỹ sư lập trình phần mềm và kiểm thử chất lượng sản phẩm. Đây là bước đệm quan trọng giúp tối ưu hóa khả năng ước lượng khối lượng công việc (Estimation), hiểu sâu rủi ro hệ thống và làm việc hiệu quả với đội ngũ kỹ thuật.",
+                "tech-back-qa-appable": "• 2017-2018: Trưởng nhóm QA tại Appable. Xây dựng và dẫn dắt đội ngũ QA, thiết lập chiến lược kiểm thử, quy trình làm việc và tiêu chuẩn chất lượng cho nhiều sản phẩm (thương mại điện tử, CMS, công cụ phân tích dữ liệu).",
+                "tech-back-qa-abtel": "• 2013-2016: Trưởng nhóm Kiểm soát Chất lượng tại ABTEL (Q-mobile). Quản lý chất lượng cho sản xuất ODM các dòng điện thoại di động (điện thoại phổ thông/Windows/Android phone), hợp tác với các đối tác OEM Trung Quốc về phần cứng, phần mềm, bao bì và ra mắt sản phẩm dưới thương hiệu Q-mobile. Hỗ trợ triển khai sản phẩm ra thị trường bán lẻ (thegioididong.com) và thị trường nước ngoài (Mozambique, Campuchia, Peru, Haiti...).",
+                "tech-back-dev-gameloft": "• 2009-2012: Lập trình viên cao cấp tại GAMELOFT. Tham gia phát triển game di động trong môi trường sản xuất toàn cầu, cộng tác với nhóm quốc tế gồm 30-40 thành viên. Xây dựng các công cụ và tài liệu nội bộ; tham gia vào giai đoạn đầu phát triển game Android và MTK.",
+                "tech-back-dev-freelance": "• 2007-2009: Lập trình viên tự do. Phát triển phần mềm (C#/MS Access) và website (PHP/MySQL, Joomla) cho các doanh nghiệp địa phương.",
+                "contact-heading": "Kết nối chuyên nghiệp", "contact-sub": "Anh/Chị có thể tham khảo chi tiết quá trình làm việc và kết nối trực tiếp với tôi qua mạng lưới LinkedIn.", "contact-phone": "Điện thoại",
+                "ach1-title": "Bàn Giao Thành Công", "ach1-desc": "Triển khai thành công hơn 20 dự án thuộc đa dạng lĩnh vực bao gồm Chuyển đổi số, Smart IoT, Y tế, Nền tảng B2B, Kho dữ liệu (Data Warehouse), Thương mại điện tử, Ngân hàng, F&B và EdTech.",
+                "ach2-title": "Lãnh Đạo Chiến Lược", "ach2-desc": "Đảm nhiệm vai trò PM duy nhất tại Aura Intelligent Living để trực tiếp quản lý đồng thời nhiều dự án song song, bàn giao thành công các giải pháp Smart Home/IoT và sản phẩm y tế MVP, đồng thời tham gia hỗ trợ presales và tiếp cận khách hàng.",
+                "ach3-title": "Phát Triển Sản Phẩm Thương Mại", "ach3-desc": "Bàn giao thành công giải pháp Smart Farm IoT cho đối tác Nikodo trong vòng khoảng 6 tháng, hoàn thiện việc vận hành thử nghiệm tại 2 trang trại lớn và thúc đẩy ra mắt sản phẩm chính thức (Tháng 11/2024).",
+                "ach4-title": "Chuyển Đổi Số Doanh Nghiệp", "ach4-desc": "Dẫn dắt quá trình phát triển các ứng dụng và hệ thống cốt lõi trong hệ sinh thái số của Pizza 4P's, duy trì vận hành ổn định cho chuỗi hơn 20 nhà hàng xuyên suốt giai đoạn đại dịch COVID-19, đồng thời cung cấp các báo cáo phân tích dữ liệu chuyên sâu hỗ trợ ban lãnh đạo ra quyết định chiến lược.",
+                "ach5-title": "Vận Hành Xuất Sắc", "ach5-desc": "Quản lý và tối ưu hóa các nền tảng lớn bao gồm Orderex (B2B, Singapore) và AlphaPlus (Hệ thống thi thời gian thực, Mỹ). Dẫn dắt đội ngũ kỹ thuật duy trì hạ tầng tính sẵn sàng cao, đảm bảo không xảy ra sự cố nghiêm trọng (zero critical incidents) trong các giai đoạn cao điểm cho hơn 14.000 người dùng AlphaPlus, và duy trì tỷ lệ thành công >99% cho hơn 100 giao dịch mỗi ngày trên Orderex."
+            }
+        };
+
+        let currentLang = 'en';
+        function updateLanguageDOM() {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18nData[currentLang][key]) el.innerHTML = i18nData[currentLang][key];
+            });
+            document.getElementById('lang-btn').innerText = currentLang === 'en' ? 'VI' : 'EN';
+        }
+        function toggleLang() { currentLang = currentLang === 'en' ? 'vi' : 'en'; updateLanguageDOM(); }
+        updateLanguageDOM();
+    </script>
+</body>
+</html>
