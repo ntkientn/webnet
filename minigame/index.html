@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kien's Arcade v2.1 - Cyber Mini-Games Hub</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; touch-action: none; select-none: none; }
+        .font-digital { font-family: 'Share Tech Mono', monospace; }
+        .tech-grid {
+            background-image: linear-gradient(to right, rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        canvas { max-width: 100%; max-height: 100%; display: block; }
+    </style>
+</head>
+<body class="bg-[#04050e] text-slate-300 antialiased min-h-screen relative overflow-hidden select-none">
+
+    <div class="absolute inset-0 tech-grid z-0 pointer-events-none"></div>
+
+    <div id="dashboard-view" class="relative z-10 max-w-5xl mx-auto px-6 pt-10 space-y-8 overflow-y-auto h-screen pb-10">
+        <header class="text-center space-y-2">
+            <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-4 py-1 rounded-full text-[10px] font-bold text-cyan-400 tracking-wider font-digital">
+                <i class="fa-solid fa-circle-check text-emerald-400 animate-pulse"></i> ALL SYSTEMS OPERATIONAL v2.1
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white">
+                KIEN'S <span class="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]">ARCADE</span>
+            </h1>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">Sửa lỗi hiển thị thẻ bài - Tối ưu hình ảnh sinh động cho trẻ nhỏ!</p>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+            <button onclick="launchGame('memory')" class="group text-left bg-slate-900/40 border border-slate-800/80 p-5 rounded-2xl hover:border-purple-500/60 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] transition-all duration-300 cursor-pointer flex flex-col justify-between gap-6 relative overflow-hidden">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/20 transition-colors"><i class="fa-solid fa-brain text-xl"></i></div>
+                <div>
+                    <span class="text-[10px] font-bold font-digital tracking-widest text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">TOUCH GAME</span>
+                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-purple-400 transition-colors">1. Lật Thẻ Sinh Vật</h3>
+                    <p class="text-xs text-slate-500 mt-1">Tìm các cặp hình thú và phi thuyền sinh động. Giúp con rèn luyện trí nhớ ngắn hạn và sự tập trung.</p>
+                </div>
+            </button>
+
+            <button onclick="launchGame('bird')" class="group text-left bg-slate-900/40 border border-slate-800/80 p-5 rounded-2xl hover:border-cyan-500/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.15)] transition-all duration-300 cursor-pointer flex flex-col justify-between gap-6 relative overflow-hidden">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-colors"><i class="fa-solid fa-dove text-xl"></i></div>
+                <div>
+                    <span class="text-[10px] font-bold font-digital tracking-widest text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded">1-TAP CONTROL</span>
+                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-cyan-400 transition-colors">2. Cyber Mecha Bird</h3>
+                    <p class="text-xs text-slate-500 mt-1">Điều khiển chú chim Robot cơ khí vỗ cánh vượt chướng ngại vật. Đồ họa vệt lửa năng lượng rực rỡ.</p>
+                </div>
+            </button>
+
+            <button onclick="launchGame('game2048')" class="group text-left bg-slate-900/40 border border-slate-800/80 p-5 rounded-2xl hover:border-amber-500/60 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] transition-all duration-300 cursor-pointer flex flex-col justify-between gap-6 relative overflow-hidden">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:bg-amber-500/20 transition-colors"><i class="fa-solid fa-cubes text-xl"></i></div>
+                <div>
+                    <span class="text-[10px] font-bold font-digital tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">SWIPE CONTROL</span>
+                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-amber-400 transition-colors">3. Ma Trận Số 2048</h3>
+                    <p class="text-xs text-slate-500 mt-1">Vuốt màn hình để dịch chuyển và gộp các ô số. Rèn luyện tư duy toán học và logic tính toán.</p>
+                </div>
+            </button>
+
+            <button onclick="launchGame('shooter')" class="group text-left bg-slate-900/40 border border-slate-800/80 p-5 rounded-2xl hover:border-red-500/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.15)] transition-all duration-300 cursor-pointer flex flex-col justify-between gap-6 relative overflow-hidden">
+                <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 group-hover:bg-red-500/20 transition-colors"><i class="fa-solid fa-jet-fighter text-xl"></i></div>
+                <div>
+                    <span class="text-[10px] font-bold font-digital tracking-widest text-red-400 bg-red-500/10 px-2 py-0.5 rounded">DRAG TO FLY</span>
+                    <h3 class="font-extrabold text-white text-lg mt-2 group-hover:text-red-400 transition-colors">4. Chiến Cơ Vũ Trụ</h3>
+                    <p class="text-xs text-slate-500 mt-1">Giữ và di ngón tay để lái chiến cơ nã đạn hủy diệt quái vật vũ trụ. Hiệu ứng bùng nổ sống động.</p>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <div id="game-view" class="relative z-10 w-full max-w-[440px] h-screen mx-auto flex flex-col justify-between py-3 px-4 hidden">
+        <div class="flex justify-between items-center bg-slate-900/70 border border-slate-800 px-4 py-2.5 rounded-xl backdrop-blur-md">
+            <button onclick="backToDashboard()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-lg cursor-pointer transition-colors">
+                <i class="fa-solid fa-angle-left mr-1"></i> HUB
+            </button>
+            <div class="flex gap-4 font-digital text-sm">
+                <div>SCORE: <span id="live-score" class="text-cyan-400 font-bold">0</span></div>
+                <div>BEST: <span id="high-score" class="text-amber-400 font-bold">0</span></div>
+            </div>
+        </div>
+
+        <div class="flex-1 my-3 bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.8)]" id="canvas-container">
+            <canvas id="gameCanvas" width="400" height="600" class="w-full h-full block"></canvas>
+            
+            <div id="game-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center text-center p-6 space-y-5">
+                <h2 id="overlay-title" class="text-2xl font-black tracking-wider text-white">TÊN TRÒ CHƠI</h2>
+                <p id="overlay-desc" class="text-xs text-slate-400 max-w-xs leading-relaxed">Hướng dẫn trò chơi.</p>
+                <button id="start-btn" class="bg-gradient-to-r from-cyan-500 to-indigo-600 text-white font-black text-xs uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg active:scale-95 cursor-pointer transition-transform">
+                    KÍCH HOẠT MÀN CHƠI
+                </button>
+            </div>
+        </div>
+        
+        <p class="text-center text-[10px] text-slate-500 italic font-mono tracking-wide">KIEN'S ARCADE - SECURITY PROTOCOL ENFORCED</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let currentActiveGame = null;
+        let gameLoopId = null;
+        let score = 0;
+        let currentHighScore = 0;
+        let isGameRunning = false;
+        let particles = [];
+
+        // Hệ thống phát hiện vuốt màn hình (Swipe Detection) cho 2048
+        let touchStartX = 0, touchStartY = 0;
+        canvas.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        canvas.addEventListener('touchend', e => {
+            if (currentActiveGame !== 'game2048' || !isGameRunning) return;
+            let diffX = e.changedTouches[0].clientX - touchStartX;
+            let diffY = e.changedTouches[0].clientY - touchStartY;
+            
+            if (Math.max(Math.abs(diffX), Math.abs(diffY)) < 25) return;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 0) handle2048Move('right'); else handle2048Move('left');
+            } else {
+                if (diffY > 0) handle2048Move('down'); else handle2048Move('up');
+            }
+        }, { passive: true });
+
+        window.addEventListener('keydown', e => {
+            if (!isGameRunning) return;
+            if (currentActiveGame === 'game2048') {
+                if(e.code === 'ArrowLeft') handle2048Move('left');
+                if(e.code === 'ArrowRight') handle2048Move('right');
+                if(e.code === 'ArrowUp') handle2048Move('up');
+                if(e.code === 'ArrowDown') handle2048Move('down');
+            }
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
+        });
+
+        function launchGame(gameId) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('game-view').classList.remove('hidden');
+            currentActiveGame = gameId;
+            score = 0;
+            document.getElementById('live-score').innerText = score;
+            currentHighScore = localStorage.getItem(`highscore_v2_${gameId}`) || 0;
+            document.getElementById('high-score').innerText = currentHighScore;
+            setupOverlayUI(gameId);
+        }
+
+        function backToDashboard() {
+            isGameRunning = false;
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            canvas.onmousedown = null; canvas.ontouchstart = null;
+            canvas.onmousemove = null; canvas.ontouchmove = null;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('game-view').classList.add('hidden');
+            document.getElementById('dashboard-view').classList.remove('hidden');
+        }
+
+        function updateScore(points) {
+            score = points;
+            document.getElementById('live-score').innerText = score;
+            if (score > currentHighScore) {
+                currentHighScore = score;
+                document.getElementById('high-score').innerText = currentHighScore;
+                localStorage.setItem(`highscore_v2_${currentActiveGame}`, currentHighScore);
+            }
+        }
+
+        function triggerGameOver() {
+            isGameRunning = false;
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            const overlay = document.getElementById('game-overlay');
+            const title = document.getElementById('overlay-title');
+            const desc = document.getElementById('overlay-desc');
+            
+            title.innerText = "MISSION FAILED";
+            title.className = "text-3xl font-black text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]";
+            desc.innerHTML = `Điểm số của con đạt được: <span class="text-white font-bold text-base">${score}</span><br>Hãy kích hoạt lại hệ thống để thử lại nhé!`;
+            overlay.classList.remove('hidden');
+        }
+
+        function setupOverlayUI(gameId) {
+            const overlay = document.getElementById('game-overlay');
+            const title = document.getElementById('overlay-title');
+            const desc = document.getElementById('overlay-desc');
+            const startBtn = document.getElementById('start-btn');
+            overlay.classList.remove('hidden');
+            
+            if(gameId === 'memory') {
+                title.innerText = "LẬT THẺ TRÍ NHỚ"; title.className = "text-2xl font-black text-purple-400";
+                desc.innerText = "Chạm vào các ô vuông mạch điện để lật thẻ. Tìm ra 2 hình giống nhau liên tiếp. Giới hạn: Tối đa 30 lượt lật bài!";
+                startBtn.onclick = () => startMemoryGame();
+            } else if(gameId === 'bird') {
+                title.innerText = "CYBER MECHA BIRD"; title.className = "text-2xl font-black text-cyan-400";
+                desc.innerText = "CHẠM VÀO MÀN HÌNH để chú chim cơ khí đập cánh bay lên. Né tránh các rặng cột năng lượng Laser Hồng Neon.";
+                startBtn.onclick = () => startBirdGame();
+            } else if(gameId === 'game2048') {
+                title.innerText = "CYBER MA TRẬN 2048"; title.className = "text-2xl font-black text-amber-400";
+                desc.innerText = "VUỐT MÀN HÌNH (Lên, Xuống, Trái, Phải) để dồn các ô số. Hai ô số giống nhau chập lại sẽ nhân đôi. Đạt ô 2048 để thắng!";
+                startBtn.onclick = () => start2048Game();
+            } else if(gameId === 'shooter') {
+                title.innerText = "CHIẾN CƠ VŨ TRỤ"; title.className = "text-2xl font-black text-red-400";
+                desc.innerText = "ẤN GIỮ & KÉO ngón tay trực tiếp lên chiến cơ để di chuyển né tránh quái vật. Hệ thống vũ khí Laser tối tân sẽ tự động bắn trả!";
+                startBtn.onclick = () => startShooterGame();
+            }
+        }
+
+        function createExplosion(x, y, color, count=10) {
+            for(let i=0; i<count; i++) {
+                particles.push({
+                    x: x, y: y,
+                    vx: (Math.random() - 0.5) * 6, vy: (Math.random() - 0.5) * 6,
+                    size: Math.random() * 3 + 1, color: color, alpha: 1
+                });
+            }
+        }
+
+        function updateAndRenderParticles() {
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let p = particles[i]; p.x += p.vx; p.y += p.vy; p.alpha -= 0.04;
+                if (p.alpha <= 0) { particles.splice(i, 1); } else {
+                    ctx.save(); ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+                    ctx.shadowBlur = 5; ctx.shadowColor = p.color;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill(); ctx.restore();
+                }
+            }
+        }
+
+
+        // =====================================================================
+        // GAME 1: LẬT THẺ TRÍ NHỚ (NÂNG CẤP BẢN EMOJI KHÔNG LỖI)
+        // =====================================================================
+        let memoryCards, firstCard, secondCard, lockBoard, pairsFound, currentMoves;
+        // Bộ Emoji rực rỡ, độ phân giải cao gốc của hệ điều hành, cam kết không lỗi font
+        const cardIcons = ['🦁', '🦖', '🦈', '🐼', '🚀', '🛸', '👾', '🤖']; 
+
+        function startMemoryGame() {
+            document.getElementById('game-overlay').classList.add('hidden');
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            isGameRunning = true;
+            pairsFound = 0; currentMoves = 0; firstCard = null; secondCard = null; lockBoard = false; particles = [];
+
+            let deck = [...cardIcons, ...cardIcons].sort(() => Math.random() - 0.5);
+            memoryCards = [];
+            const cW = 76, cH = 76, gapX = 14, gapY = 14;
+            const startX = (canvas.width - (4 * cW + 3 * gapX)) / 2;
+            const startY = (canvas.height - (4 * cH + 3 * gapY)) / 2;
+
+            for(let i=0; i<deck.length; i++) {
+                memoryCards.push({
+                    id: i, x: startX + (i % 4) * (cW + gapX), y: startY + Math.floor(i / 4) * (cH + gapY),
+                    w: cW, h: cH, icon: deck[i], isFlipped: false, isMatched: false
+                });
+            }
+
+            function handleTouch(clientX, clientY) {
+                if (!isGameRunning || lockBoard) return;
+                let rect = canvas.getBoundingClientRect();
+                let mX = (clientX - rect.left) * (canvas.width / rect.width);
+                let mY = (clientY - rect.top) * (canvas.height / rect.height);
+
+                for (let card of memoryCards) {
+                    if (mX >= card.x && mX <= card.x + card.w && mY >= card.y && mY <= card.y + card.h) {
+                        if (card.isFlipped || card.isMatched || card === firstCard) return;
+                        card.isFlipped = true;
+                        if (!firstCard) { firstCard = card; return; }
+                        secondCard = card; currentMoves++;
+                        
+                        if (firstCard.icon === secondCard.icon) {
+                            firstCard.isMatched = secondCard.isMatched = true; pairsFound++;
+                            createExplosion(card.x + card.w/2, card.y + card.h/2, '#22d3ee', 15);
+                            firstCard = secondCard = null;
+                            updateScore(pairsFound * 25);
+                            if (pairsFound === 8) {
+                                isGameRunning = false;
+                                setTimeout(() => {
+                                    document.getElementById('overlay-title').innerText = "TRÍ NHỚ SIÊU PHÀM!";
+                                    document.getElementById('overlay-title').className = "text-2xl font-black text-purple-400";
+                                    document.getElementById('overlay-desc').innerText = `Tuyệt vời! Con tìm đủ các cặp thẻ trong ${currentMoves} lượt mở bài.`;
+                                    document.getElementById('game-overlay').classList.remove('hidden');
+                                }, 400);
+                            }
+                        } else {
+                            lockBoard = true;
+                            setTimeout(() => { firstCard.isFlipped = secondCard.isFlipped = false; firstCard = secondCard = null; lockBoard = false; }, 700);
+                        }
+                        if (currentMoves >= 30 && pairsFound < 8) setTimeout(triggerGameOver, 600);
+                        return;
+                    }
+                }
+            }
+            canvas.onmousedown = (e) => handleTouch(e.clientX, e.clientY);
+            canvas.ontouchstart = (e) => { handleTouch(e.touches[0].clientX, e.touches[0].clientY); };
+
+            function loop() {
+                if (!isGameRunning) return;
+                ctx.fillStyle = '#050611'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#64748b'; ctx.font = "14px 'Share Tech Mono'";
+                ctx.fillText(`LƯỢT ĐÃ MỞ: ${currentMoves} / 30`, 30, 40);
+
+                memoryCards.forEach(card => {
+                    ctx.save();
+                    if (card.isFlipped || card.isMatched) {
+                        // Mặt trước khi mở: Viền sáng rực rỡ
+                        ctx.fillStyle = card.isMatched ? '#091d24' : '#111827';
+                        ctx.strokeStyle = card.isMatched ? '#22d3ee' : '#6366f1'; ctx.lineWidth = 2.5;
+                        ctx.shadowBlur = card.isMatched ? 8 : 0; ctx.shadowColor = '#22d3ee';
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
+                        
+                        // Vẽ hình Emoji (Cam kết không lỗi font)
+                        ctx.font = "36px sans-serif";
+                        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                        ctx.fillText(card.icon, card.x + card.w/2, card.y + card.h/2 + 2); 
+                    } else {
+                        // Mặt sau khi đóng: Họa tiết ma trận Cyber bí ẩn
+                        ctx.fillStyle = '#0b0f19'; ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1.5;
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
+                        
+                        ctx.strokeStyle = '#a855f725'; ctx.strokeRect(card.x + 8, card.y + 8, card.w - 16, card.h - 16);
+                        ctx.fillStyle = '#3b4252'; ctx.font = "bold 22px 'Share Tech Mono'"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                        ctx.fillText("?", card.x + card.w/2, card.y + card.h/2);
+                    }
+                    ctx.restore();
+                });
+                updateAndRenderParticles();
+                gameLoopId = requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+
+        // =====================================================================
+        // GAME 2: CYBER MECHA BIRD
+        // =====================================================================
+        let bird, pipes;
+        const bGravity = 0.32, bJump = -6.2;
+
+        function startBirdGame() {
+            document.getElementById('game-overlay').classList.add('hidden');
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            isGameRunning = true; particles = []; pipes = [];
+            bird = { x: 60, y: 250, w: 34, h: 26, velocity: 0, wingAngle: 0 };
+            let pipeTimer = 0, bScore = 0;
+
+            function jump() {
+                if(!isGameRunning) return;
+                bird.velocity = bJump; bird.wingAngle = 0.5;
+                for(let i=0; i<5; i++) {
+                    particles.push({ x: bird.x - 2, y: bird.y + bird.h/2, vx: -Math.random()*2 - 1, vy: (Math.random()-0.5)*4, size: Math.random()*2.5+1, color: '#38bdf8', alpha: 1 });
+                }
+            }
+            canvas.onmousedown = () => jump();
+            canvas.ontouchstart = (e) => { e.preventDefault(); jump(); };
+
+            function loop() {
+                if (!isGameRunning) return;
+                ctx.fillStyle = '#04050d'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                bird.velocity += bGravity; bird.y += bird.velocity;
+                if (bird.velocity > 0) bird.wingAngle = Math.max(-0.4, bird.wingAngle - 0.04);
+                if (bird.y + bird.h > canvas.height || bird.y < 0) { triggerGameOver(); return; }
+
+                if (Math.random() > 0.5) particles.push({ x: bird.x - 2, y: bird.y + bird.h/2, vx: -1.5, vy: (Math.random()-0.5)*1, size: Math.random()*2+1, color: '#22d3ee', alpha: 0.7 });
+
+                ctx.save(); ctx.translate(bird.x + bird.w/2, bird.y + bird.h/2);
+                ctx.rotate(Math.min(Math.max(bird.velocity * 0.05, -0.3), 0.6));
+                ctx.shadowBlur = 10; ctx.shadowColor = '#22d3ee';
+                
+                ctx.save(); ctx.translate(-4, 1); ctx.rotate(bird.wingAngle);
+                ctx.fillStyle = '#0284c7'; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-12,-12); ctx.lineTo(-4,-18); ctx.lineTo(5,-3); ctx.closePath(); ctx.fill();
+                ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+
+                ctx.fillStyle = '#0ea5e9'; ctx.beginPath(); ctx.ellipse(0,0, bird.w/2, bird.h/2, 0, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.moveTo(bird.w/2 - 2, -4); ctx.lineTo(bird.w/2 + 8, 0); ctx.lineTo(bird.w/2 - 2, 4); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(5, -3, 3.5, 0, Math.PI*2); ctx.fill();
+                ctx.restore();
+
+                pipeTimer++;
+                if (pipeTimer > 115) {
+                    let gap = 140, minH = 50, maxH = canvas.height - gap - minH - 80;
+                    let topH = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+                    pipes.push({ x: canvas.width, topH: topH, botY: topH + gap, w: 50, passed: false });
+                    pipeTimer = 0;
+                }
+
+                for (let i = pipes.length - 1; i >= 0; i--) {
+                    let p = pipes[i]; p.x -= 2.4;
+                    if (p.x + p.w < 0) { pipes.splice(i, 1); continue; }
+
+                    ctx.fillStyle = '#1e1b4b'; ctx.strokeStyle = '#6366f1'; ctx.lineWidth = 1.5;
+                    ctx.fillRect(p.x, 0, p.w, p.topH); ctx.strokeRect(p.x, 0, p.w, p.topH);
+                    ctx.fillRect(p.x, p.botY, p.w, canvas.height - p.botY); ctx.strokeRect(p.x, p.botY, p.w, canvas.height - p.botY);
+
+                    ctx.save(); ctx.shadowBlur = 12; ctx.shadowColor = '#f43f5e'; ctx.fillStyle = '#f43f5e';
+                    ctx.fillRect(p.x-2, p.topH-7, p.w+4, 7); ctx.fillRect(p.x-2, p.botY, p.w+4, 7); ctx.restore();
+
+                    if (bird.x + 2 < p.x + p.w && bird.x + bird.w - 2 > p.x) {
+                        if (bird.y + 2 < p.topH || bird.y + bird.h - 2 > p.botY) { triggerGameOver(); return; }
+                    }
+                    if (!p.passed && p.x + p.w < bird.x) { bScore++; p.passed = true; updateScore(bScore); }
+                }
+                updateAndRenderParticles();
+                gameLoopId = requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+
+        // =====================================================================
+        // GAME 3: MA TRẬN SỐ 2048
+        // =====================================================================
+        let grid2048, score2048;
+        const size2048 = 4;
+
+        function start2048Game() {
+            document.getElementById('game-overlay').classList.add('hidden');
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            isGameRunning = true; particles = []; canvas.onmousedown = null; canvas.ontouchstart = null;
+            score2048 = 0;
+            init2048Grid();
+            draw2048();
+        }
+
+        function init2048Grid() {
+            grid2048 = Array(size2048).fill(null).map(() => Array(size2048).fill(0));
+            add2048Tile(); add2048Tile();
+        }
+
+        function add2048Tile() {
+            let emptyCells = [];
+            for(let r=0; r<size2048; r++) {
+                for(let c=0; c<size2048; c++) { if (grid2048[r][c] === 0) emptyCells.push({r, c}); }
+            }
+            if (emptyCells.length > 0) {
+                let cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                grid2048[cell.r][cell.c] = Math.random() < 0.9 ? 2 : 4;
+            }
+        }
+
+        function draw2048() {
+            if (currentActiveGame !== 'game2048') return;
+            ctx.fillStyle = '#05060f'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            const boardW = 340, pad = 12;
+            const tileW = (boardW - (size2048 + 1) * pad) / size2048;
+            const startX = (canvas.width - boardW) / 2;
+            const startY = (canvas.height - boardW) / 2;
+
+            ctx.fillStyle = '#0d1224'; ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.roundRect(startX, startY, boardW, boardW, 14); ctx.fill(); ctx.stroke();
+
+            const colors = {
+                2: {bg: '#1e293b', txt: '#f8fafc', glow: 0}, 4: {bg: '#334155', txt: '#f8fafc', glow: 0},
+                8: {bg: '#1e3a8a', txt: '#93c5fd', glow: 5}, 16: {bg: '#2563eb', txt: '#ffffff', glow: 8},
+                32: {bg: '#065f46', txt: '#a7f3d0', glow: 6}, 64: {bg: '#059669', txt: '#ffffff', glow: 10},
+                128: {bg: '#78350f', txt: '#fde68a', glow: 8}, 256: {bg: '#d97706', txt: '#ffffff', glow: 14},
+                512: {bg: '#701a75', txt: '#fbcfe8', glow: 12}, 1024: {bg: '#2e1065', txt: '#e9d5ff', glow: 16},
+                2048: {bg: '#be123c', txt: '#ffffff', glow: 22}
+            };
+
+            for(let r=0; r<size2048; r++) {
+                for(let c=0; c<size2048; c++) {
+                    let val = grid2048[r][c];
+                    let tX = startX + pad + c * (tileW + pad);
+                    let tY = startY + pad + r * (tileW + pad);
+
+                    ctx.save();
+                    if (val > 0) {
+                        let conf = colors[val] || {bg: '#4c1d95', txt: '#ffffff', glow: 25};
+                        ctx.fillStyle = conf.bg;
+                        if(conf.glow > 0) { ctx.shadowBlur = conf.glow; ctx.shadowColor = conf.bg; }
+                        ctx.beginPath(); ctx.roundRect(tX, tY, tileW, tileW, 8); ctx.fill();
+                        
+                        ctx.shadowBlur = 0; ctx.fillStyle = conf.txt;
+                        ctx.font = `bold ${tileW * (val > 100 ? 0.35 : 0.45)}px sans-serif`;
+                        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+                        ctx.fillText(val, tX + tileW/2, tY + tileW/2);
+                    } else {
+                        ctx.fillStyle = '#080b14'; ctx.beginPath(); ctx.roundRect(tX, tY, tileW, tileW, 8); ctx.fill();
+                    }
+                    ctx.restore();
+                }
+            }
+            updateAndRenderParticles();
+            if(isGameRunning) gameLoopId = requestAnimationFrame(draw2048);
+        }
+
+        function handle2048Move(dir) {
+            if (!isGameRunning) return;
+            let moved = false;
+            let rotatedGrid = grid2048;
+
+            if (dir === 'up') rotatedGrid = rotateMatrixCounterClockwise(grid2048);
+            if (dir === 'right') rotatedGrid = rotateMatrixClockwise(rotateMatrixClockwise(grid2048));
+            if (dir === 'down') rotatedGrid = rotateMatrixClockwise(grid2048);
+
+            for (let r = 0; r < size2048; r++) {
+                let row = rotatedGrid[r].filter(v => v !== 0);
+                let newRow = [];
+                for (let i = 0; i < row.length; i++) {
+                    if (row[i] === row[i + 1]) {
+                        let mergedVal = row[i] * 2;
+                        newRow.push(mergedVal); score2048 += mergedVal; i++; moved = true;
+                        createExplosion(canvas.width/2, canvas.height/2, '#f59e0b', 5);
+                        if(mergedVal === 2048) {
+                            isGameRunning = false;
+                            setTimeout(() => {
+                                document.getElementById('overlay-title').innerText = "VI THÀNH TỰU!";
+                                document.getElementById('overlay-title').className = "text-2xl font-black text-amber-400";
+                                document.getElementById('overlay-desc').innerText = "Chúc mừng con trai! Con đã hợp thể thành công ô số huyền thoại 2048!";
+                                document.getElementById('game-overlay').classList.remove('hidden');
+                            }, 300);
+                        }
+                    } else { newRow.push(row[i]); }
+                }
+                while (newRow.length < size2048) newRow.push(0);
+                if (JSON.stringify(rotatedGrid[r]) !== JSON.stringify(newRow)) moved = true;
+                rotatedGrid[r] = newRow;
+            }
+
+            if (dir === 'up') grid2048 = rotateMatrixClockwise(rotatedGrid);
+            else if (dir === 'right') grid2048 = rotateMatrixClockwise(rotateMatrixClockwise(rotatedGrid));
+            else if (dir === 'down') grid2048 = rotateMatrixCounterClockwise(rotatedGrid);
+            else grid2048 = rotatedGrid;
+
+            if (moved) {
+                add2048Tile(); updateScore(score2048);
+                if (check2048GameOver()) triggerGameOver();
+            }
+        }
+
+        function rotateMatrixClockwise(matrix) { return matrix[0].map((val, index) => matrix.map(row => row[index]).reverse()); }
+        function rotateMatrixCounterClockwise(matrix) { return matrix[0].map((val, index) => matrix.map(row => row[row.length - 1 - index])); }
+
+        function check2048GameOver() {
+            for (let r = 0; r < size2048; r++) {
+                for (let c = 0; c < size2048; c++) {
+                    if (grid2048[r][c] === 0) return false;
+                    if (c < size2048 - 1 && grid2048[r][c] === grid2048[r][c + 1]) return false;
+                    if (r < size2048 - 1 && grid2048[r][c] === grid2048[r + 1][c]) return false;
+                }
+            }
+            return true;
+        }
+
+
+        // =====================================================================
+        // GAME 4: CHIẾN CƠ VŨ TRỤ
+        // =====================================================================
+        let playerShip, lasers, enemies, enemyTimer, killCount;
+
+        function startShooterGame() {
+            document.getElementById('game-overlay').classList.add('hidden');
+            if (gameLoopId) cancelAnimationFrame(gameLoopId);
+            isGameRunning = true; particles = []; lasers = []; enemies = [];
+            playerShip = { x: canvas.width / 2 - 18, y: canvas.height - 80, w: 36, h: 32, isDragging: false };
+            enemyTimer = 0; killCount = 0;
+
+            function onMove(clientX, clientY) {
+                let rect = canvas.getBoundingClientRect();
+                let rootX = (clientX - rect.left) * (canvas.width / rect.width);
+                let rootY = (clientY - rect.top) * (canvas.height / rect.height);
+                playerShip.x = Math.max(0, Math.min(canvas.width - playerShip.w, rootX - playerShip.w/2));
+                playerShip.y = Math.max(0, Math.min(canvas.height - playerShip.h, rootY - playerShip.h/2));
+            }
+
+            canvas.onmousedown = () => playerShip.isDragging = true;
+            window.onmouseup = () => playerShip.isDragging = false;
+            canvas.onmousemove = (e) => { if(playerShip.isDragging) onMove(e.clientX, e.clientY); };
+
+            canvas.ontouchstart = () => playerShip.isDragging = true;
+            window.ontouchend = () => playerShip.isDragging = false;
+            canvas.ontouchmove = (e) => { if(playerShip.isDragging) onMove(e.touches[0].clientX, e.touches[0].clientY); };
+
+            function loop() {
+                if (!isGameRunning) return;
+                ctx.fillStyle = '#04040a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                if (Math.random() > 0.88) lasers.push({ x: playerShip.x + playerShip.w/2 - 2, y: playerShip.y, w: 3.5, h: 14, speed: 7.5 });
+
+                ctx.save(); ctx.shadowBlur = 10; ctx.shadowColor = '#f43f5e';
+                ctx.fillStyle = '#e11d48';
+                ctx.beginPath(); ctx.moveTo(playerShip.x + playerShip.w/2, playerShip.y);
+                ctx.lineTo(playerShip.x + playerShip.w, playerShip.y + playerShip.h);
+                ctx.lineTo(playerShip.x + playerShip.w/2, playerShip.y + playerShip.h * 0.78);
+                ctx.lineTo(playerShip.x, playerShip.y + playerShip.h); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = '#22d3ee'; ctx.fillRect(playerShip.x + playerShip.w/2 - 3, playerShip.y + playerShip.h - 2, 6, 5);
+                ctx.restore();
+
+                for (let i = lasers.length - 1; i >= 0; i--) {
+                    let l = lasers[i]; l.y -= l.speed;
+                    if (l.y < 0) { lasers.splice(i, 1); continue; }
+                    ctx.fillStyle = '#38bdf8'; ctx.shadowBlur = 8; ctx.shadowColor = '#38bdf8';
+                    ctx.fillRect(l.x, l.y, l.w, l.h); ctx.restore();
+                }
+
+                enemyTimer++;
+                if (enemyTimer > Math.max(25, 55 - killCount * 0.4)) {
+                    enemies.push({ x: Math.random() * (canvas.width - 30), y: -30, w: 28, h: 24, speed: 1.8 + Math.random() * 1.5 });
+                    enemyTimer = 0;
+                }
+
+                for (let i = enemies.length - 1; i >= 0; i--) {
+                    let e = enemies[i]; e.y += e.speed;
+                    if (e.y > canvas.height) { triggerGameOver(); return; }
+
+                    ctx.save(); ctx.shadowBlur = 8; ctx.shadowColor = '#a855f7'; ctx.fillStyle = '#a855f7';
+                    ctx.beginPath(); ctx.roundRect(e.x, e.y, e.w, e.h, 6); ctx.fill();
+                    ctx.fillStyle = '#ffffff'; ctx.fillRect(e.x + 5, e.y + 6, 4, 4); ctx.fillRect(e.x + e.w - 9, e.y + 6, 4, 4);
+                    ctx.restore();
+
+                    if (playerShip.x < e.x + e.w && playerShip.x + playerShip.w > e.x &&
+                        playerShip.y < e.y + e.h && playerShip.y + playerShip.h > e.y) {
+                        createExplosion(e.x + e.w/2, e.y + e.h/2, '#ef4444', 25);
+                        triggerGameOver(); return;
+                    }
+
+                    for (let j = lasers.length - 1; j >= 0; j--) {
+                        let l = lasers[j];
+                        if (l.x > e.x && l.x < e.x + e.w && l.y > e.y && l.y < e.y + e.h) {
+                            createExplosion(e.x + e.w/2, e.y + e.h/2, '#c084fc', 12);
+                            enemies.splice(i, 1); lasers.splice(j, 1);
+                            killCount++; updateScore(killCount * 10);
+                            break;
+                        }
+                    }
+                }
+                updateAndRenderParticles();
+                gameLoopId = requestAnimationFrame(loop);
+            }
+            loop();
+        }
+    </script>
+</body>
+</html>
