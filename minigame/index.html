@@ -880,23 +880,24 @@
         }
 
         // =====================================================================
-        // GAME 6: PHÁ HỦY BỨC TƯỜNG (BRICK BREAKER - THIẾT KẾ TRẺ EM)
+        // GAME 6: PHÁ HỦY BỨC TƯỜNG (BRICK BREAKER - THIẾT KẾ TRÈ EM TỐI ƯU)
         // =====================================================================
         let paddle, ball, bricks;
         const brickRows = 5, brickCols = 7, brickHeight = 22, brickPadding = 6, brickOffsetTop = 60, brickOffsetLeft = 12;
         const brickColors = ['#ef4444', '#f97316', '#f59e0b', '#10b981', '#3b82f6']; // Đỏ, Cam, Vàng, Xanh lá, Xanh dương
+        let breakerScore = 0;
 
         function startBreakerGame() {
             document.getElementById('game-overlay').classList.add('hidden');
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
-            isGameRunning = true; particles = [];
+            isGameRunning = true; particles = []; breakerScore = 0;
             
-            // Cấu hình thanh đỡ siêu to khổng lồ (rộng 95px) giúp trẻ em dễ chơi
-            paddle = { x: canvas.width / 2 - 47.5, y: canvas.height - 40, w: 95, h: 12 };
+            // 1. Cấu hình thanh đỡ siêu to khổng lồ (rộng 95px) giúp trẻ em dễ chơi
+            paddle = { x: canvas.width / 2 - 47.5, y: canvas.height - 50, w: 95, h: 12 };
             // Tốc độ bóng vừa phải để bé kịp phản xạ bóng
-            ball = { x: canvas.width / 2, y: canvas.height - 60, radius: 8, dx: 2.2, dy: -3.2 };
+            ball = { x: canvas.width / 2, y: canvas.height - 80, radius: 8, dx: 2.5, dy: -4 };
             
-            // Khởi tạo các viên gạch
+            // 2. Khởi tạo các viên gạch
             bricks = [];
             for (let r = 0; r < brickRows; r++) {
                 bricks[r] = [];
@@ -905,13 +906,13 @@
                 }
             }
 
-            // Xử lý kéo di chuyển thanh hứng gạch (Hỗ trợ chạm bất cứ đâu ở nửa dưới màn hình)
+            // Xử lý kéo di chuyển thanh hứng gạch (Hỗ trợ chạm vuốt mượt mà)
             function movePaddle(clientX) {
                 let rect = canvas.getBoundingClientRect();
                 let canvasX = (clientX - rect.left) * (canvas.width / rect.width);
                 paddle.x = canvasX - paddle.w / 2;
                 
-                // Giới hạn thanh đỡ không vượt biên
+                // Giới hạn thanh đỡ không vượt biên canvas
                 if (paddle.x < 0) paddle.x = 0;
                 if (paddle.x > canvas.width - paddle.w) paddle.x = canvas.width - paddle.w;
             }
@@ -922,26 +923,32 @@
 
             canvas.ontouchstart = () => paddle.isDragging = true;
             window.ontouchend = () => paddle.isDragging = false;
-            canvas.ontouchmove = (e) => { e.preventDefault(); if (isGameRunning) movePaddle(e.touches[0].clientX); };
+            canvas.ontouchmove = (e) => { if (isGameRunning) movePaddle(e.touches[0].clientX); };
 
             function loop() {
                 if (!isGameRunning) return;
                 ctx.fillStyle = '#060813'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // 1. KIỂM TRA VA CHẠM TƯỜNG (BÓNG BẬT LẠI)
-                if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) ball.dx = -ball.dx;
-                if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) ball.dx = -ball.dx;
-                if (ball.y + ball.dy < ball.radius) ball.dy = -ball.dy;
+                // 1. KIỂM TRA VA CHẠM TƯỜNG BÊN VÀ TRẦN (BÓNG BẬT LẠI)
+                if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
+                    ball.dx = -ball.dx;
+                }
+                if (ball.y + ball.dy < ball.radius) {
+                    ball.dy = -ball.dy;
+                }
                 
-                // 2. VA CHẠM ĐÁY MÀN HÌNH (THUA CUỘC HOẶC ĐỠ BÓNG)
-                if (ball.y + ball.dy > canvas.height - ball.radius - 30) {
+                // 2. KIỂM TRA VA CHẠM VỚI THANH ĐỠ HOẶC RƠI XUỐNG ĐÁY
+                if (ball.y + ball.dy > paddle.y - ball.radius) {
+                    // Nếu bóng nằm trong phạm vi chiều ngang của thanh đỡ
                     if (ball.x > paddle.x && ball.x < paddle.x + paddle.w) {
-                        // Tính toán góc bật dựa trên điểm chạm trên thanh đỡ
+                        // Tính toán góc bật thông minh dựa trên vị trí chạm trên thanh đỡ (chạm rìa bật chéo mạnh)
                         let hitPos = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
-                        ball.dx = hitPos * 3.5;
-                        ball.dy = -Math.abs(ball.dy); // Chắc chắn bóng nảy lên
+                        ball.dx = hitPos * 4;
+                        ball.dy = -Math.abs(ball.dy); // Chắc chắn hướng bóng nảy ngược lên
                         createExplosion(ball.x, ball.y, '#22d3ee', 6);
-                    } else if (ball.y + ball.dy > canvas.height - ball.radius) {
+                    } 
+                    // Nếu vượt quá đáy thanh đỡ -> Thua cuộc
+                    else if (ball.y + ball.dy > canvas.height - ball.radius) {
                         createExplosion(ball.x, ball.y, '#ef4444', 30);
                         triggerGameOver();
                         return;
@@ -964,17 +971,18 @@
                             let bY = r * (brickHeight + brickPadding) + brickOffsetTop;
                             b.x = bX; b.y = bY;
 
-                            // Phát hiện bóng chạm gạch
+                            // Phát hiện bóng va chạm hộp gạch (AABB Collision)
                             if (ball.x + ball.radius > bX && ball.x - ball.radius < bX + brickWidth &&
                                 ball.y + ball.radius > bY && ball.y - ball.radius < bY + brickHeight) {
+                                
                                 ball.dy = -ball.dy;
                                 b.status = 0;
-                                score += 10;
-                                updateScore(score);
+                                breakerScore += 10;
+                                updateScore(breakerScore);
                                 createExplosion(bX + brickWidth / 2, bY + brickHeight / 2, b.color, 12);
                             }
 
-                            // Vẽ viên gạch Candy Neon bo góc nhẹ
+                            // Vẽ viên gạch Candy Neon bo góc nhẹ rực rỡ
                             ctx.save();
                             ctx.fillStyle = b.color;
                             ctx.shadowBlur = 6; ctx.shadowColor = b.color;
@@ -984,13 +992,13 @@
                     }
                 }
 
-                // KIỂM TRA CHIẾN THẮNG (Phá hết toàn bộ gạch)
+                // KIỂM TRA ĐIỀU KIỆN CHIẾN THẮNG (Phá hết toàn bộ gạch)
                 if (activeBricks === 0) {
                     isGameRunning = false;
                     setTimeout(() => {
                         document.getElementById('overlay-title').innerText = "CHIẾN THẮNG RỰC RỠ!";
                         document.getElementById('overlay-title').className = "text-2xl font-black text-pink-400";
-                        document.getElementById('overlay-desc').innerText = `Tuyệt vời ông mặt trời! Bé đã phá hủy thành công bức tường năng lượng với điểm số: ${score}!`;
+                        document.getElementById('overlay-desc').innerText = `Tuyệt vời ông mặt trời! Bé đã phá hủy thành công bức tường năng lượng với điểm số: ${breakerScore}!`;
                         document.getElementById('game-overlay').classList.remove('hidden');
                     }, 300);
                     return;
