@@ -731,16 +731,55 @@
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
             isGameRunning = true; particles = [];
             
-            // Khởi tạo rắn ở giữa màn hình, hướng đi sang phải
+            // Khởi tạo rắn ở giữa màn hình, hướng đi ban đầu sang phải
             snake = [{x: 200, y: 300}, {x: 180, y: 300}, {x: 160, y: 300}];
             dx = 20; dy = 0; snakeScore = 0; snakeTimer = 0;
             generateSnakeFood();
         
-            // Hệ thống điều khiển: Chạm vào 4 góc màn hình để rẽ hướng trên Mobile
-            canvas.onmousedown = (e) => handleSnakeControl(e.clientX, e.clientY);
-            canvas.ontouchstart = (e) => { e.preventDefault(); handleSnakeControl(e.touches[0].clientX, e.touches[0].clientY); };
+            // variables phục vụ cơ chế vuốt (Swipe) trên Mobile
+            let touchStartX = 0;
+            let touchStartY = 0;
+        
+            // 1. BẮT ĐẦU CHẠM MÀN HÌNH
+            canvas.ontouchstart = (e) => {
+                e.preventDefault();
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            };
+        
+            // 2. VUỐT VÀ THẢ TAY (Nhận diện hướng vuốt)
+            canvas.ontouchend = (e) => {
+                e.preventDefault();
+                if (!isGameRunning) return;
+        
+                let touchEndX = e.changedTouches[0].clientX;
+                let touchEndY = e.changedTouches[0].clientY;
+        
+                let diffX = touchEndX - touchStartX;
+                let diffY = touchEndY - touchStartY;
+        
+                // Ngưỡng tối thiểu để nhận diện cú vuốt (tránh việc vô tình chạm nhẹ)
+                const threshold = 30; 
+        
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // Vuốt theo chiều NGANG (Trái / Phải)
+                    if (Math.abs(diffX) > threshold) {
+                        if (diffX > 0 && dx === 0) { dx = 20; dy = 0; }     // Vuốt sang phải -> Chạy phải
+                        else if (diffX < 0 && dx === 0) { dx = -20; dy = 0; } // Vuốt sang trái -> Chạy trái
+                    }
+                } else {
+                    // Vuốt theo chiều DỌC (Lên / Xuống)
+                    if (Math.abs(diffY) > threshold) {
+                        if (diffY > 0 && dy === 0) { dx = 0; dy = 20; }     // Vuốt xuống -> Chạy xuống
+                        else if (diffY < 0 && dy === 0) { dx = 0; dy = -20; } // Vuốt lên -> Chạy lên
+                    }
+                }
+            };
+        
+            // Vô hiệu hóa chuột trên mobile để tránh xung đột
+            canvas.onmousedown = null;
             
-            // Điều khiển bằng phím mũi tên trên Máy tính
+            // 3. ĐIỀU KHIỂN BẰNG PHÍM MŨI TÊN (Trên Máy tính)
             window.onkeydown = (e) => {
                 if (!isGameRunning) return;
                 if (e.code === 'ArrowLeft' && dx === 0) { dx = -20; dy = 0; }
@@ -749,47 +788,44 @@
                 if (e.code === 'ArrowDown' && dy === 0) { dx = 0; dy = 20; }
             };
         
+            // VÒNG LẶP GAME (GAME LOOP)
             function loop() {
                 if (!isGameRunning) return;
                 
                 snakeTimer++;
-                // Khống chế tốc độ chạy của rắn (cứ sau 7 khung hình thì nhích 1 bước)
-                if (snakeTimer >= 7) {
+                // Tốc độ chạy của rắn: Cứ sau 8 khung hình nhích 1 bước (Đã giảm tốc một chút cho các bé dễ phản xạ)
+                if (snakeTimer >= 8) {
                     snakeTimer = 0;
                     
-                    // Di chuyển đầu rắn
                     const head = {x: snake[0].x + dx, y: snake[0].y + dy};
                     snake.unshift(head);
         
-                    // Kiểm tra ăn mồi
                     if (head.x === food.x && head.y === food.y) {
                         snakeScore += 10;
                         updateScore(snakeScore);
                         createExplosion(food.x + 10, food.y + 10, '#10b981', 12);
                         generateSnakeFood();
                     } else {
-                        snake.pop(); // Không ăn mồi thì cắt đuôi để giữ nguyên độ dài
+                        snake.pop();
                     }
         
-                    // Kiểm tra đâm tường hoặc tự cắn đuôi
                     if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height || checkSnakeCollision(head)) {
                         triggerGameOver();
                         return;
                     }
                 }
         
-                // Vẽ giao diện game
                 ctx.fillStyle = '#030712'; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Vẽ thức ăn (Quả táo Neon)
+                // Vẽ thức ăn Neon
                 ctx.save(); ctx.shadowBlur = 10; ctx.shadowColor = '#10b981';
                 ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(food.x + 10, food.y + 10, 8, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         
-                // Vẽ thân rắn
+                // Vẽ thân rắn uốn lượn mượt mà
                 snake.forEach((part, index) => {
                     ctx.save();
                     if (index === 0) {
-                        ctx.fillStyle = '#34d399'; ctx.shadowBlur = 8; ctx.shadowColor = '#34d399'; // Đầu rắn sáng hơn
+                        ctx.fillStyle = '#34d399'; ctx.shadowBlur = 8; ctx.shadowColor = '#34d399';
                     } else {
                         ctx.fillStyle = '#047857';
                     }
