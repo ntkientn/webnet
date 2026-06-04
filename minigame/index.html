@@ -68,7 +68,7 @@
                     <div class="absolute right-3 bottom-0 w-3 h-12 bg-cyan-950 border-l border-t border-cyan-500/30"></div>
                     <div class="relative group-hover:translate-y-[-6px] transition-transform duration-300 flex items-center justify-center">
                         <div class="absolute -left-3 text-xs opacity-80 animate-pulse text-cyan-400">🔥</div>
-                        <span class="text-3xl drop-shadow-[0_0_10px_rgba(34,211,238,0.6)] relative z-10 inline-block transform scaleX(-1)">🐦</span>
+                        <span class="text-3xl drop-shadow-[0_0_10px_rgba(34,211,238,0.6)] relative z-10 inline-block">🐦</span>
                     </div>
                 </div>
                 <div class="w-2/3 p-4 flex flex-col justify-between h-full">
@@ -657,12 +657,57 @@
 
             canvas.onmousedown = () => playerShip.isDragging = true;
             window.onmouseup = () => playerShip.isDragging = false;
-            canvas.onmousemove = (e) => { if(playerShip.isDragging) onMove(e.clientX, e.clientY); };
+            //canvas.onmousemove = (e) => { if(playerShip.isDragging) onMove(e.clientX, e.clientY); };
+            // Điều khiển trên Máy tính: Di chuột
+            canvas.onmousemove = (e) => {
+                if (!isGameRunning) return;
+                let rect = canvas.getBoundingClientRect();
+                let mouseX = e.clientX - rect.left;
+                let mouseY = e.clientY - rect.top;
+                
+                let canvasX = mouseX * (canvas.width / rect.width);
+                let canvasY = mouseY * (canvas.height / rect.height);
+                
+                // Đẩy máy bay lên trên con trỏ chuột 45px
+                const offsetY = 45;
+                
+                player.x = canvasX;
+                player.y = canvasY - offsetY;
+                
+                if (player.x < 0) player.x = 0;
+                if (player.x > canvas.width) player.x = canvas.width;
+                if (player.y < 0) player.y = 0;
+                if (player.y > canvas.height) player.y = canvas.height;
+            };
 
             canvas.ontouchstart = () => playerShip.isDragging = true;
             window.ontouchend = () => playerShip.isDragging = false;
-            canvas.ontouchmove = (e) => { if(playerShip.isDragging) onMove(e.touches[0].clientX, e.touches[0].clientY); };
-
+            //canvas.ontouchmove = (e) => { if(playerShip.isDragging) onMove(e.touches[0].clientX, e.touches[0].clientY); };
+            // Điều khiển trên Mobile: Giữ và di chuyển ngón tay
+            canvas.ontouchmove = (e) => {
+                e.preventDefault();
+                if (!isGameRunning) return;
+                let rect = canvas.getBoundingClientRect();
+                let touchX = e.touches[0].clientX - rect.left;
+                let touchY = e.touches[0].clientY - rect.top;
+                
+                // Chuyển đổi tọa độ thực tế sang tọa độ hiển thị trên Canvas
+                let canvasX = touchX * (canvas.width / rect.width);
+                let canvasY = touchY * (canvas.height / rect.height);
+                
+                // ĐIỀU CHỈNH QUAN TRỌNG: Đẩy máy bay lên TRÊN ngón tay 45px để không bị che
+                const offsetY = 45; 
+                
+                player.x = canvasX;
+                player.y = canvasY - offsetY; // Trừ đi offsetY để máy bay bay phía trên ngón tay
+                
+                // Giới hạn không cho máy bay bay lệch ra ngoài biên màn hình game
+                if (player.x < 0) player.x = 0;
+                if (player.x > canvas.width) player.x = canvas.width;
+                if (player.y < 0) player.y = 0;
+                if (player.y > canvas.height) player.y = canvas.height;
+            };
+            
             function loop() {
                 if (!isGameRunning) return;
                 ctx.fillStyle = '#04040a'; ctx.fillRect(0, 0, canvas.width, canvas.height);
