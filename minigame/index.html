@@ -880,51 +880,62 @@
         }
 
         // =====================================================================
-        // GAME 6: PHÁ HỦY BỨC TƯỜNG (CẤU TRÚC 4 CỤM RIÊNG BIỆT - SIÊU NHỎ)
+        // GAME 6: PHÁ HỦY BỨC TƯỜNG (MOD: 4 CỤM LỚN XẾP SO LE NHAU - SIÊU NHỎ)
         // =====================================================================
         let paddle, ball, bricks;
-        // Tăng lên 15 cột để chia cụm, 3 hàng gạch mỗi cụm dẹt tinh tế (chiều cao chỉ 10px)
-        const brickRows = 3, brickCols = 15, brickHeight = 10, brickPadding = 4, brickOffsetTop = 70, brickOffsetLeft = 10;
+        // Mở rộng ma trận lên 12 hàng và 14 cột để đủ không gian xếp 4 cụm lớn so le
+        const brickRows = 12, brickCols = 14, brickHeight = 10, brickPadding = 3, brickOffsetTop = 50, brickOffsetLeft = 10;
         
         function startBreakerGame() {
             document.getElementById('game-overlay').classList.add('hidden');
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
             isGameRunning = true; score = 0; particles = [];
             
-            // Thanh đỡ tinh chỉnh nhỏ lại một chút để cân bằng với bóng siêu nhỏ
-            paddle = { x: canvas.width / 2 - 35, y: canvas.height - 40, w: 70, h: 8 };
-            // QUẢ BÓNG SIÊU NHỎ (radius giảm xuống còn 3.5px) lướt cực mượt qua khe gạch
-            ball = { x: canvas.width / 2, y: canvas.height - 60, radius: 3.5, dx: 2.5, dy: -4.5 };
+            // Thanh đỡ nhỏ gọn để tăng độ thử thách
+            paddle = { x: canvas.width / 2 - 30, y: canvas.height - 40, w: 60, h: 8 };
+            // BÓNG SIÊU NHỎ (Bán kính chỉ 3px) - Chuyên trị các khe hở so le siêu hẹp
+            ball = { x: canvas.width / 2, y: canvas.height - 60, radius: 3, dx: 2.5, dy: -4 };
             
-            // Khởi tạo gạch theo cơ chế chia 4 cụm độc lập và gài gạch bê tông
+            // Khởi tạo ma trận gạch và lập trình phân vùng 4 cụm so le
             bricks = [];
             for (let r = 0; r < brickRows; r++) {
                 bricks[r] = [];
                 for (let c = 0; c < brickCols; c++) {
+                    let isBrick = false;
+                    let isConcrete = false;
                     
-                    // THIẾT KẾ 4 CỤM: Mỗi cụm rộng 3 cột, cách nhau bởi 1 cột trống
-                    // Cụm 1: Cột 0,1,2 | Trống: 3
-                    // Cụm 2: Cột 4,5,6 | Trống: 7
-                    // Cụm 3: Cột 8,9,10 | Trống: 11
-                    // Cụm 4: Cột 12,13,14
-                    let isGap = (c === 3 || c === 7 || c === 11);
+                    // CỤM 1: Hàng 0, 1 -> Nằm bên trái (Cột 0 đến 9)
+                    if ((r === 0 || r === 1) && c >= 0 && c <= 9) {
+                        isBrick = true;
+                        if (r === 1 && c === 9) isConcrete = true; // Gài bê tông ở rìa khe
+                    }
+                    // CỤM 2: Hàng 3, 4 -> Nằm bên phải (Cột 4 đến 13)
+                    else if ((r === 3 || r === 4) && c >= 4 && c <= 13) {
+                        isBrick = true;
+                        if (r === 3 && c === 4) isConcrete = true;
+                    }
+                    // CỤM 3: Hàng 6, 7 -> Nằm bên trái (Cột 0 đến 9)
+                    else if ((r === 6 || r === 7) && c >= 0 && c <= 9) {
+                        isBrick = true;
+                        if (r === 7 && c === 9) isConcrete = true;
+                    }
+                    // CỤM 4: Hàng 9, 10 -> Nằm bên phải (Cột 4 đến 13)
+                    else if ((r === 9 || r === 10) && c >= 4 && c <= 13) {
+                        isBrick = true;
+                        if (r === 9 && c === 4) isConcrete = true;
+                    }
                     
-                    if (isGap) {
-                        // Cột trống hoàn toàn để tạo khe lọt bóng sâu lên tận trần
-                        bricks[r][c] = { status: 0, type: 'gap' };
-                    } else {
-                        // Xác định vị trí đặt gạch bê tông không thể phá hủy tại tâm của các cụm
-                        let isConcrete = false;
-                        if (r === 1 && (c === 1 || c === 5 || c === 9 || c === 13)) {
-                            isConcrete = true;
-                        }
-                        
+                    if (isBrick) {
                         bricks[r][c] = { 
                             x: 0, 
                             y: 0, 
                             status: 1, 
-                            type: isConcrete ? 'concrete' : 'normal' 
+                            type: isConcrete ? 'concrete' : 'normal',
+                            cluster: Math.floor(r / 3) // Phân màu theo cụm tầng
                         };
+                    } else {
+                        // Vùng trống làm đường đi và khe hở cho bóng chạy
+                        bricks[r][c] = { status: 0, type: 'empty' };
                     }
                 }
             }
@@ -965,14 +976,14 @@
                 ball.x += ball.dx;
                 ball.y += ball.dy;
 
-                // Xử lý logic va chạm và vẽ ma trận gạch micro
+                // Xử lý vẽ và va chạm ma trận gạch so le
                 let activeNormalBricks = 0;
                 const brickWidth = (canvas.width - (brickOffsetLeft * 2) - ((brickCols - 1) * brickPadding)) / brickCols;
 
                 for (let r = 0; r < brickRows; r++) {
                     for (let c = 0; c < brickCols; c++) {
                         let b = bricks[r][c];
-                        if (b.type === 'gap') continue; // Bỏ qua khoảng trống không xử lý
+                        if (b.type === 'empty') continue;
 
                         let bX = c * (brickWidth + brickPadding) + brickOffsetLeft;
                         let bY = r * (brickHeight + brickPadding) + brickOffsetTop;
@@ -981,7 +992,7 @@
                         if (b.status === 1 || b.type === 'concrete') {
                             if (b.type === 'normal') activeNormalBricks++;
 
-                            // Xử lý va chạm chính xác cho gạch kích thước siêu nhỏ (AABB)
+                            // Xử lý va chạm hộp gạch siêu nhỏ chính xác (AABB)
                             if (ball.x + ball.radius > bX && ball.x - ball.radius < bX + brickWidth &&
                                 ball.y + ball.radius > bY && ball.y - ball.radius < bY + brickHeight) {
                                 
@@ -991,27 +1002,26 @@
                                     b.status = 0;
                                     score += 10;
                                     updateScore(score);
-                                    createExplosion(bX + brickWidth/2, bY + brickHeight/2, '#f43f5e', 8);
+                                    createExplosion(bX + brickWidth/2, bY + brickHeight/2, '#06b6d4', 8);
                                 } else {
-                                    // Gạch bê tông lóe sáng bạc khi va đập
-                                    createExplosion(ball.x, ball.y, '#cbd5e1', 4);
+                                    // Va chạm gạch bê tông lóe tia lửa xám
+                                    createExplosion(ball.x, ball.y, '#94a3b8', 4);
                                 }
                             }
 
-                            // Tiến hành vẽ các khối gạch Micro-Neon
+                            // Vẽ gạch nghệ thuật theo cụm so le
                             ctx.save();
                             if (b.type === 'concrete') {
-                                // Gạch bê tông kiên cố màu xám sắt bóng bẩy
+                                // Gạch bê tông bảo vệ khe màu xám đậm bền bỉ
                                 ctx.fillStyle = '#475569';
-                                ctx.strokeStyle = '#94a3b8';
+                                ctx.strokeStyle = '#cbd5e1';
                                 ctx.lineWidth = 1;
                                 ctx.beginPath(); ctx.roundRect(bX, bY, brickWidth, brickHeight, 1.5); ctx.fill(); ctx.stroke();
                             } else {
-                                // Gạch thường: Phối màu Candy theo từng cụm dọc để dễ phân biệt
-                                const clusterColors = ['#ec4899', '#8b5cf6', '#06b6d4', '#10b981'];
-                                let clusterIndex = Math.floor(c / 4);
-                                ctx.fillStyle = clusterColors[clusterIndex % clusterColors.length];
-                                ctx.shadowBlur = 3; ctx.shadowColor = ctx.fillStyle;
+                                // Gạch thường: Mỗi cụm tầng một màu neon Cyber rực rỡ khác nhau
+                                const clusterColors = ['#f43f5e', '#a855f7', '#06b6d4', '#10b981'];
+                                ctx.fillStyle = clusterColors[b.cluster % clusterColors.length];
+                                ctx.shadowBlur = 4; ctx.shadowColor = ctx.fillStyle;
                                 ctx.beginPath(); ctx.roundRect(bX, bY, brickWidth, brickHeight, 1.5); ctx.fill();
                             }
                             ctx.restore();
@@ -1019,25 +1029,25 @@
                     }
                 }
 
-                // Điều kiện phá đảo thành công
+                // Điều kiện phá đảo
                 if (activeNormalBricks === 0) {
                     isGameRunning = false;
                     setTimeout(() => {
-                        document.getElementById('overlay-title').innerText = "PHÁ ĐẢO THÀNH CÔNG!";
-                        document.getElementById('overlay-desc').innerText = `Quá xuất sắc! Bé đã điều khiển bóng lọt khe thông minh và đạt: ${score} điểm!`;
+                        document.getElementById('overlay-title').innerText = "VICTORY!";
+                        document.getElementById('overlay-desc').innerText = `Tuyệt đỉnh lách khe! Bé đã dọn sạch các cụm gạch so le và đạt: ${score} điểm!`;
                         document.getElementById('game-overlay').classList.remove('hidden');
                     }, 300);
                     return;
                 }
 
-                // Vẽ thanh đỡ nhỏ gọn
+                // Vẽ thanh đỡ thanh mảnh
                 ctx.save();
                 ctx.fillStyle = '#22d3ee';
                 ctx.shadowBlur = 6; ctx.shadowColor = '#22d3ee';
                 ctx.beginPath(); ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 3); ctx.fill();
                 ctx.restore();
 
-                // Vẽ quả bóng siêu nhỏ phát sáng quyến rũ
+                // Vẽ quả bóng siêu nhỏ
                 ctx.save();
                 ctx.fillStyle = '#facc15';
                 ctx.shadowBlur = 6; ctx.shadowColor = '#facc15';
