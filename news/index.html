@@ -240,7 +240,37 @@ footer{
     </div>
   </div>
 
-  <script>
+  <div class="sidebar-section">
+    <button class="sidebar-parent" onclick="toggleGroup(this,'market-children')">📈 Tỉ Giá & Thị Trường <span class="caret">▶</span></button>
+    <div class="sidebar-children open" id="market-children">
+      <div class="sidebar-item" onclick="loadPanel('market-gold')" data-panel="market-gold"><span class="dot" style="background:var(--gold)"></span>Vàng VN & Thế Giới</div>
+      <div class="sidebar-item" onclick="loadPanel('market-forex')" data-panel="market-forex"><span class="dot" style="background:var(--green)"></span>Ngoại Tệ / VND</div>
+      <div class="sidebar-item" onclick="loadPanel('market-crypto')" data-panel="market-crypto"><span class="dot" style="background:var(--purple)"></span>Crypto & Chart</div>
+    </div>
+  </div>
+</nav>
+
+<div id="main">
+  <div class="content-area" id="contentArea">
+    <div id="welcome" class="panel active" style="text-align:center;padding:4rem 1rem">
+      <div style="font-size:3rem;margin-bottom:1rem">📰</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:.5rem">KIEN's News Hub</h2>
+      <p style="color:var(--txt3);font-size:1rem">Chọn mục tin tức từ menu bên trái để bắt đầu đọc báo.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <span class="footer-brand">© 2026 Nguyen Trung Kien. All rights reserved.</span>
+      <span>Phiên bản: v1.2.20260605</span>
+    </div>
+    <div class="footer-right">
+      <span>Powered by Claude & Gemini</span>
+    </div>
+  </footer>
+</div>
+
+<script>
 // Khai báo Proxy chuẩn mã Key của bạn
 const PROXY = 'https://api.rss2json.com/v1/api.json?api_key=pxxnsqurnfhxbaqdyrzhsx0socsjhesnrccxieau&rss_url=';
 const PAGE = 10;
