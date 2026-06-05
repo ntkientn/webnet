@@ -363,98 +363,188 @@
         }
 
         // =====================================================================
-        // GAME 1: LẬT THẺ TRÍ NHỚ
+        // GAME 1: LẬT THẺ NHỚ (MEMORY CARDS - UPDATE: TÍNH ĐIỂM CHIẾN THUẬT)
         // =====================================================================
-        let memoryCards, firstCard, secondCard, lockBoard, pairsFound, currentMoves;
-        const cardIcons = ['🦁', '🦖', '🦈', '🐼', '🚀', '🛸', '👾', '🤖']; 
+        let memoryCards = [];
+        let firstCard = null, secondCard = null;
+        let lockBoard = false;
+        let memoryTimer = null;
+        let memorySeconds = 0;
+        let memoryTurns = 0; // Đếm số lần lật bài
 
         function startMemoryGame() {
             document.getElementById('game-overlay').classList.add('hidden');
             if (gameLoopId) cancelAnimationFrame(gameLoopId);
-            isGameRunning = true;
-            pairsFound = 0; currentMoves = 0; firstCard = null; secondCard = null; lockBoard = false; particles = [];
+            if (memoryTimer) clearInterval(memoryTimer);
+            
+            isGameRunning = true; 
+            particles = [];
+            memorySeconds = 0;
+            memoryTurns = 0;
+            score = 1000; // Điểm trần ban đầu (Bắt đầu từ 1000 và giảm dần)
+            updateScore(score);
 
-            let deck = [...cardIcons, ...cardIcons].sort(() => Math.random() - 0.5);
+            // Khởi tạo bộ đếm thời gian: Cứ 1 giây trôi qua trừ 2 điểm
+            memoryTimer = setInterval(() => {
+                if (isGameRunning) {
+                    memorySeconds++;
+                    if (score > 100) { // Giới hạn không trừ điểm xuống âm, giữ tối thiểu 100 điểm khuyến khích
+                        score -= 2;
+                        updateScore(score);
+                    }
+                }
+            }, 1000);
+
+            // Khởi tạo dữ liệu 10 cặp thẻ biểu tượng Cyber/Neon
+            const icons = ['fa-bolt', 'fa-shield-halved', 'fa-wand-magic-sparkles', 'fa-bomb', 'fa-gem', 'fa-dna', 'fa-ghost', 'fa-mask', 'fa-skull', 'fa-gamepad'];
+            let deck = [...icons, ...icons];
+            
+            // Thuật toán xáo bài ngẫu nhiên Fisher-Yates
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+
+            // Thiết lập cấu trúc các thẻ bài ẩn ban đầu
             memoryCards = [];
-            const cW = 76, cH = 76, gapX = 14, gapY = 14;
-            const startX = (canvas.width - (4 * cW + 3 * gapX)) / 2;
-            const startY = (canvas.height - (4 * cH + 3 * gapY)) / 2;
-
-            for(let i=0; i<deck.length; i++) {
+            const cardW = 55, cardH = 75, gap = 12, offsetTop = 85, offsetLeft = 14;
+            
+            for (let i = 0; i < deck.length; i++) {
+                let row = Math.floor(i / 5);
+                let col = i % 5;
                 memoryCards.push({
-                    id: i, x: startX + (i % 4) * (cW + gapX), y: startY + Math.floor(i / 4) * (cH + gapY),
-                    w: cW, h: cH, icon: deck[i], isFlipped: false, isMatched: false
+                    x: col * (cardW + gap) + offsetLeft,
+                    y: row * (cardH + gap) + offsetTop,
+                    w: cardW,
+                    h: cardH,
+                    icon: deck[i],
+                    isFlipped: false,
+                    isMatched: false
                 });
             }
 
-            function handleTouch(clientX, clientY) {
+            firstCard = null; secondCard = null; lockBoard = false;
+
+            // Xử lý sự kiện click/chạm lật bài trên Canvas
+            canvas.onclick = (e) => {
                 if (!isGameRunning || lockBoard) return;
                 let rect = canvas.getBoundingClientRect();
-                let mX = (clientX - rect.left) * (canvas.width / rect.width);
-                let mY = (clientY - rect.top) * (canvas.height / rect.height);
+                let mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+                let my = (e.clientY - rect.top) * (canvas.height / rect.height);
 
                 for (let card of memoryCards) {
-                    if (mX >= card.x && mX <= card.x + card.w && mY >= card.y && mY <= card.y + card.h) {
-                        if (card.isFlipped || card.isMatched || card === firstCard) return;
+                    if (!card.isFlipped && !card.isMatched && mx > card.x && mx < card.x + card.w && my > card.y && my < card.y + card.h) {
                         card.isFlipped = true;
-                        if (!firstCard) { firstCard = card; return; }
-                        secondCard = card; currentMoves++;
-                        
-                        if (firstCard.icon === secondCard.icon) {
-                            firstCard.isMatched = secondCard.isMatched = true; pairsFound++;
-                            createExplosion(card.x + card.w/2, card.y + card.h/2, '#22d3ee', 15);
-                            firstCard = secondCard = null;
-                            updateScore(pairsFound * 25);
-                            if (pairsFound === 8) {
-                                isGameRunning = false;
-                                setTimeout(() => {
-                                    document.getElementById('overlay-title').innerText = "TRÍ NHỚ SIÊU PHÀM!";
-                                    document.getElementById('overlay-title').className = "text-2xl font-black text-purple-400";
-                                    document.getElementById('overlay-desc').innerText = `Tuyệt vời! Con tìm đủ các cặp thẻ trong ${currentMoves} lượt mở bài.`;
-                                    document.getElementById('game-overlay').classList.remove('hidden');
-                                }, 400);
-                            }
+                        createExplosion(card.x + card.w/2, card.y + card.h/2, '#a855f7', 6);
+
+                        if (!firstCard) {
+                            firstCard = card;
                         } else {
+                            secondCard = card;
                             lockBoard = true;
-                            setTimeout(() => { firstCard.isFlipped = secondCard.isFlipped = false; firstCard = secondCard = null; lockBoard = false; }, 700);
+                            memoryTurns++; // Tính là 1 lượt lật cặp bài
+                            
+                            // Mỗi lượt lật bài tiêu tốn thể lực -> Trừ 10 điểm
+                            if (score > 100) score -= 10;
+                            updateScore(score);
+
+                            // Kiểm tra xem hai thẻ có trùng biểu tượng không
+                            if (firstCard.icon === secondCard.icon) {
+                                firstCard.isMatched = true;
+                                secondCard.isMatched = true;
+                                createExplosion(firstCard.x + firstCard.w/2, firstCard.y + firstCard.h/2, '#10b981', 12);
+                                createExplosion(secondCard.x + secondCard.w/2, secondCard.y + secondCard.h/2, '#10b981', 12);
+                                firstCard = null; secondCard = null; lockBoard = false;
+                                
+                                // Kiểm tra điều kiện hoàn thành toàn bộ game
+                                if (memoryCards.every(c => c.isMatched)) {
+                                    isGameRunning = false;
+                                    clearInterval(memoryTimer);
+                                    
+                                    // Cập nhật Best Score cục bộ cho Game 1 vào hệ thống kỷ lục của anh
+                                    let currentBest = localStorage.getItem('arcade_best_1') ? parseInt(localStorage.getItem('arcade_best_1')) : 0;
+                                    if (score > currentBest) {
+                                        localStorage.setItem('arcade_best_1', score);
+                                    }
+
+                                    setTimeout(() => {
+                                        document.getElementById('overlay-title').innerText = "SIÊU TRÍ TUỆ!";
+                                        document.getElementById('overlay-desc').innerText = `Bé đã phá đảo danh mục thẻ nhớ!\n⏱ Thời gian: ${memorySeconds}s\n🔄 Số lượt lật: ${memoryTurns} lần\n🏆 Điểm số đạt được: ${score} điểm!`;
+                                        document.getElementById('game-overlay').classList.remove('hidden');
+                                    }, 300);
+                                }
+                            } else {
+                                // Nếu không trùng nhau, giữ hiển thị 0.8 giây rồi úp lại
+                                setTimeout(() => {
+                                    firstCard.isFlipped = false;
+                                    secondCard.isFlipped = false;
+                                    firstCard = null; secondCard = null; lockBoard = false;
+                                }, 800);
+                            }
                         }
-                        if (currentMoves >= 30 && pairsFound < 8) setTimeout(triggerGameOver, 600);
-                        return;
+                        break;
                     }
                 }
-            }
-            canvas.onmousedown = (e) => handleTouch(e.clientX, e.clientY);
-            canvas.ontouchstart = (e) => { handleTouch(e.touches[0].clientX, e.touches[0].clientY); };
+            };
+
+            // Hủy đăng ký kéo vuốt tránh xung đột đồ họa
+            canvas.onmousemove = null; canvas.ontouchmove = null;
 
             function loop() {
                 if (!isGameRunning) return;
-                ctx.fillStyle = '#050611'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = '#64748b'; ctx.font = "14px 'Share Tech Mono'";
-                ctx.fillText(`LƯỢT ĐÃ MỞ: ${currentMoves} / 30`, 30, 40);
+                ctx.fillStyle = '#060813'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                memoryCards.forEach(card => {
+                // Hiển thị HUD đếm thông số ngay trên trần game cho người chơi quan sát
+                ctx.fillStyle = '#64748b';
+                ctx.font = '600 13px "Plus Jakarta Sans"';
+                ctx.fillText(`LƯỢT LẬT: ${memoryTurns}`, 16, 45);
+                ctx.fillText(`THỜI GIAN: ${memorySeconds}s`, canvas.width - 115, 45);
+
+                // Vẽ ma trận các thẻ bài Candy Cyber
+                for (let card of memoryCards) {
                     ctx.save();
-                    if (card.isFlipped || card.isMatched) {
-                        ctx.fillStyle = card.isMatched ? '#091d24' : '#111827';
-                        ctx.strokeStyle = card.isMatched ? '#22d3ee' : '#6366f1'; ctx.lineWidth = 2.5;
-                        ctx.shadowBlur = card.isMatched ? 8 : 0; ctx.shadowColor = '#22d3ee';
-                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
-                        ctx.font = "36px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-                        ctx.fillText(card.icon, card.x + card.w/2, card.y + card.h/2 + 2); 
+                    if (card.isMatched || card.isFlipped) {
+                        // Trạng thái THẺ MỞ: Màu nền sáng kết hợp biểu tượng Neon rực rỡ
+                        ctx.fillStyle = '#1e1b4b';
+                        ctx.strokeStyle = '#8b5cf6';
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 6); ctx.fill(); ctx.stroke();
+
+                        ctx.fillStyle = card.isMatched ? '#10b981' : '#f43f5e';
+                        ctx.font = '900 22px "Font Awesome 5 Free"';
+                        if (card.icon.includes('fa-')) ctx.font = '900 22px "Font Awesome 6 Free"';
+                        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                        ctx.fillText(getIconUnicode(card.icon), card.x + card.w / 2, card.y + card.h / 2);
                     } else {
-                        ctx.fillStyle = '#0b0f19'; ctx.strokeStyle = '#1e293b'; ctx.lineWidth = 1.5;
-                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 12); ctx.fill(); ctx.stroke();
-                        ctx.strokeStyle = '#a855f725'; ctx.strokeRect(card.x + 8, card.y + 8, card.w - 16, card.h - 16);
-                        ctx.fillStyle = '#3b4252'; ctx.font = "bold 22px 'Share Tech Mono'"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-                        ctx.fillText("?", card.x + card.w/2, card.y + card.h/2);
+                        // Trạng thái THẺ ÚP: Thiết kế vân công nghệ Hologram huyền bí thu hút trẻ nhỏ
+                        ctx.fillStyle = '#0f172a';
+                        ctx.strokeStyle = '#3b82f6';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.roundRect(card.x, card.y, card.w, card.h, 6); ctx.fill(); ctx.stroke();
+
+                        // Vẽ logo trang trí dấu hỏi nhỏ ở tâm thẻ bài úp
+                        ctx.fillStyle = '#1e293b';
+                        ctx.font = '900 20px "Font Awesome 6 Free"';
+                        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                        ctx.fillText('\uf128', card.x + card.w / 2, card.y + card.h / 2); // Mã Unicode của dấu hỏi 'question'
                     }
                     ctx.restore();
-                });
+                }
+
                 updateAndRenderParticles();
                 gameLoopId = requestAnimationFrame(loop);
             }
             loop();
+        }
+
+        // Hàm helper chuyển đổi class tên FontAwesome thành ký tự Unicode chính xác để vẽ trực tiếp lên Canvas
+        function getIconUnicode(className) {
+            const mapping = {
+                'fa-bolt': '\uf0e7', 'fa-shield-halved': '\uf554', 'fa-wand-magic-sparkles': '\ue2ca',
+                'fa-bomb': '\uf1e2', 'fa-gem': '\uf3a5', 'fa-dna': '\uf471',
+                'fa-ghost': '\uf6e2', 'fa-mask': '\uf6fa', 'fa-skull': '\uf54c', 'fa-gamepad': '\uf11b'
+            };
+            return mapping[className] || '\uf0a3';
         }
 
         // =====================================================================
