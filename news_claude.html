@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NewsHub — Tin tức & Cảm hứng</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1814;
+    --ink-2: #3d3a34;
+    --ink-3: #6b6760;
+    --ink-4: #a09d97;
+    --paper: #faf8f3;
+    --paper-2: #f2efe8;
+    --paper-3: #e8e4da;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --blue: #1a4a8a;
+    --blue-light: #eef3fc;
+    --green: #1a6b42;
+    --green-light: #eef7f2;
+    --gold: #8b6914;
+    --gold-light: #fdf6e3;
+    --purple: #5a3a8a;
+    --purple-light: #f5f0fc;
+    --border: #ddd9d0;
+    --section-gap: 3rem;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--red); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .date-display {
+    font-size: 0.8rem;
+    color: var(--ink-4);
+    font-weight: 300;
+  }
+
+  .refresh-all-btn {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+    font-weight: 500;
+  }
+
+  .refresh-all-btn:hover { background: #a93226; }
+
+  /* Nav tabs */
+  nav {
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+  }
+
+  .nav-tab {
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink-3);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-tab:hover { color: var(--ink); border-bottom-color: var(--border); }
+  .nav-tab.active { color: var(--ink); border-bottom-color: var(--red); }
+
+  /* Main layout */
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: var(--section-gap);
+    scroll-margin-top: 70px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-accent {
+    width: 4px;
+    height: 28px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .section-source {
+    font-size: 0.75rem;
+    color: var(--ink-4);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .section-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .refresh-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--ink-3);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .refresh-btn:hover { border-color: var(--ink-3); color: var(--ink); }
+
+  .refresh-icon {
+    font-size: 0.9rem;
+    transition: transform 0.4s;
+    display: inline-block;
+  }
+
+  .refresh-btn.spinning .refresh-icon { animation: spin 0.7s linear infinite; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Article grid */
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* For featured section — first article large */
+  .articles-grid.with-featured .article-card:first-child {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 0;
+  }
+
+  .article-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .article-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    background: var(--paper-2);
+    flex-shrink: 0;
+  }
+
+  .articles-grid.with-featured .article-card:first-child .article-thumb {
+    aspect-ratio: unset;
+    height: 100%;
+    min-height: 240px;
+  }
+
+  .article-body {
+    padding: 1rem 1.1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .article-category {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  .article-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .article-title:hover { color: var(--red); }
+
+  .articles-grid.with-featured .article-card:first-child .article-title {
+    font-size: 1.4rem;
+  }
+
+  .article-desc {
+    font-size: 0.88rem;
+    color: var(--ink-3);
+    line-height: 1.55;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--paper-3);
+  }
+
+  .article-date {
+    font-size: 0.75rem;
+    color: var(--ink-4);
+  }
+
+  .read-link {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  /* Inspiration section */
+  .inspire-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .inspire-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 4px solid transparent;
+  }
+
+  .inspire-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+  }
+
+  .inspire-quote-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-family: 'Playfair Display', serif;
+    color: var(--paper-3);
+  }
+
+  .inspire-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .inspire-title:hover { opacity: 0.75; }
+
+  .inspire-desc {
+    font-size: 0.83rem;
+    color: var(--ink-3);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .inspire-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--paper-3);
+  }
+
+  .inspire-source {
+    font-size: 0.72rem;
+    color: var(--ink-4);
+    font-weight: 500;
+  }
+
+  .inspire-date {
+    font-size: 0.72rem;
+    color: var(--ink-4);
+  }
+
+  /* See more */
+  .see-more-wrap {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .see-more-btn {
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    color: var(--ink-2);
+    padding: 9px 28px;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .see-more-btn:hover { background: var(--paper-3); border-color: var(--ink-3); }
+  .see-more-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Loading */
+  .loading-bar {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    color: var(--ink-4);
+    font-size: 0.85rem;
+  }
+
+  .dot-pulse {
+    display: flex;
+    gap: 4px;
+  }
+
+  .dot-pulse span {
+    width: 6px;
+    height: 6px;
+    background: var(--ink-4);
+    border-radius: 50%;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+
+  .dot-pulse span:nth-child(2) { animation-delay: 0.2s; }
+  .dot-pulse span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  .error-msg {
+    text-align: center;
+    padding: 2rem;
+    color: var(--ink-4);
+    font-size: 0.88rem;
+  }
+
+  /* Thumb placeholder */
+  .thumb-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper-3);
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--ink);
+    color: var(--ink-4);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  footer a { color: var(--ink-4); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    main { padding: 1rem; }
+    .articles-grid.with-featured .article-card:first-child {
+      grid-template-columns: 1fr;
+    }
+    .header-inner { padding: 0 1rem; }
+    .nav-inner { padding: 0 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">News<span>Hub</span></a>
+    <div class="header-right">
+      <span class="date-display" id="dateDisplay"></span>
+      <button class="refresh-all-btn" onclick="refreshAll()">
+        <span style="display:inline-block" id="refreshAllIcon">↻</span> Làm mới tất cả
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#tin-moi" onclick="scrollTo('tin-moi')">Tin Mới Nhất</a>
+    <a class="nav-tab" href="#tin-noi-bat" onclick="scrollTo('tin-noi-bat')">Tin Nổi Bật</a>
+    <a class="nav-tab" href="#tin-xem-nhieu" onclick="scrollTo('tin-xem-nhieu')">Tin Xem Nhiều</a>
+    <a class="nav-tab" href="#the-thao" onclick="scrollTo('the-thao')">Thể Thao</a>
+    <a class="nav-tab" href="#world-news" onclick="scrollTo('world-news')">World News</a>
+    <a class="nav-tab" href="#cam-hung" onclick="scrollTo('cam-hung')">✦ Cảm Hứng</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- VnExpress: Tin mới nhất -->
+  <section class="section" id="tin-moi">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--red)"></div>
+        <div>
+          <div class="section-title">Tin Mới Nhất</div>
+          <div class="section-source">VnExpress</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('tin-moi')">
+          <span class="refresh-icon">↻</span> Làm mới
+        </button>
+      </div>
+    </div>
+    <div id="tin-moi-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="tin-moi-more" onclick="loadMore('tin-moi')">Xem thêm 10 bài...</button>
+    </div>
+  </section>
+
+  <!-- VnExpress: Tin nổi bật -->
+  <section class="section" id="tin-noi-bat">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--blue)"></div>
+        <div>
+          <div class="section-title">Tin Nổi Bật</div>
+          <div class="section-source">VnExpress</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('tin-noi-bat')">
+          <span class="refresh-icon">↻</span> Làm mới
+        </button>
+      </div>
+    </div>
+    <div id="tin-noi-bat-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="tin-noi-bat-more" onclick="loadMore('tin-noi-bat')">Xem thêm 10 bài...</button>
+    </div>
+  </section>
+
+  <!-- VnExpress: Tin xem nhiều -->
+  <section class="section" id="tin-xem-nhieu">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--green)"></div>
+        <div>
+          <div class="section-title">Tin Xem Nhiều</div>
+          <div class="section-source">VnExpress</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('tin-xem-nhieu')">
+          <span class="refresh-icon">↻</span> Làm mới
+        </button>
+      </div>
+    </div>
+    <div id="tin-xem-nhieu-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="tin-xem-nhieu-more" onclick="loadMore('tin-xem-nhieu')">Xem thêm 10 bài...</button>
+    </div>
+  </section>
+
+  <!-- VnExpress: Thể thao -->
+  <section class="section" id="the-thao">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--gold)"></div>
+        <div>
+          <div class="section-title">Thể Thao</div>
+          <div class="section-source">VnExpress</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('the-thao')">
+          <span class="refresh-icon">↻</span> Làm mới
+        </button>
+      </div>
+    </div>
+    <div id="the-thao-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="the-thao-more" onclick="loadMore('the-thao')">Xem thêm 10 bài...</button>
+    </div>
+  </section>
+
+  <!-- Reuters World News -->
+  <section class="section" id="world-news">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--purple)"></div>
+        <div>
+          <div class="section-title">World News</div>
+          <div class="section-source">Reuters</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('world-news')">
+          <span class="refresh-icon">↻</span> Refresh
+        </button>
+      </div>
+    </div>
+    <div id="world-news-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="world-news-more" onclick="loadMore('world-news')">See 10 more...</button>
+    </div>
+  </section>
+
+  <!-- Cảm hứng -->
+  <section class="section" id="cam-hung">
+    <div class="section-header">
+      <div class="section-title-wrap">
+        <div class="section-accent" style="background:var(--purple)"></div>
+        <div>
+          <div class="section-title">✦ Cảm Hứng & Bài Học Cuộc Sống</div>
+          <div class="section-source">Success.com · Addicted2Success · TinyBuddha</div>
+        </div>
+      </div>
+      <div class="section-actions">
+        <button class="refresh-btn" onclick="refreshSection('cam-hung')">
+          <span class="refresh-icon">↻</span> Làm mới
+        </button>
+      </div>
+    </div>
+    <div id="cam-hung-content"></div>
+    <div class="see-more-wrap">
+      <button class="see-more-btn" id="cam-hung-more" onclick="loadMore('cam-hung')">Xem thêm 10 bài...</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>NewsHub — Tổng hợp tin tức &amp; cảm hứng. Nguồn: <a href="https://vnexpress.net" target="_blank">VnExpress</a>, <a href="https://reuters.com" target="_blank">Reuters</a>, <a href="https://success.com" target="_blank">Success.com</a>, <a href="https://addicted2success.com" target="_blank">Addicted2Success</a>, <a href="https://tinybuddha.com" target="_blank">TinyBuddha</a></p>
+</footer>
+
+<script>
+const PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const PAGE_SIZE = 10;
+
+const SECTIONS = {
+  'tin-moi': {
+    feeds: ['https://vnexpress.net/rss/tin-moi-nhat.rss'],
+    color: 'var(--red)',
+    catColor: 'color: var(--red)',
+    catBg: 'background:var(--red-light)',
+    catLabel: 'Tin Mới',
+    isInspire: false
+  },
+  'tin-noi-bat': {
+    feeds: ['https://vnexpress.net/rss/tin-noi-bat.rss'],
+    color: 'var(--blue)',
+    catColor: 'color: var(--blue)',
+    catBg: 'background:var(--blue-light)',
+    catLabel: 'Nổi Bật',
+    isInspire: false
+  },
+  'tin-xem-nhieu': {
+    feeds: ['https://vnexpress.net/rss/tin-xem-nhieu.rss'],
+    color: 'var(--green)',
+    catColor: 'color: var(--green)',
+    catBg: 'background:var(--green-light)',
+    catLabel: 'Hot',
+    isInspire: false
+  },
+  'the-thao': {
+    feeds: ['https://vnexpress.net/rss/the-thao.rss'],
+    color: 'var(--gold)',
+    catColor: 'color: var(--gold)',
+    catBg: 'background:var(--gold-light)',
+    catLabel: 'Thể Thao',
+    isInspire: false
+  },
+  'world-news': {
+    feeds: [
+      'https://feeds.reuters.com/reuters/topNews',
+      'https://feeds.reuters.com/Reuters/worldNews'
+    ],
+    color: 'var(--purple)',
+    catColor: 'color: var(--purple)',
+    catBg: 'background:var(--purple-light)',
+    catLabel: 'World',
+    isInspire: false
+  },
+  'cam-hung': {
+    feeds: [
+      'https://success.com/feed',
+      'https://addicted2success.com/feed',
+      'https://tinybuddha.com/feed'
+    ],
+    color: 'var(--purple)',
+    catColor: 'color: var(--purple)',
+    catBg: 'background:var(--purple-light)',
+    catLabel: 'Inspire',
+    isInspire: true
+  }
+};
+
+const state = {};
+
+Object.keys(SECTIONS).forEach(id => {
+  state[id] = { items: [], shown: 0, loading: false };
+});
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  } catch(e) { return ''; }
+}
+
+function extractImg(item) {
+  // Try thumbnail field
+  if (item.thumbnail && item.thumbnail.startsWith('http')) return item.thumbnail;
+  // Try enclosure
+  if (item.enclosure && item.enclosure.link) return item.enclosure.link;
+  // Try content
+  if (item.content) {
+    const m = item.content.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+function stripHtml(html) {
+  if (!html) return '';
+  return html.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, ' ').trim();
+}
+
+function renderArticleCard(item, section, isFeatured) {
+  const img = extractImg(item);
+  const desc = stripHtml(item.description || item.content || '');
+  const s = SECTIONS[section];
+  const thumbHtml = img
+    ? `<img class="article-thumb" src="${img}" alt="" loading="lazy" onerror="this.parentElement.querySelector('.thumb-placeholder') && (this.style.display='none')">`
+    : `<div class="thumb-placeholder">📰</div>`;
+  return `
+    <div class="article-card" style="border-top: 3px solid ${s.color}">
+      ${thumbHtml}
+      <div class="article-body">
+        <div class="article-category" style="${s.catColor}; ${s.catBg}; padding: 2px 8px; border-radius: 3px; display:inline-block; width:fit-content; margin-bottom:8px">${s.catLabel}</div>
+        <a href="${item.link}" target="_blank" class="article-title">${item.title}</a>
+        <p class="article-desc">${desc}</p>
+        <div class="article-meta">
+          <span class="article-date">${formatDate(item.pubDate)}</span>
+          <a href="${item.link}" target="_blank" class="read-link" style="${s.catColor}">Đọc bài →</a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderInspireCard(item, sourceName, s) {
+  const desc = stripHtml(item.description || item.content || '');
+  return `
+    <div class="inspire-card" style="border-left-color: ${s.color}">
+      <div class="inspire-quote-icon">"</div>
+      <a href="${item.link}" target="_blank" class="inspire-title">${item.title}</a>
+      <p class="inspire-desc">${desc}</p>
+      <div class="inspire-meta">
+        <span class="inspire-source">${sourceName}</span>
+        <span class="inspire-date">${formatDate(item.pubDate)}</span>
+      </div>
+    </div>`;
+}
+
+async function fetchFeed(url) {
+  const endpoint = `${PROXY}${encodeURIComponent(url)}&count=100&api_key=`;
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    if (data.status === 'ok' && data.items) return data.items;
+    return [];
+  } catch(e) {
+    return [];
+  }
+}
+
+async function loadSection(id) {
+  const s = SECTIONS[id];
+  const st = state[id];
+  const content = document.getElementById(`${id}-content`);
+  const moreBtn = document.getElementById(`${id}-more`);
+
+  if (st.loading) return;
+  st.loading = true;
+
+  content.innerHTML = `<div class="loading-bar"><div class="dot-pulse"><span></span><span></span><span></span></div><span>Đang tải...</span></div>`;
+  if (moreBtn) moreBtn.disabled = true;
+
+  try {
+    const allItems = [];
+    // Keep source name for inspire section
+    const sourceMap = {};
+    for (const feed of s.feeds) {
+      const items = await fetchFeed(feed);
+      const sourceName = feed.includes('success.com') ? 'Success.com'
+        : feed.includes('addicted2success') ? 'Addicted2Success'
+        : feed.includes('tinybuddha') ? 'TinyBuddha'
+        : feed.includes('reuters') ? 'Reuters'
+        : 'VnExpress';
+      items.forEach(item => { sourceMap[item.link] = sourceName; });
+      allItems.push(...items);
+    }
+    // Deduplicate by link
+    const seen = new Set();
+    const unique = allItems.filter(i => {
+      if (seen.has(i.link)) return false;
+      seen.add(i.link);
+      return true;
+    });
+    st.items = unique;
+    st.shown = 0;
+    st.sourceMap = sourceMap;
+    renderMore(id, content, moreBtn);
+  } catch(e) {
+    content.innerHTML = `<div class="error-msg">Không tải được nội dung. Vui lòng thử lại.<br><small>${e.message}</small></div>`;
+  }
+
+  st.loading = false;
+}
+
+function renderMore(id, content, moreBtn) {
+  const s = SECTIONS[id];
+  const st = state[id];
+  const items = st.items;
+  const from = st.shown;
+  const to = Math.min(from + PAGE_SIZE, items.length);
+  const chunk = items.slice(from, to);
+
+  if (from === 0) {
+    // Initial render
+    const gridClass = s.isInspire ? 'inspire-grid' : 'articles-grid';
+    content.innerHTML = `<div class="${gridClass}" id="${id}-grid"></div>`;
+  }
+
+  const grid = document.getElementById(`${id}-grid`);
+  chunk.forEach((item, i) => {
+    const html = s.isInspire
+      ? renderInspireCard(item, st.sourceMap ? (st.sourceMap[item.link] || 'Inspire') : 'Inspire', s)
+      : renderArticleCard(item, id, from === 0 && i === 0);
+    grid.insertAdjacentHTML('beforeend', html);
+  });
+
+  st.shown = to;
+
+  if (moreBtn) {
+    if (to >= items.length) {
+      moreBtn.disabled = true;
+      moreBtn.textContent = 'Đã hiển thị tất cả';
+    } else {
+      moreBtn.disabled = false;
+      const remaining = items.length - to;
+      const next = Math.min(remaining, PAGE_SIZE);
+      moreBtn.textContent = `Xem thêm ${next} bài...`;
+    }
+  }
+}
+
+function loadMore(id) {
+  const content = document.getElementById(`${id}-content`);
+  const moreBtn = document.getElementById(`${id}-more`);
+  renderMore(id, content, moreBtn);
+}
+
+async function refreshSection(id) {
+  const btn = document.querySelector(`#${id} .refresh-btn`);
+  if (btn) {
+    btn.classList.add('spinning');
+    btn.disabled = true;
+  }
+  await loadSection(id);
+  if (btn) {
+    btn.classList.remove('spinning');
+    btn.disabled = false;
+  }
+}
+
+async function refreshAll() {
+  const icon = document.getElementById('refreshAllIcon');
+  icon.style.animation = 'spin 0.7s linear infinite';
+  const keys = Object.keys(SECTIONS);
+  await Promise.all(keys.map(id => loadSection(id)));
+  icon.style.animation = '';
+}
+
+// Nav active state on scroll
+function updateNavOnScroll() {
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('.section');
+  let current = '';
+  sections.forEach(s => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top < 120) current = s.id;
+  });
+  tabs.forEach(t => {
+    t.classList.toggle('active', t.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateNavOnScroll);
+
+// Set date
+function setDate() {
+  const d = new Date();
+  document.getElementById('dateDisplay').textContent = d.toLocaleDateString('vi-VN', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+  });
+}
+
+// Init
+setDate();
+Object.keys(SECTIONS).forEach(id => loadSection(id));
+</script>
+</body>
+</html>
