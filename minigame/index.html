@@ -22,41 +22,40 @@
                               linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
             background-size: 32px 32px;
         }
-        /* Thêm đoạn này vào bên trong thẻ <style> cho hình chìm background */
-        #dashboard-view {
-            position: relative;
-            z-index: 10;
-            background: transparent !important; /* Xóa nền đặc để lộ ảnh chìm nghệ thuật */
+        /* Ép ảnh chìm thẳng vào nền Body bằng CSS - Không sợ bị đè lên Game */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1; /* Nằm dưới cùng, dưới cả lưới tech-grid */
+            pointer-events: none;
+            
+            /* Nhúng đồng thời 2 ảnh: Ảnh 1 ở TOP, Ảnh 2 ở BOTTOM */
+            background-image: 
+                url('https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173232.jpg?raw=true'),
+                url('https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173246.jpg?raw=true');
+            
+            background-position: top center, bottom center;
+            background-repeat: no-repeat, no-repeat;
+            background-size: 100% auto, 100% auto;
+            
+            /* Đẩy opacity cực nhẹ (7%) để tạo độ chìm tinh tế, không làm rối mắt */
+            opacity: 0.07; 
+            
+            /* Hiệu ứng chuyển ảnh thành dạng đơn sắc sang trọng */
+            filter: grayscale(100%) brightness(0.9) contrast(1.2);
         }
-        /* Hiệu ứng chuyển lớp mềm mịn cho ảnh */
-        .mask-linear {
-            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-        }
+        
         canvas { max-width: 100%; max-height: 100%; display: block; }
     </style>
 </head>
-<body class="bg-[#0c0f24] text-slate-300 antialiased min-h-screen relative select-none overflow-x-hidden">
+<body class="bg-[#04050e] text-slate-300 antialiased min-h-screen relative select-none overflow-x-hidden">
 
-    <div class="absolute inset-0 tech-grid" style="z-index: 0; pointer-events: none;"></div>
+    <!-- LỚP LƯỚI TECH-GRID NỀN TẢNG (Trở lại nguyên bản 100% của anh) -->
+    <div class="absolute inset-0 tech-grid z-0 pointer-events-none"></div>
 
-    <div class="absolute top-0 left-0 right-0 h-[40vh] pointer-events-none overflow-hidden select-none" style="z-index: 1; pointer-events: none;">
-        <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173232.jpg?raw=true" 
-             class="w-full h-full object-cover object-center scale-105" 
-             style="opacity: 0.08; filter: brightness(0.8) contrast(1.2); mix-blend-mode: luminosity;" 
-             alt="Header Backdrop">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0c0f24]/60 to-[#0c0f24]"></div>
-    </div>
-
-    <div class="absolute bottom-0 left-0 right-0 h-[35vh] pointer-events-none overflow-hidden select-none" style="z-index: 1; pointer-events: none;">
-        <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173246.jpg?raw=true" 
-             class="w-full h-full object-cover object-bottom scale-105" 
-             style="opacity: 0.06; filter: brightness(0.8) contrast(1.1); mix-blend-mode: luminosity;" 
-             alt="Footer Backdrop">
-        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#0c0f24]/70 to-[#0c0f24]"></div>
-    </div>
-
-    <div id="dashboard-view" class="min-h-screen container mx-auto px-4 py-8 relative block" style="z-index: 10; bg-color: transparent;">
+    <!-- MAIN HUB VIEWPORT (Giữ nguyên class gốc của anh để không lệch layout) -->
+    <div id="dashboard-view" class="min-h-screen container mx-auto px-4 py-8 relative z-10 block">
         <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173246.jpg?raw=true" 
              class="w-full h-full object-cover object-bottom scale-105" 
              alt="Footer Backdrop">
