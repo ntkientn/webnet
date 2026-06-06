@@ -36,25 +36,27 @@
         canvas { max-width: 100%; max-height: 100%; display: block; }
     </style>
 </head>
-<body class="bg-[#02040a] text-slate-300 antialiased min-h-screen relative select-none overflow-x-hidden">
+<body class="bg-[#0c0f24] text-slate-300 antialiased min-h-screen relative select-none overflow-x-hidden">
 
-    <div class="absolute inset-0 tech-grid z-0 pointer-events-none"></div>
+    <div class="absolute inset-0 tech-grid" style="z-index: 0; pointer-events: none;"></div>
 
-    <div class="absolute top-0 left-0 right-0 h-[45vh] pointer-events-none overflow-hidden z-0 select-none opacity-[0.14] sm:opacity-[0.18]" style="mix-blend-mode: overlay;">
+    <div class="absolute top-0 left-0 right-0 h-[40vh] pointer-events-none overflow-hidden select-none" style="z-index: 1; pointer-events: none;">
         <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173232.jpg?raw=true" 
-             class="w-full h-full object-cover object-center scale-105 filter brightness-110 contrast-125" 
+             class="w-full h-full object-cover object-center scale-105" 
+             style="opacity: 0.08; filter: brightness(0.8) contrast(1.2); mix-blend-mode: luminosity;" 
              alt="Header Backdrop">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#02040a]/60 to-[#02040a]"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0c0f24]/60 to-[#0c0f24]"></div>
     </div>
 
-    <div class="absolute bottom-0 left-0 right-0 h-[38vh] pointer-events-none overflow-hidden z-0 select-none opacity-[0.12] sm:opacity-[0.15]" style="mix-blend-mode: overlay;">
+    <div class="absolute bottom-0 left-0 right-0 h-[35vh] pointer-events-none overflow-hidden select-none" style="z-index: 1; pointer-events: none;">
         <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173246.jpg?raw=true" 
-             class="w-full h-full object-cover object-bottom scale-105 filter brightness-110 contrast-110" 
+             class="w-full h-full object-cover object-bottom scale-105" 
+             style="opacity: 0.06; filter: brightness(0.8) contrast(1.1); mix-blend-mode: luminosity;" 
              alt="Footer Backdrop">
-        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#02040a]/70 to-[#02040a]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-[#0c0f24]/70 to-[#0c0f24]"></div>
     </div>
 
-    <div id="dashboard-view" class="min-h-screen container mx-auto px-4 py-8 relative z-10 block bg-transparent">
+    <div id="dashboard-view" class="min-h-screen container mx-auto px-4 py-8 relative block" style="z-index: 10; bg-color: transparent;">
         <img src="https://github.com/ntkientn/mypage/blob/master/assets/KTLN/IMG_20251122_173246.jpg?raw=true" 
              class="w-full h-full object-cover object-bottom scale-105" 
              alt="Footer Backdrop">
