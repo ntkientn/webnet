@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Tool - Ma trận SWOT & Risk Register Tích Hợp</title>
+    <!-- Tailwind CSS (V4) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf.js để xuất file PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .swot-card { transition: all 0.25s ease; }
+        .swot-card:focus-within { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <!-- Header & Bộ điều khiển trung tâm cố định phía trên -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-center sm:text-left">
+                <h1 class="text-xl md:text-2xl font-bold flex items-center justify-center sm:justify-start gap-2">
+                    <i class="fa-solid fa-square-poll-horizontal text-cyan-400"></i> SWOT & Risk Integration Deck
+                </h1>
+                <p class="text-xs text-indigo-200">Biến ma trận định tính thành danh mục rủi ro và chiến lược hành động thực chiến.</p>
+            </div>
+            <!-- Bộ nút hành động chung cho cả 3 bước -->
+            <div class="flex gap-3 shrink-0">
+                <button onclick="clearAllData()" class="px-4 py-2 bg-slate-800/60 border border-slate-600/50 rounded-lg text-slate-200 hover:bg-slate-800 hover:text-white text-sm font-medium transition cursor-pointer flex items-center gap-1.5">
+                    <i class="fa-solid fa-trash-can text-rose-400"></i> Xóa Toàn Bộ dữ liệu
+                </button>
+                <button onclick="exportSwotRiskPDF()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 text-sm font-medium transition shadow-md cursor-pointer flex items-center gap-1.5">
+                    <i class="fa-solid fa-file-pdf"></i> Xuất Báo Cáo PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-10">
+
+        <!-- BƯỚC 1: XÂY DỰNG MA TRẬN SWOT -->
+        <section class="space-y-4">
+            <div class="border-b border-slate-200 pb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Mục 01</span>
+                <h2 class="text-xl font-bold text-slate-900">Xây Dựng Ma Trận SWOT Dự Án / Tổ Chức</h2>
+            </div>
+
+            <div id="swot-matrix" class="grid grid-cols-1 md:grid-cols-2 gap-5 bg-slate-200/60 p-4 rounded-2xl">
+                <!-- STRENGTHS -->
+                <div class="swot-card bg-white p-5 rounded-xl border border-emerald-100 shadow-sm flex flex-col justify-between">
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-emerald-700 font-bold text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-circle-plus text-emerald-500"></i> S - ĐIỂM MẠNH (Nội tại / Tích cực)
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Năng lực lõi, chứng chỉ chuyên môn (PMP/Agile), hạ tầng công nghệ hoặc lợi thế nhân sự giúp kiểm soát tiến độ tốt.</p>
+                    </div>
+                    <textarea id="strengths" rows="4" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none transition placeholder:text-slate-400 text-sm" placeholder="Nhập các điểm mạnh nội tại..."></textarea>
+                </div>
+
+                <!-- WEAKNESSES -->
+                <div class="swot-card bg-white p-5 rounded-xl border border-amber-100 shadow-sm flex flex-col justify-between">
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-amber-700 font-bold text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-circle-minus text-amber-500"></i> W - ĐIỂM YẾU (Nội tại / Tiêu cực)
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Hạn chế kỹ thuật, rào cản quy trình, thiếu hụt ngân sách, rủi ro giao tiếp hoặc các điểm nghẽn hệ thống nội bộ.</p>
+                    </div>
+                    <textarea id="weaknesses" rows="4" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-amber-500 focus:outline-none transition placeholder:text-slate-400 text-sm" placeholder="Nhập các điểm yếu nội bộ..."></textarea>
+                </div>
+
+                <!-- OPPORTUNITIES -->
+                <div class="swot-card bg-white p-5 rounded-xl border border-blue-100 shadow-sm flex flex-col justify-between">
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-blue-700 font-bold text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-blue-500"></i> O - CƠ HỘI (Bên ngoài / Tích cực)
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Xu hướng tự động hóa bằng AI, làn sóng chuyển đổi số toàn cầu, hoặc các chính sách mở rộng thị phần mới từ khách hàng.</p>
+                    </div>
+                    <textarea id="opportunities" rows="4" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder:text-slate-400 text-sm" placeholder="Nhập các cơ hội từ thị trường/bên ngoài..."></textarea>
+                </div>
+
+                <!-- THREATS -->
+                <div class="swot-card bg-white p-5 rounded-xl border border-rose-100 shadow-sm flex flex-col justify-between">
+                    <div class="mb-3">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-rose-700 font-bold text-sm md:text-base flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> T - THÁCH THỨC (Bên ngoài / Tiêu cực)
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">Sự thay đổi nhân sự cấp cao, biến động kinh tế vĩ mô, rủi ro công nghệ bị lỗi thời nhanh chóng, sự cạnh tranh gay gắt.</p>
+                    </div>
+                    <textarea id="threats" rows="4" class="w-full p-3 border border-slate-200 rounded-lg bg-slate-50 focus:bg-white focus:ring-2 focus:ring-rose-500 focus:outline-none transition placeholder:text-slate-400 text-sm" placeholder="Nhập các thách thức rủi ro bên ngoài..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 2: CONVERT & INTEGRATE VÀO RISK REGISTER -->
+        <section class="space-y-4">
+            <div class="border-b border-slate-200 pb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Mục 02</span>
+                <h2 class="text-xl font-bold text-slate-900">Risk Register Integration & Conversion</h2>
+                <p class="text-xs text-slate-500 mt-1">
+                    Tư duy cấu trúc PM: Biên dịch <strong>Weaknesses $\rightarrow$ Risks to Mitigate</strong>, 
+                    <strong>Threats $\rightarrow$ Risks to Plan</strong>, 
+                    <strong>Strengths $\rightarrow$ Leverage</strong>, và 
+                    <strong>Opportunities $\rightarrow$ Exploit</strong>.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
+                                <th class="p-3 w-1/4">Phân Loại Định Hướng</th>
+                                <th class="p-3 w-1/2">Nội Dung Rủi Ro / Cơ Hội Được Tích Hợp</th>
+                                <th class="p-3 w-1/4">Biện Pháp Ứng Phó Cốt Lõi (Response Strategy)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-sm">
+                            <!-- Weaknesses -> Risks to Mitigate -->
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="p-3 font-semibold text-amber-800 bg-amber-50/40">
+                                    <div class="flex items-center gap-1.5 text-xs">
+                                        <i class="fa-solid fa-shield-halved"></i> Weaknesses &rarr; Risks to Mitigate
+                                    </div>
+                                </td>
+                                <td class="p-2"><textarea id="risk-mitigate" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Mô tả rủi ro xuất phát từ điểm yếu nội bộ và phương án giảm thiểu..."></textarea></td>
+                                <td class="p-2"><textarea id="resp-mitigate" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Mitigation Plan..."></textarea></td>
+                            </tr>
+                            <!-- Threats -> Risks to Plan -->
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="p-3 font-semibold text-rose-800 bg-rose-50/40">
+                                    <div class="flex items-center gap-1.5 text-xs">
+                                        <i class="fa-solid fa-calendar-check"></i> Threats &rarr; Risks to Plan
+                                    </div>
+                                </td>
+                                <td class="p-2"><textarea id="risk-plan" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Mô tả rủi ro xuất phát từ thách thức bên ngoài và kế hoạch phòng bị dự phòng (Contingency)..."></textarea></td>
+                                <td class="p-2"><textarea id="resp-plan" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Contingency Plan..."></textarea></td>
+                            </tr>
+                            <!-- Strengths -> Leverage -->
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="p-3 font-semibold text-emerald-800 bg-emerald-50/40">
+                                    <div class="flex items-center gap-1.5 text-xs">
+                                        <i class="fa-solid fa-gem"></i> Strengths &rarr; Leverage
+                                    </div>
+                                </td>
+                                <td class="p-2"><textarea id="risk-leverage" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Khai thác điểm mạnh nội tại để tối ưu hóa nguồn lực dự án..."></textarea></td>
+                                <td class="p-2"><textarea id="resp-leverage" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Leverage Execution..."></textarea></td>
+                            </tr>
+                            <!-- Opportunities -> Exploit -->
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="p-3 font-semibold text-blue-800 bg-blue-50/40">
+                                    <div class="flex items-center gap-1.5 text-xs">
+                                        <i class="fa-solid fa-rocket"></i> Opportunities &rarr; Exploit
+                                    </div>
+                                </td>
+                                <td class="p-2"><textarea id="risk-exploit" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Nắm bắt thời cơ bên ngoài, chủ động gia tăng xác thực thành công..."></textarea></td>
+                                <td class="p-2"><textarea id="resp-exploit" rows="2" class="w-full p-2 border border-slate-200 rounded focus:bg-white text-xs focus:outline-indigo-600" placeholder="Exploitation Plan..."></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- BƯỚC 3: CHIẾN LƯỢC HÀNH ĐỘNG MA TRẬN -->
+        <section class="space-y-4">
+            <div class="border-b border-slate-200 pb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Mục 03</span>
+                <h2 class="text-xl font-bold text-slate-900">Ma Trận Chiến Lược Hành Động (TOWS Matrix)</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-slate-800">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 mb-1 flex items-center gap-2 text-sm">
+                        <span class="bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded">S</span> + <span class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">O</span> Chiến lược Tấn công
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-2">Tập trung nguồn lực thế mạnh để hiện thực hóa cơ hội thị trường một cách nhanh nhất.</p>
+                    <textarea id="so-strategy" rows="3" class="w-full p-2.5 border border-slate-200 rounded bg-slate-50 text-sm focus:bg-white focus:outline-indigo-600" placeholder="Thiết lập hành động cụ thể..."></textarea>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 mb-1 flex items-center gap-2 text-sm">
+                        <span class="bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded">W</span> + <span class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded">O</span> Chiến lược Cải thiện
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-2">Khắc phục hoặc bù đắp điểm yếu nội tại bằng cách mượn lực từ thời cơ bên ngoài.</p>
+                    <textarea id="wo-strategy" rows="3" class="w-full p-2.5 border border-slate-200 rounded bg-slate-50 text-sm focus:bg-white focus:outline-indigo-600" placeholder="Thiết lập hành động cụ thể..."></textarea>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 mb-1 flex items-center gap-2 text-sm">
+                        <span class="bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded">S</span> + <span class="bg-rose-500 text-white text-xs px-1.5 py-0.5 rounded">T</span> Chiến lược Phòng thủ
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-2">Sử dụng lá chắn là năng lực mạnh mẽ của tổ chức để triệt tiêu hiểm họa bên ngoài.</p>
+                    <textarea id="st-strategy" rows="3" class="w-full p-2.5 border border-slate-200 rounded bg-slate-50 text-sm focus:bg-white focus:outline-indigo-600" placeholder="Thiết lập hành động cụ thể..."></textarea>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="font-bold text-slate-900 mb-1 flex items-center gap-2 text-sm">
+                        <span class="bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded">W</span> + <span class="bg-rose-500 text-white text-xs px-1.5 py-0.5 rounded">T</span> Chiến lược Sống sót
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-2">Phòng vệ nghiêm ngặt, giảm bớt điểm yếu để né tránh tổn thất lớn nhất từ các thách thức nguy hại.</p>
+                    <textarea id="wt-strategy" rows="3" class="w-full p-2.5 border border-slate-200 rounded bg-slate-50 text-sm focus:bg-white focus:outline-indigo-600" placeholder="Thiết lập hành động cụ thể..."></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-500 text-center py-6 text-xs border-t border-slate-800">
+        <p>&copy; 2026 PM Deck Studio. Artifact & Risk Registry Framework.</p>
+    </footer>
+
+    <!-- LOGIC JAVASCRIPT: KHẮC PHỤC HOÀN TOÀN CÁC LỖI KHÔNG HOẠT ĐỘNG -->
+    <script>
+        // Mảng định danh chứa tất cả các trường dữ liệu trên màn hình để tự động lưu / xóa
+        const fields = [
+            'strengths', 'weaknesses', 'opportunities', 'threats', 
+            'risk-mitigate', 'resp-mitigate', 'risk-plan', 'resp-plan',
+            'risk-leverage', 'resp-leverage', 'risk-exploit', 'resp-exploit',
+            'so-strategy', 'wo-strategy', 'st-strategy', 'wt-strategy'
+        ];
+        
+        // Khởi tạo cơ chế lưu trữ tự động (Auto-save) vào LocalStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            fields.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    // Phục hồi dữ liệu cũ từ bộ nhớ trình duyệt nếu có
+                    if (localStorage.getItem(id)) {
+                        element.value = localStorage.getItem(id);
+                    }
+                    // Lắng nghe liên tục sự kiện nhập liệu để tránh mất mát thông tin
+                    element.addEventListener('input', () => {
+                        localStorage.setItem(id, element.value);
+                    });
+                }
+            });
+        });
+
+        // Khắc phục lỗi nút "Xóa hết" không hoạt động
+        function clearAllData() {
+            if (confirm("Hệ thống sẽ làm sạch toàn bộ dữ liệu của cả 3 bước Phân tích & Convert. Bạn có chắc chắn không?")) {
+                fields.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.value = '';
+                    }
+                    localStorage.removeItem(id);
+                });
+            }
+        }
+
+        // Khắc phục lỗi xuất file PDF không hoạt động & thiết kế bản in chuyên nghiệp chuẩn PM
+        function exportSwotRiskPDF() {
+            const printElement = document.createElement('div');
+            printElement.className = 'p-8 font-sans bg-white text-slate-900';
+            
+            // Biên dịch cấu trúc tài liệu in PDF gọn gàng sang trang A4
+            printElement.innerHTML = `
+                <div style="border-bottom: 2px solid #1e3a8a; padding-bottom: 12px; margin-bottom: 20px;">
+                    <h1 style="font-size: 22px; font-weight: bold; color: #1e3a8a; text-transform: uppercase;">Bản Phân Tích SWOT & Danh Mục Quản Trị Rủi Ro Dự Án</h1>
+                    <p style="font-size: 11px; color: #64748b; margin-top: 4px;">PM Deck Artifact Framework &bull; Xuất ngày: ${new Date().toLocaleDateString('vi-VN')}</p>
+                </div>
+                
+                <!-- BƯỚC 1: SWOT -->
+                <h2 style="font-size: 14px; font-weight: bold; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">1. Ma Trận Định Vị Định Tính (SWOT)</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 12px;">
+                    <tr>
+                        <td style="width: 50%; border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; background: #f0fdf4;">
+                            <strong style="color: #166534;">S - ĐIỂM MẠNH (Strengths)</strong>
+                            <p style="white-space: pre-wrap; margin-top: 5px; color: #334155; line-height:1.4;">${document.getElementById('strengths').value || 'Chưa thiết lập.'}</p>
+                        </td>
+                        <td style="width: 50%; border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; background: #fffbeb;">
+                            <strong style="color: #92400e;">W - ĐIỂM YẾU (Weaknesses)</strong>
+                            <p style="white-space: pre-wrap; margin-top: 5px; color: #334155; line-height:1.4;">${document.getElementById('weaknesses').value || 'Chưa thiết lập.'}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; background: #eff6ff;">
+                            <strong style="color: #1e40af;">O - CƠ HỘI (Opportunities)</strong>
+                            <p style="white-space: pre-wrap; margin-top: 5px; color: #334155; line-height:1.4;">${document.getElementById('opportunities').value || 'Chưa thiết lập.'}</p>
+                        </td>
+                        <td style="width: 50%; border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; background: #fff1f2;">
+                            <strong style="color: #9f1239;">T - THÁCH THỨC (Threats)</strong>
+                            <p style="white-space: pre-wrap; margin-top: 5px; color: #334155; line-height:1.4;">${document.getElementById('threats').value || 'Chưa thiết lập.'}</p>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- BƯỚC 2: RISK INTEGRATION -->
+                <h2 style="font-size: 14px; font-weight: bold; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">2. Tích Hợp Danh Mục Rủi Ro (Risk Register)</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 11px;">
+                    <thead>
+                        <tr style="background: #f1f5f9; text-align: left;">
+                            <th style="border: 1px solid #cbd5e1; padding: 8px; width: 30%;">Phân Loại Cấu Trúc</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 8px; width: 45%;">Nội Dung Phân Tích</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 8px; width: 25%;">Response Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight:bold; color:#92400e;">Risks to Mitigate (W)</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('risk-mitigate').value || '-'}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('resp-mitigate').value || '-'}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight:bold; color:#b91c1c;">Risks to Plan (T)</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('risk-plan').value || '-'}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('resp-plan').value || '-'}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight:bold; color:#065f46;">Leverage Asset (S)</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('risk-leverage').value || '-'}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('resp-leverage').value || '-'}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight:bold; color:#1e40af;">Exploit Target (O)</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('risk-exploit').value || '-'}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 8px; white-space:pre-wrap;">${document.getElementById('resp-exploit').value || '-'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- BƯỚC 3: STRATEGIES -->
+                <h2 style="font-size: 14px; font-weight: bold; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">3. Ma Trận Chiến Lược Định Hướng Hành Động</h2>
+                <div style="font-size: 12px; line-height: 1.5;">
+                    <div style="margin-bottom: 8px; padding: 6px; border-left: 3px solid #10b981; background: #f8fafc;"><strong>Chiến lược SO (Tấn công):</strong> ${document.getElementById('so-strategy').value || 'N/A'}</div>
+                    <div style="margin-bottom: 8px; padding: 6px; border-left: 3px solid #f59e0b; background: #f8fafc;"><strong>Chiến lược WO (Cải thiện):</strong> ${document.getElementById('wo-strategy').value || 'N/A'}</div>
+                    <div style="margin-bottom: 8px; padding: 6px; border-left: 3px solid #3b82f6; background: #f8fafc;"><strong>Chiến lược ST (Phòng thủ):</strong> ${document.getElementById('st-strategy').value || 'N/A'}</div>
+                    <div style="margin-bottom: 8px; padding: 6px; border-left: 3px solid #ef4444; background: #f8fafc;"><strong>Chiến lược WT (Sống sót):</strong> ${document.getElementById('wt-strategy').value || 'N/A'}</div>
+                </div>
+            `;
+
+            // Định cấu hình thông số kỹ thuật tối ưu chất lượng in PDF không bị vỡ chữ
+            const configOpt = {
+                margin:       [12, 12, 12, 12],
+                filename:     'SWOT_and_Risk_Register_Report.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Thực thi tiến trình kết xuất PDF và tải xuống
+            html2pdf().set(configOpt).from(printElement).save();
+        }
+    </script>
+</body>
+</html>
