@@ -222,6 +222,28 @@
             background: #1c2242;
         }
 
+        /* TỐI ƯU UI CHO CARD BỊ KHÓA (DISABLE) */
+        .web-card.disabled-card {
+            /* Bỏ opacity cũ, giữ nền rõ nét nhưng đổi sang dạng kính mờ tối hơn */
+            background: rgba(15, 19, 42, 0.6); 
+            border: 1px dashed rgba(148, 163, 184, 0.2); /* Viền nét đứt tinh tế */
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none !important;
+            transition: border-color 0.25s ease;
+        }
+        
+        .web-card.disabled-card:hover {
+            border-color: rgba(255, 255, 255, 0.05) !important;
+            background: rgba(22, 27, 53, 0.6) !important;
+            box-shadow: none !important;
+        }
+
+        .web-card.disabled-card .btn-action-trigger,
+        .web-card.disabled-card .sublink-item {
+            pointer-events: none; /* Khóa triệt để mọi hành vi rê chuột click vào nút bên trong */
+        }
+
         .card-header-row {
             display: flex;
             align-items: center;
@@ -247,7 +269,7 @@
             font-size: 1.1rem;
         }
 
-        .web-card:hover .card-icon-box {
+        .web-card:not(.disabled-card):hover .card-icon-box {
             background: var(--accent-indigo);
             color: #fff;
             border-color: transparent;
@@ -440,7 +462,6 @@
     </div>
 
     <script>
-        // CẬP NHẬT CHÍNH XÁC CONFIG TÊN "PM DECK" VÀ TRANG CON THEO YÊU CẦU
         const webPages = [
             {
                 title: "Nguyen Trung Kien Portfolio",
@@ -452,14 +473,13 @@
                 subpages: []
             },
             {
-                title: "PM Deck", // ĐÃ ĐỔI TÊN CHÍNH XÁC SANG PM DECK
+                title: "PM Deck", 
                 description: "Hệ thống quản lý dự án thực chiến, trạm chỉ huy quy trình và công cụ điều hành.",
                 url: "https://ntkientn.github.io/mypage/pmdeck/",
                 icon: "fa-chart-gantt", 
-                status: "maintenance",
+                status: "live",
                 tags: ["Management", "Professional"],
                 subpages: [
-                    // ĐÃ ĐỔI TÊN CÁC TRANG SUBPAGES ĐÚNG CHUẨN UX CỦA BẠN
                     { title: "PM Tool Advisor", url: "https://ntkientn.github.io/mypage/pmdeck/pmtooladvisor.html" },
                     { title: "PM Tools Reference", url: "https://ntkientn.github.io/mypage/pmdeck/pmtoolsref.html" }
                 ]
@@ -517,14 +537,22 @@
                 status: "coming",
                 tags: ["Personal", "Life"],
                 subpages: []
+            },
+            {
+                title: "Knowledge Base",
+                description: "Web chúa thông tin kiến thức về tự nhiên và cuộc sóng",
+                url: "https://ntkientn.github.io/mypage/knowledge/",
+                icon: "fa-book-atlas", 
+                status: "coming",
+                tags: ["Personal", "Life"],
+                subpages: []
             }
-            
         ];
 
         const statusConfig = {
             live: { text: "Active", color: "var(--color-live)" },
             error: { text: "Disconnect", color: "var(--color-error)" },
-            maintenance: { text: "Mainternance", color: "var(--color-maintenance)" },
+            maintenance: { text: "Maintenance", color: "var(--color-maintenance)" },
             coming: { text: "Coming soon", color: "var(--color-offline)" }
         };
 
@@ -555,9 +583,15 @@
 
             webPages.forEach(page => {
                 const currentStatus = statusConfig[page.status] || statusConfig.offline;
+                const isLive = page.status === 'live';
+
+                // KIỂM TRA ĐIỀU KIỆN ĐỂ SET EVENT ONCLICK VÀ CSS
+                const cardClass = isLive ? "web-card" : "web-card disabled-card";
+                const cardClickEvent = isLive ? `onclick="navigate(event, '${page.url}', false)"` : "";
 
                 let sublinksHTML = `<div class="empty-sub-notice"></div>`;
-                if(page.subpages && page.subpages.length > 0) {
+                // Chỉ hiển thị subpages nếu card ở trạng thái active (live) để đảm bảo sạch UI
+                if(isLive && page.subpages && page.subpages.length > 0) {
                     sublinksHTML = `<div class="sublinks-grid">`;
                     page.subpages.forEach(sub => {
                         sublinksHTML += `
@@ -574,8 +608,14 @@
 
                 const tagsHTML = page.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
 
+                // NÚT ACTION PHÍA TRÊN BÊN PHẢI CHỈ XUẤT HIỆN KHI CARD LIVE
+                const actionButtonHTML = isLive ? `
+                    <div class="btn-action-trigger" onclick="navigate(event, '${page.url}', true)" title="Mở trong tab mới">
+                        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px;"></i>
+                    </div>` : `<div></div>`;
+
                 const cardHTML = `
-                    <div class="web-card" onclick="navigate(event, '${page.url}', false)">
+                    <div class="${cardClass}" ${cardClickEvent}>
                         <div class="card-header-row">
                             <div class="icon-and-status">
                                 <div class="card-icon-box">
@@ -586,9 +626,7 @@
                                     ${currentStatus.text}
                                 </div>
                             </div>
-                            <div class="btn-action-trigger" onclick="navigate(event, '${page.url}', true)" title="Mở trong tab mới">
-                                <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px;"></i>
-                            </div>
+                            ${actionButtonHTML}
                         </div>
 
                         <div class="card-info-cluster">
