@@ -473,62 +473,53 @@
         defer>
     </script>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Theo dõi sát sao sự xuất hiện và thay đổi của các phần tử Dify
-            const observer = new MutationObserver(() => {
-                const button = document.getElementById("dify-chatbot-bubble-button");
-                const windowChat = document.getElementById("dify-chatbot-bubble-window");
+    <style>
+        /* 1. ÉP NÚT BẤM CHAT LUÔN GHIM CỐ ĐỊNH */
+        html body #dify-chatbot-bubble-button {
+            background-color: #1C64F2 !important;
+            position: fixed !important;
+            bottom: 2rem !important;
+            right: 2rem !important;
+            z-index: 999999 !important;
+        }
 
-                // 1. Ép vị trí cố định cho NÚT BẤM CHAT
-                if (button) {
-                    button.style.setProperty("position", "fixed", "important");
-                    button.style.setProperty("bottom", window.innerWidth <= 640 ? "1.5rem" : "2rem", "important");
-                    button.style.setProperty("right", window.innerWidth <= 640 ? "1.5rem" : "2rem", "important");
-                    button.style.setProperty("top", "auto", "important");
-                    button.style.setProperty("left", "auto", "important");
-                    button.style.setProperty("z-index", "999999", "important");
-                }
+        /* 2. ÉP THẺ IFRAME (CHỨA CỬA SỔ CHAT) KHÔNG ĐƯỢC PHÉP CO NHỎ VÀ NHẢY VỊ TRÍ */
+        /* Trên Máy tính (Desktop) */
+        html body iframe[src*="udify.app/chatbot"] {
+            position: fixed !important;
+            
+            /* Ép kích thước lớn cố định - Chống tuyệt đối hành vi tự động bóp nhỏ sau 1-2s */
+            width: 24rem !important;   /* Chiều rộng ô chat lớn */
+            height: 40rem !important;  /* Chiều cao ô chat lớn */
+            
+            /* Ghim chặt ngay phía trên nút bấm */
+            bottom: 6.5rem !important; 
+            right: 2rem !important;
+            z-index: 999999 !important;
+            
+            /* Triệt tiêu toàn bộ lệnh dịch chuyển động từ script nội bộ Dify */
+            top: auto !important;
+            left: auto !important;
+            transform: none !important;
+            margin: 0 !important;
+        }
 
-                // 2. Ép vị trí và kích thước cố định cho CỬA SỔ CHAT (Chống nhảy xuống đáy và chống tự resize)
-                if (windowChat) {
-                    // Kiểm tra xem cửa sổ có đang ở trạng thái ẩn không (để không lỗi nút Close X)
-                    const isHidden = windowChat.style.display === 'none' || windowChat.hasAttribute('hidden');
-                    
-                    if (!isHidden) {
-                        windowChat.style.setProperty("position", "fixed", "important");
-                        windowChat.style.setProperty("top", "auto", "important");
-                        windowChat.style.setProperty("left", "auto", "important");
-                        windowChat.style.setProperty("margin", "0", "important");
-                        
-                        // Định cấu hình dựa trên thiết bị (Desktop vs Mobile)
-                        if (window.innerWidth <= 640) {
-                            // Cấu hình trên Điện thoại (Mobile) - Dùng % mượt mà
-                            windowChat.style.setProperty("width", "85%", "important");
-                            windowChat.style.setProperty("height", "65%", "important");
-                            windowChat.style.setProperty("bottom", "5.5rem", "important");
-                            windowChat.style.setProperty("right", "1.5rem", "important");
-                            windowChat.style.setProperty("border-radius", "12px", "important");
-                        } else {
-                            // Cấu hình trên Máy tính (Desktop) - Giữ kích thước lớn chuẩn chỉnh
-                            windowChat.style.setProperty("width", "24rem", "important");
-                            windowChat.style.setProperty("height", "40rem", "important");
-                            windowChat.style.setProperty("bottom", "6.5rem", "important");
-                            windowChat.style.setProperty("right", "2rem", "important");
-                        }
-                    }
-                }
-            });
-
-            // Kích hoạt chế độ quan sát toàn bộ sự thay đổi cấu trúc trang web
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['style', 'class']
-            });
-        });
-    </script>
+        /* 3. ĐỊNH VỊ THEO TỶ LỆ TRÊN ĐIỆN THOẠI (MOBILE) */
+        @media (max-width: 640px) {
+            html body #dify-chatbot-bubble-button {
+                bottom: 1.5rem !important;
+                right: 1.5rem !important;
+            }
+            
+            html body iframe[src*="udify.app/chatbot"] {
+                width: 85% !important;     /* Chiếm 85% bề ngang màn hình mobile */
+                height: 65% !important;    /* Chiếm 65% bề dọc màn hình mobile */
+                bottom: 5.5rem !important; /* Nằm ngay trên nút bấm mobile */
+                right: 1.5rem !important;
+                border-radius: 12px !important;
+            }
+        }
+    </style>
     
 </body>
 </html>
