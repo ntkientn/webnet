@@ -44,14 +44,19 @@
                     </p>
                 </div>
 
-                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <span class="text-xs font-bold tracking-wider uppercase text-emerald-700 block">Kiến thức đổi mới mỗi ngày</span>
-                        <p id="search-query-text" class="text-lg font-bold text-slate-800">" cách xử lý nhanh khi sưng đau gout cấp ngón chân cái "</p>
+                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl flex flex-col space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <span class="text-xs font-bold tracking-wider uppercase text-emerald-700">Kiến thức đổi mới mỗi ngày</span>
+                        <button onclick="loadRandomQuery()" class="text-sm font-bold text-slate-500 hover:text-emerald-600 flex items-center gap-1 cursor-pointer transition-colors">
+                            🔄 Đổi câu hỏi tra cứu khác
+                        </button>
                     </div>
-                    <button onclick="searchGoogle()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold px-5 py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
-                        🔍 Xem kết quả trên Google
-                    </button>
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p id="search-query-text" class="text-lg font-bold text-slate-800">" Đang tải câu hỏi gợi ý... "</p>
+                        <button onclick="searchGoogle()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold px-5 py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer flex-shrink-0">
+                            🔍 Xem kết quả trên Google
+                        </button>
+                    </div>
                 </div>
 
                 <div class="border border-slate-100 rounded-2xl p-6 bg-white shadow-xs">
@@ -174,6 +179,31 @@
     </div>
 
     <script>
+        // ================= ĐÃ SỬA: BỔ SUNG POOL CÂU HỎI GOOGLE TRỞ LẠI =================
+        const QUERIES_POOL = [
+            "cách xử lý nhanh khi sưng đau gout cấp ngón chân cái",
+            "thực phẩm kiềm tính hỗ trợ đào thải axit uric hiệu quả",
+            "bị thận độ 2 cần kiêng gia vị muối mặn như thế nào",
+            "chỉ số HbA1c 5.9 có nguy hiểm không và cách kiểm soát đường huyết",
+            "gan nhiễm mỡ nên ăn rau gì để thải độc và giảm mỡ gan"
+        ];
+
+        let currentQueryIndex = -1;
+        function loadRandomQuery() {
+            let newIdx;
+            do {
+                newIdx = Math.floor(Math.random() * QUERIES_POOL.length);
+            } while (newIdx === currentQueryIndex && QUERIES_POOL.length > 1);
+            
+            currentQueryIndex = newIdx;
+            document.getElementById('search-query-text').innerText = `"${QUERIES_POOL[currentQueryIndex]}"`;
+        }
+
+        function searchGoogle() {
+            const query = document.getElementById('search-query-text').innerText.replace(/"/g, '').trim();
+            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+        }
+
         // ================= POOL BÀI VIẾT RANDOM TẠI TAB 1 =================
         const ARTICLES_POOL = [
             {
@@ -227,11 +257,6 @@
                 li.innerHTML = `<span class="text-emerald-500 mt-1 flex-shrink-0">•</span><span>${text}</span>`;
                 contentUl.appendChild(li);
             });
-        }
-
-        function searchGoogle() {
-            const query = document.getElementById('search-query-text').innerText.replace(/"/g, '').trim();
-            window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
         }
 
         // ================= LOGIC CHUYỂN TAB =================
@@ -308,13 +333,12 @@
         async function initFoodDatabase() {
             const grid = document.getElementById('food-grid');
             try {
-                // Fetch tệp dữ liệu cùng cấp thư mục
-                const response = await fetch('gout.json');
+                const response = await fetch('https://ntkientn.github.io/mypage/healthcare/gout.json');
                 if (!response.ok) {
                     throw new Error(`Không thể đọc file dữ liệu (Status: ${response.status})`);
                 }
                 FOOD_DATABASE = await response.json();
-                filterByLevel(0); // Hiển thị dữ liệu ngay sau khi nạp thành công
+                filterByLevel(0);
             } catch (error) {
                 console.error("Lỗi Fetch JSON:", error);
                 grid.innerHTML = `
@@ -362,7 +386,6 @@
             if (FOOD_DATABASE.length === 0) return;
             grid.innerHTML = '';
 
-            // Lưu ý map chuẩn tên thuộc tính 'level' hoặc 'lvl' từ file JSON của anh
             const filtered = FOOD_DATABASE.filter(f => {
                 const fLevel = f.level !== undefined ? f.level : f.lvl;
                 const matchSearch = f.name.toLowerCase().includes(searchVal);
@@ -414,8 +437,9 @@
 
         // CHẠY KHI KHỞI ĐỘNG
         document.addEventListener('DOMContentLoaded', () => {
-            loadRandomArticle();
-            initFoodDatabase();
+            loadRandomQuery();   // Khởi tạo câu hỏi Google ngẫu nhiên ban đầu
+            loadRandomArticle(); // Khởi tạo bài viết ngẫu nhiên ban đầu
+            initFoodDatabase();  // Fetch dữ liệu từ JSON ngoài
         });
     </script>
 </body>
