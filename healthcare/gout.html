@@ -69,13 +69,21 @@
                             🔄 Đổi bài viết khác
                         </button>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-6 items-start">
-                        <div class="md:col-span-3 space-y-3">
-                            <h4 id="art-title" class="text-lg font-extrabold text-emerald-800 leading-snug"></h4>
-                            <img id="art-img" src="" alt="Hình minh họa" class="w-full h-full object-cover">
-                            <ul id="art-content" class="space-y-2.5 text-slate-600 text-base leading-relaxed"></ul>
+                
+                    <!-- Loại bỏ Grid để dùng cơ chế Float tự nhiên -->
+                    <div class="block clearfix">
+                        <!-- Tiêu đề bài viết luôn nằm trên cùng -->
+                        <h4 id="art-title" class="text-lg font-extrabold text-emerald-800 leading-snug mb-3"></h4>
+                        
+                        <!-- Ảnh minh họa: Đẩy sang phải trên màn hình PC, hiển thị full-width trên Mobile -->
+                        <div class="w-full sm:w-1/3 md:w-1/4 sm:float-right sm:ml-6 sm:mb-4 mb-4">
+                            <img id="art-img" src="" alt="Hình minh họa" class="w-full h-auto object-cover rounded-xl border border-slate-100 shadow-xs">
                         </div>
+                        
+                        <!-- Nội dung bài viết: Tự động ôm bao quanh ảnh -->
+                        <ul id="art-content" class="space-y-2.5 text-slate-600 text-base leading-relaxed">
+                            <!-- Data text của anh khi render ra thẻ <li> sẽ tự động tràn hàng nếu vượt quá chiều cao ảnh -->
+                        </ul>
                     </div>
                 </div>
             </div>
