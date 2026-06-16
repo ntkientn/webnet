@@ -19,15 +19,15 @@
                 <span class="text-3xl">🥦</span>
                 <h1 class="text-2xl md:text-3xl font-extrabold text-emerald-800">GoutCare Personal Assistant</h1>
             </div>
-            <p class="text-base text-slate-500 font-medium">Hệ thống hỗ trợ kiểm soát Gout, Tiền tiểu đường & Thận độ 2</p>
+            <p class="text-base text-slate-500 font-medium">Hệ thống hỗ trợ kiểm soát bệnh Gout</p>
         </div>
 
         <div class="flex border-b border-slate-100 bg-slate-50/50 p-2 gap-2">
             <button onclick="switchTab('tab1')" id="btn-tab1" class="flex-1 py-3 text-center rounded-xl text-base font-bold transition-all cursor-pointer bg-white text-emerald-700 shadow-sm border border-slate-200">
-                ℹ️ Tổng Quan & Tin Tức
+                ℹ️ Thông Tin Tổng Quan
             </button>
             <button onclick="switchTab('tab2')" id="btn-tab2" class="flex-1 py-3 text-center rounded-xl text-base font-bold transition-all cursor-pointer text-slate-600 hover:bg-white/60">
-                📝 Khảo Sát Sức Khỏe
+                📝 Khảo Sát Bệnh Gout
             </button>
             <button onclick="switchTab('tab3')" id="btn-tab3" class="flex-1 py-3 text-center rounded-xl text-base font-bold transition-all cursor-pointer text-slate-600 hover:bg-white/60">
                 📊 Sổ Tay Thực Phẩm
@@ -40,15 +40,15 @@
                 <div class="bg-emerald-50/60 border-l-4 border-emerald-600 p-5 rounded-r-xl">
                     <h2 class="text-lg font-bold text-emerald-900 mb-1">Mục tiêu sức khỏe cá nhân</h2>
                     <p class="text-base text-emerald-800 leading-relaxed">
-                        Kiểm soát chặt chẽ nồng độ Axit Uric, giữ chỉ số HbA1c ổn định dưới mức 5.9%, giảm tải áp lực lọc cho Thận độ 2 và cải thiện tình trạng Gan nhiễm mỡ.
+                        Kiểm soát chặt chẽ nồng độ Axit Uric và các cơn gout cấp. Tra cứu ăn uống giúp tránh tăng Axit Uric, giữ chỉ số HbA1c ổn định dưới mức 5.9%, giảm tải áp lực lọc cho Thận độ 2 và cải thiện tình trạng Gan nhiễm mỡ.
                     </p>
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl flex flex-col space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                        <span class="text-xs font-bold tracking-wider uppercase text-emerald-700">Kiến thức đổi mới mỗi ngày</span>
+                        <span class="text-xs font-bold tracking-wider uppercase text-emerald-700">Tìm hiểu Kiến Thức từ Google</span>
                         <button onclick="loadRandomQuery()" class="text-sm font-bold text-slate-500 hover:text-emerald-600 flex items-center gap-1 cursor-pointer transition-colors">
-                            🔄 Đổi câu hỏi tra cứu khác
+                            🔄 Đổi câu hỏi khác
                         </button>
                     </div>
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -63,7 +63,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-4">
                         <div class="flex items-center gap-2">
                             <span class="text-2xl">💡</span>
-                            <h3 class="text-xl font-bold text-slate-800">Góc Kiến Thức Y Khoa</h3>
+                            <h3 class="text-xl font-bold text-slate-800">Góc Kiến Thức về bệnh Gout</h3>
                         </div>
                         <button onclick="loadRandomArticle()" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-600 border border-slate-200 hover:border-emerald-200 px-4 py-2 rounded-xl text-base font-bold transition-all shadow-sm cursor-pointer">
                             🔄 Đổi bài viết khác
@@ -181,11 +181,19 @@
     <script>
         // ================= ĐÃ SỬA: BỔ SUNG POOL CÂU HỎI GOOGLE TRỞ LẠI =================
         const QUERIES_POOL = [
-            "cách xử lý nhanh khi sưng đau gout cấp ngón chân cái",
-            "thực phẩm kiềm tính hỗ trợ đào thải axit uric hiệu quả",
-            "bị thận độ 2 cần kiêng gia vị muối mặn như thế nào",
+            "cách xử lý khi sưng đau gout cấp ở bàn chân",
+            "thực phẩm hỗ trợ đào thải axit uric hiệu quả",
+            "bị thận độ 2 cần kiêng thực phẩm gì",
             "chỉ số HbA1c 5.9 có nguy hiểm không và cách kiểm soát đường huyết",
-            "gan nhiễm mỡ nên ăn rau gì để thải độc và giảm mỡ gan"
+            "gan nhiễm mỡ nên ăn rau gì để thải độc và giảm mỡ gan",
+            "điều trị bệnh gout như thế nào",
+            "nguyên nhân nào gây ra chỉ số acid uric cao",
+            "àm sao giảm cơn đau do gout",
+            "làm sao để phòng tránh bệnh gout",
+            "Bệnh gout nên xây dựng lối sống như thế nào",
+            "có nên tập thể thao nhiều khi bị Gout",
+            "chề độ ăn uống cho người bệnh Gout",
+            "Làm sao giảm Axit Uric đang rất cao về mức an toàn"
         ];
 
         let currentQueryIndex = -1;
