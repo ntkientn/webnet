@@ -30,7 +30,7 @@
   { "name": "Đậu bắp", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Đậu cô ve", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Đậu đũa", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cà tím", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty: false },
+  { "name": "Cà tím", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Ớt chuông", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Cần tây", "category": "RAU CỦ", "level": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Hỗ trợ giảm axit uric rất tốt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
   { "name": "Khoai lang trắng/vàng/tím", "category": "RAU CỦ", "level": 2, "limit": "150g – 200g / lần", "note": "Củ có tinh bột, giới hạn định lượng do chỉ số HbA1c 5.9%.", "isStarch": true, "isHighPurine": false, "isSalty": false },
