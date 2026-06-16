@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ Lý Sức Khỏe Gout Cá Nhân</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .level-border-1 { border-left: 6px solid #22c55e; background-color: #f0fdf4; }
+        .level-border-2 { border-left: 6px solid #eab308; background-color: #fefce8; }
+        .level-border-3 { border-left: 6px solid #f97316; background-color: #fff7ed; }
+        .level-border-4 { border-left: 6px solid #ef4444; background-color: #fef2f2; }
+        .level-border-5 { border-left: 6px solid #7f1d1d; background-color: #fef2f2; }
+        .tab-active { border-bottom-color: #047857; color: #047857; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen pb-12">
+
+    <div class="max-w-4xl mx-auto px-4 pt-6">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl font-black text-emerald-800 flex items-center justify-center gap-2">
+                🥦 GoutCare Personal Assistant
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">Hệ thống hỗ trợ kiểm soát Gout, Tiền tiểu đường & Thận độ 2</p>
+        </header>
+
+        <div class="flex border-b border-gray-200 justify-between text-center bg-white rounded-t-xl shadow-xs">
+            <button onclick="switchTab('tab1')" id="btn-tab1" class="flex-1 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-emerald-600 tab-active">
+                ℹ️ Tổng Quan & Tin Tức
+            </button>
+            <button onclick="switchTab('tab2')" id="btn-tab2" class="flex-1 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-emerald-600">
+                📝 Khảo Sát Sức Khỏe
+            </button>
+            <button onclick="switchTab('tab3')" id="btn-tab3" class="flex-1 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-emerald-600">
+                📊 Sổ Tay Thực Phẩm
+            </button>
+        </div>
+
+        <div id="tab1" class="tab-content bg-white p-6 rounded-b-xl shadow-xs space-y-6">
+            <div class="border-l-4 border-emerald-500 pl-4">
+                <h2 class="text-xl font-bold text-emerald-900">Mục tiêu sức khỏe cá nhân</h2>
+                <p class="text-sm text-gray-600 mt-1">Kiểm soát chặt chẽ nồng độ Axit Uric, giữ chỉ số HbA1c ổn định dưới mức 5.9%, giảm tải áp lực lọc cho Thận độ 2 và cải thiện tình trạng Gan nhiễm mỡ.</p>
+            </div>
+
+            <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">💡 Kiến thức đổi mới mỗi ngày</span>
+                    <button onclick="generateRandomSearch()" class="text-xs text-emerald-600 hover:underline flex items-center gap-1">🔄 Đổi câu hỏi khác</button>
+                </div>
+                <h3 id="search-question" class="text-base font-bold text-gray-900 mb-3">Đang tải câu hỏi gợi ý...</h3>
+                <a id="search-google-btn" href="#" target="_blank" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition shadow-xs">
+                    🔍 Xem kết quả cập nhật trên Google
+                </a>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content bg-white p-6 rounded-b-xl shadow-xs hidden space-y-6">
+            <h2 class="text-xl font-bold text-gray-900">Khảo Sát Tình Hình Sức Khỏe Hiện Tại</h2>
+            <form id="surveyForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">1. Tình trạng đau khớp hiện tại của bạn?</label>
+                    <select id="q-pain" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                        <option value="normal">Bình thường (Không đau, ổn định)</option>
+                        <option value="mild">Khớp hơi ê ẩm, khó chịu nhẹ</option>
+                        <option value="acute">Đang bị cơn Gout cấp hành hạ (Sưng, nóng, đau dữ dội)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">2. Chỉ số Axit Uric máu gần đây thế nào?</label>
+                    <select id="q-uric" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                        <option value="normal">Bình thường (&lt; 420 µmol/L)</option>
+                        <option value="high">Đang ở mức cao (≥ 420 µmol/L)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">3. Mục tiêu kiểm soát Đường huyết (HbA1c) hôm nay?</label>
+                    <select id="q-hba1c" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                        <option value="stable">Bình thường / Ổn định</option>
+                        <option value="warn" selected>Giữ mức hiện tại (5.9% - Tiền tiểu đường)</option>
+                        <option value="danger">Đang tăng cao (≥ 6.5% - Cần siết chặt tinh bột/đường)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">4. Chức năng lọc của Thận hiện tại?</label>
+                    <select id="q-kidney" class="w-full p-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                        <option value="normal">Bình thường (eGFR ≥ 90)</option>
+                        <option value="stage2" selected>Ngưỡng hiện tại (Thận độ 2: eGFR 60 - 89)</option>
+                        <option value="stage3">Suy giảm nặng (eGFR &lt; 60 - Cần kiêng muối tuyệt đối)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">5. Tình trạng Gan nhiễm mỡ?</label>
+                    <div class="flex gap-4 mt-1">
+                        <label class="inline-flex items-center text-sm"><input type="radio" name="q-fattyliver" value="yes" checked class="mr-2 text-emerald-600"> Có bị</label>
+                        <label class="inline-flex items-center text-sm"><input type="radio" name="q-fattyliver" value="no" class="mr-2 text-emerald-600"> Không bị</label>
+                    </div>
+                </div>
+                <button type="button" onclick="evaluateHealth()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 px-4 rounded-lg transition shadow-xs mt-2">
+                    📊 Xem Nhận Định & Cập Nhật Thực Đơn
+                </button>
+            </form>
+
+            <div id="result-box" class="hidden border border-gray-200 rounded-xl p-5 bg-gray-50 space-y-4">
+                <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2">📋 Kết quả đánh giá chi tiết:</h3>
+                <div id="result-details" class="space-y-2.5 text-sm"></div>
+                <div id="result-summary" class="p-3 bg-emerald-100 text-emerald-950 font-medium rounded-lg text-sm border border-emerald-200"></div>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content bg-white p-6 rounded-b-xl shadow-xs hidden space-y-4">
+            <div class="flex flex-col md:flex-row gap-3">
+                <input type="text" id="searchBar" oninput="filterFoods()" placeholder="🔍 Nhập tên món ăn cần kiểm tra..." class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <select id="categoryFilter" onchange="filterFoods()" class="px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-white">
+                    <option value="all">Tất cả danh mục</option>
+                    <option value="RAU CỦ">Rau củ</option>
+                    <option value="TRÁI CÂY">Trái cây</option>
+                    <option value="ĐỘNG VẬT">Động vật (Thịt, cá, hải sản)</option>
+                    <option value="ĐỒ ĂN CHẾ BIẾN SẴN">Đồ ăn chế biến sẵn</option>
+                    <option value="ĐỒ UỐNG">Đồ uống</option>
+                    <option value="GIA VỊ">Gia vị</option>
+                    <option value="NGŨ CỐC – ĐẬU – HẠT">Ngũ cốc – Đậu – Hạt</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-5 text-[10px] md:text-xs text-center font-bold gap-1 py-1">
+                <span class="bg-green-100 text-green-800 p-1 rounded border-l-4 border-green-500">M1: Thoải mái</span>
+                <span class="bg-yellow-100 text-yellow-800 p-1 rounded border-l-4 border-yellow-500">M2: Hàng ngày</span>
+                <span class="bg-orange-100 text-orange-800 p-1 rounded border-l-4 border-orange-500">M3: Hàng tuần</span>
+                <span class="bg-red-100 text-red-800 p-1 rounded border-l-4 border-red-500">M4: Hàng tháng</span>
+                <span class="bg-red-950 text-white p-1 rounded border-l-4 border-red-900">M5: Tránh xa</span>
+            </div>
+
+            <div id="foodList" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2"></div>
+        </div>
+    </div>
+
+    <script>
+        const searchKeywords = [
+            "mẹo giảm axit uric máu nhanh nhất tại nhà",
+            "thực đơn cho người bị gout kèm tiền tiểu đường",
+            "bài tập thể dục tốt cho người bị gout mãn tính",
+            "người bị gout có nên ăn đậu phụ tàu hũ không",
+            "triệu chứng suy thận độ 2 diễn tiến thế nào",
+            "cách xử lý nhanh khi sưng đau gout cấp ngón chân cái"
+        ];
+
+        let masterFoods = []; // Dữ liệu gốc tải về từ file JSON
+        let currentFoods = []; // Dữ liệu trạng thái hiện tại (sau khi survey tác động)
+
+        // HÀM CHÍNH: Gọi và load file JSON
+        async function loadFoodData() {
+            try {
+                const response = await fetch('foods.json');
+                if (!response.ok) {
+                    throw new Error('Không thể tải file dữ liệu JSON.');
+                }
+                masterFoods = await response.json();
+                currentFoods = JSON.parse(JSON.stringify(masterFoods));
+                displayFoods(currentFoods); // Hiển thị ra danh sách
+            } catch (error) {
+                console.error("Lỗi:", error);
+                document.getElementById("foodList").innerHTML = `<p class="text-red-500 text-center col-span-2 py-8 text-sm">Lỗi nạp dữ liệu! Vui lòng chạy ứng dụng qua Local Server (Live Server) hoặc hosting.</p>`;
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('nav button, div button').forEach(el => el.classList.remove('tab-active'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.add('tab-active');
+        }
+
+        function generateRandomSearch() {
+            const randomIndex = Math.floor(Math.random() * searchKeywords.length);
+            const question = searchKeywords[randomIndex];
+            document.getElementById("search-question").innerText = `“ ${question} ”`;
+            document.getElementById("search-google-btn").href = `https://www.google.com/search?q=${encodeURIComponent(question)}`;
+        }
+
+        function evaluateHealth() {
+            const pain = document.getElementById("q-pain").value;
+            const uric = document.getElementById("q-uric").value;
+            const hba1c = document.getElementById("q-hba1c").value;
+            const kidney = document.getElementById("q-kidney").value;
+            const fattyLiver = document.querySelector('input[name="q-fattyliver"]:checked').value;
+
+            let detailsHtml = "";
+            let summaryText = "";
+            currentFoods = JSON.parse(JSON.stringify(masterFoods));
+
+            if (pain === "acute") {
+                detailsHtml += `<p class="text-red-700">🔴 <strong>Bệnh Gout (Cấp tính):</strong> Đang bị cơn Gout cấp hành hạ.</p>`;
+                summaryText += "Báo động Gout cấp! Hệ thống tự động nâng tất cả thực phẩm chứa purine cao và đạm động vật lên MỨC 5. ";
+                currentFoods.forEach(f => {
+                    if (f.isHighPurine || f.category === "ĐỘNG VẬT") {
+                        f.level = 5;
+                        f.limit = "CẤM ĂN TRONG ĐỢT CẤP";
+                    }
+                });
+            } else if (uric === "high") {
+                detailsHtml += `<p class="text-orange-600">🟠 <strong>Bệnh Gout (Uric cao):</strong> Axit Uric đang ở mức cao.</p>`;
+                summaryText += "Uric máu cao: Siết chặt thịt đỏ. ";
+                currentFoods.forEach(f => {
+                    if (f.isHighPurine && f.level === 3) f.level = 4;
+                });
+            }
+
+            if (hba1c === "danger") {
+                detailsHtml += `<p class="text-red-700">🔴 <strong>Tiền tiểu đường:</strong> HbA1c tăng cao nguy hiểm.</p>`;
+                summaryText += "Đường huyết cao: Cấm nhóm củ nhiều tinh bột và đồ ngọt. ";
+                currentFoods.forEach(f => {
+                    if (f.isStarch || f.name.includes("đường") || f.name.includes("sấy")) f.level = 5;
+                });
+            }
+
+            if (kidney === "stage3") {
+                detailsHtml += `<p class="text-red-700">🔴 <strong>Chức năng Thận:</strong> Suy giảm nặng (eGFR < 60).</p>`;
+                summaryText += "Thận suy giảm: Đồ mặn nhảy thẳng lên mức cấm. ";
+                currentFoods.forEach(f => {
+                    if (f.isSalty) f.level = 5;
+                });
+            }
+
+            if (summaryText === "") {
+                summaryText = "✅ Sức khỏe đang ổn định theo phác đồ.";
+            } else {
+                summaryText = "⚠️ <strong>Lời khuyên:</strong> " + summaryText;
+            }
+
+            document.getElementById("result-details").innerHTML = detailsHtml;
+            document.getElementById("result-summary").innerHTML = summaryText;
+            document.getElementById("result-box").classList.remove("hidden");
+            filterFoods();
+        }
+
+        function displayFoods(foods) {
+            const container = document.getElementById("foodList");
+            container.innerHTML = "";
+
+            if (foods.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-center col-span-2 py-8 text-sm">Không tìm thấy món ăn nào phù hợp.</p>`;
+                return;
+            }
+
+            foods.forEach(f => {
+                const card = document.createElement("div");
+                card.className = `p-4 rounded-xl shadow-xs level-border-${f.level} flex flex-col justify-between transition-all hover:scale-[1.01]`;
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/90 text-gray-500 border border-gray-100">${f.category}</span>
+                            <span class="text-[10px] font-black px-2 py-0.5 rounded bg-gray-900 text-white">MỨC ${f.level}</span>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-base leading-tight">${f.name}</h3>
+                        <p class="text-xs text-red-700 font-bold mt-1.5 flex items-center gap-1">⏱️ Định lượng: ${f.limit}</p>
+                    </div>
+                    <p class="text-[11px] text-gray-500 italic mt-3 pt-2 border-t border-gray-100">Ghi chú: ${f.note}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterFoods() {
+            const searchTxt = document.getElementById("searchBar").value.toLowerCase().trim();
+            const selectedCategory = document.getElementById("categoryFilter").value;
+
+            const filtered = currentFoods.filter(f => {
+                const matchesSearch = f.name.toLowerCase().includes(searchTxt);
+                const matchesCategory = (selectedCategory === "all") || (f.category === selectedCategory);
+                return matchesSearch && matchesCategory;
+            });
+            displayFoods(filtered);
+        }
+
+        // KÍCH HOẠT KHI TẢI TRANG
+        generateRandomSearch();
+        loadFoodData();
+    </script>
+</body>
+</html>
