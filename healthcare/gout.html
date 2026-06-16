@@ -49,8 +49,8 @@
                         <span class="text-xs font-bold tracking-wider uppercase text-emerald-700 block">Kiến thức đổi mới mỗi ngày</span>
                         <p id="search-query-text" class="text-lg font-bold text-slate-800">" cách xử lý nhanh khi sưng đau gout cấp ngón chân cái "</p>
                     </div>
-                    <button onclick="searchGoogle()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold px-5 py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-95">
-                        🔍 Xem kết quả cập nhật trên Google
+                    <button onclick="searchGoogle()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold px-5 py-3 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                        🔍 Xem kết quả trên Google
                     </button>
                 </div>
 
@@ -60,14 +60,14 @@
                             <span class="text-2xl">💡</span>
                             <h3 class="text-xl font-bold text-slate-800">Góc Kiến Thức Y Khoa</h3>
                         </div>
-                        <button onclick="loadRandomArticle()" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-600 border border-slate-200 hover:border-emerald-200 px-4 py-2 rounded-xl text-base font-bold transition-all shadow-sm cursor-pointer active:scale-95">
+                        <button onclick="loadRandomArticle()" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-600 border border-slate-200 hover:border-emerald-200 px-4 py-2 rounded-xl text-base font-bold transition-all shadow-sm cursor-pointer">
                             🔄 Đổi bài viết khác
                         </button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-6 items-start">
                         <div class="md:col-span-2 w-full aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 shadow-inner">
-                            <img id="art-img" src="" alt="Hình minh họa bài viết" class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?w=600'">
+                            <img id="art-img" src="" alt="Hình minh họa" class="w-full h-full object-cover">
                         </div>
                         <div class="md:col-span-3 space-y-3">
                             <h4 id="art-title" class="text-lg font-extrabold text-emerald-800 leading-snug"></h4>
@@ -77,35 +77,25 @@
                 </div>
             </div>
 
-
             <div id="tab2" class="tab-content space-y-6">
                 <div class="border-b border-slate-100 pb-3">
                     <h2 class="text-xl font-bold text-slate-800">Đánh giá & Nhận định tình trạng sức khỏe lâm sàng</h2>
-                    <p class="text-base text-slate-500">Bài khảo sát theo dõi các biểu hiện của cơ thể độc lập với danh mục thực phẩm.</p>
                 </div>
 
                 <form id="survey-form" onsubmit="evaluateHealth(event)" class="space-y-5">
                     <div class="space-y-2">
                         <label class="text-base font-bold text-slate-700 block">1. Vị trí khớp đang có dấu hiệu sưng hoặc nhức đau?</label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q1" value="ngon_chan" class="w-5 h-5 accent-emerald-600"> Ngón chân cái / Khớp bàn chân
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q1" value="co_chan" class="w-5 h-5 accent-emerald-600"> Cổ chân / Đầu gối
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q1" value="tay" class="w-5 h-5 accent-emerald-600"> Khớp ngón tay / Cổ tay
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q1" value="khong_dau" class="w-5 h-5 accent-emerald-600"> Hiện tại các khớp bình thường
-                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q1" value="ngon_chan" class="w-5 h-5 accent-emerald-600"> Ngón chân cái / Khớp bàn chân</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q1" value="co_chan" class="w-5 h-5 accent-emerald-600"> Cổ chân / Đầu gối</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q1" value="tay" class="w-5 h-5 accent-emerald-600"> Khớp ngón tay / Cổ tay</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q1" value="khong_dau" class="w-5 h-5 accent-emerald-600"> Hiện tại các khớp bình thường</label>
                         </div>
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-base font-bold text-slate-700 block">2. Cường độ đau và biểu hiện ngoài da tại ổ khớp như thế nào?</label>
-                        <select name="q2" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-base focus:border-emerald-500 focus:outline-hidden">
+                        <label class="text-base font-bold text-slate-700 block">2. Cường độ đau và biểu hiện ngoài da tại ổ khớp?</label>
+                        <select name="q2" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-base">
                             <option value="binh_thuong">Bình thường, khớp cử động linh hoạt</option>
                             <option value="am_i">Đau âm ỉ nhẹ, cảm giác hơi ê mỏi</option>
                             <option value="du_doi">Đau dữ dội đột ngột, sưng nóng đỏ rát (Biểu hiện Gout cấp)</option>
@@ -114,8 +104,8 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="text-base font-bold text-slate-700 block">3. Xét nghiệm nồng độ Axit Uric trong máu gần đây nhất của anh?</label>
-                        <select name="q3" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-base focus:border-emerald-500 focus:outline-hidden">
+                        <label class="text-base font-bold text-slate-700 block">3. Xét nghiệm nồng độ Axit Uric trong máu gần đây nhất?</label>
+                        <select name="q3" class="w-full p-3 border border-slate-200 rounded-xl bg-white text-base">
                             <option value="binh_thuong">Nằm trong ngưỡng an toàn bình thường (&lt; 420 µmol/L)</option>
                             <option value="cao_nhe">Tăng nhẹ hoặc vừa (420 - 500 µmol/L)</option>
                             <option value="rat_cao">Tăng rất cao nguy hiểm (&gt; 500 µmol/L)</option>
@@ -125,18 +115,10 @@
                     <div class="space-y-2">
                         <label class="text-base font-bold text-slate-700 block">4. Thói quen ăn uống sinh hoạt trong tuần vừa qua?</label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q4" value="ruou_bia" class="w-5 h-5 accent-emerald-600"> Có uống rượu, bia, hoặc đồ ngọt
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q4" value="thit_do" class="w-5 h-5 accent-emerald-600"> Có ăn thịt đỏ, hải sản, đồ muối mặn
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q4" value="uong_nuoc" class="w-5 h-5 accent-emerald-600"> Đảm bảo uống đủ &gt; 2 lít nước lọc/ngày
-                            </label>
-                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base">
-                                <input type="checkbox" name="q4" value="rau_xanh" class="w-5 h-5 accent-emerald-600"> Ăn nhiều rau xanh kiềm tính
-                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q4" value="ruou_bia" class="w-5 h-5 accent-emerald-600"> Có uống rượu, bia, hoặc đồ ngọt</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q4" value="thit_do" class="w-5 h-5 accent-emerald-600"> Có ăn thịt đỏ, hải sản, đồ muối mặn</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q4" value="uong_nuoc" class="w-5 h-5 accent-emerald-600"> Đảm bảo uống đủ &gt; 2 lít nước lọc/ngày</label>
+                            <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer text-base"><input type="checkbox" name="q4" value="rau_xanh" class="w-5 h-5 accent-emerald-600"> Ăn nhiều rau xanh kiềm tính</label>
                         </div>
                     </div>
 
@@ -146,9 +128,7 @@
                 </form>
 
                 <div id="survey-result" class="hidden p-6 rounded-2xl border transition-all">
-                    <h3 class="text-lg font-bold mb-2 flex items-center gap-2">
-                        <span id="result-icon"></span> Nhận định tình hình cơ thể:
-                    </h3>
+                    <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><span id="result-icon"></span> Nhận định tình hình cơ thể:</h3>
                     <p id="result-text" class="text-base leading-relaxed mb-4"></p>
                     <div class="bg-white/80 p-4 rounded-xl border border-slate-100 space-y-2">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Lời khuyên hành động cấp thiết:</span>
@@ -157,14 +137,13 @@
                 </div>
             </div>
 
-
             <div id="tab3" class="tab-content space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="md:col-span-2">
-                        <input type="text" id="food-search" oninput="filterFoods()" placeholder="Nhập tên thực phẩm cần tra cứu... (Ví dụ: rau lang, cá rô, măng chua)" class="w-full p-3 border border-slate-200 rounded-xl text-base focus:border-emerald-500 focus:outline-hidden bg-slate-50/50">
+                        <input type="text" id="food-search" oninput="filterFoods()" placeholder="Nhập tên thực phẩm cần tra cứu... (Ví dụ: rau lang, cá rô, măng chua)" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-slate-50/50">
                     </div>
                     <div>
-                        <select id="category-filter" onchange="filterFoods()" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-white focus:border-emerald-500 focus:outline-hidden">
+                        <select id="category-filter" onchange="filterFoods()" class="w-full p-3 border border-slate-200 rounded-xl text-base bg-white">
                             <option value="all">Tất cả danh mục món ăn</option>
                             <option value="RAU CỦ">Rau củ / Nấm</option>
                             <option value="TRÁI CÂY">Trái cây</option>
@@ -187,7 +166,8 @@
                 </div>
 
                 <div id="food-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    </div>
+                    <div class="col-span-full text-center py-8 text-slate-400 text-base animate-pulse">Đang nạp dữ liệu thực phẩm từ file JSON...</div>
+                </div>
             </div>
 
         </div>
@@ -204,16 +184,6 @@
                     "Cơn đau thường xuất hiện đột ngột với nhiều mức độ từ âm ỉ ê nhức tới đau dữ dội, tăng mạnh về đêm.",
                     "Các vị trí sưng viêm phổ biến nhất là khớp ngón chân cái, cổ chân, đầu gối kèm biểu hiện sưng, nóng, đỏ rát rõ rệt.",
                     "Bệnh hình thành do lượng axit uric tích tụ trong máu tăng cao, kết tủa thành các tinh thể urat sắc nhọn hình kim chọc vào khớp."
-                ]
-            },
-            {
-                title: "Các nguyên nhân cốt lõi dẫn đến bệnh Gút",
-                image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=600&auto=format&fit=crop&q=60",
-                content: [
-                    "Yếu tố cơ địa di truyền: Cơ thể người bệnh tự tổng hợp purine nội sinh mạnh mẽ làm giải phóng nhiều axit uric.",
-                    "Thói quen ăn uống: Dung nạp quá nhiều thực phẩm chứa hàm lượng nhân purine cao làm dư thừa chất thải trong máu.",
-                    "Tác động từ bệnh lý nền: Người suy giảm chức năng lọc của thận, béo phì, huyết áp cao... làm giảm tốc độ đào thải tự nhiên.",
-                    "Lối sống kém điều độ: Sử dụng nhiều bia, rượu hoặc nước ngọt có ga ở nam giới trung niên đẩy nhanh tốc độ phát bệnh."
                 ]
             },
             {
@@ -264,7 +234,7 @@
             window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
         }
 
-        // ================= LOGIC ĐIỀU HƯỚNG CHUYỂN TAB =================
+        // ================= LOGIC CHUYỂN TAB =================
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
@@ -279,7 +249,7 @@
             });
         }
 
-        // ================= LOGIC XỬ LÝ KHẢO SÁT TẠI TAB 2 =================
+        // ================= LOGIC KHẢO SÁT SỨC KHỎE =================
         function evaluateHealth(e) {
             e.preventDefault();
             const form = document.getElementById('survey-form');
@@ -331,195 +301,32 @@
             resultBox.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ================= NHÚNG TRỰC TIẾP TOÀN BỘ DỮ LIỆU TỪ GOUT.JSON =================
-        const FOOD_DATABASE = [
-  { "name": "Rau lang", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Đa số rau lá an toàn. Tốt cho gan nhiễm mỡ.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau mồng tơi", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau dền", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cải xanh", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cải ngọt", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cải thìa", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cải bẹ xanh", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Xà lách", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Diếp cá", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Tần ô (cải cúc)", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau má", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau đay", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau ngót", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau khoai lang", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau càng cua", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau lá an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Húng quế", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Tía tô", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị hỗ trợ tốt cho người bị gout.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Kinh giới", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Hành lá", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Ngò rí", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thì là", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau gia vị an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Dưa leo / Dưa chuột", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Rau quả nhiều nước, hỗ trợ đào thải tốt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cà chua", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Khổ qua", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bầu", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bí xanh / Bí đao", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Mướp / Mướp hương", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Su su", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu bắp", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu cô ve", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu đũa", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cà tím", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Ớt chuông", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "An toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cần tây", "cat": "RAU CỦ", "lvl": 1, "limit": "Ăn uống thoải mái không cần lo", "note": "Hỗ trợ giảm axit uric rất tốt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Khoai lang trắng/vàng/tím", "cat": "RAU CỦ", "lvl": 2, "limit": "150g – 200g / lần", "note": "Củ có tinh bột, giới hạn định lượng do chỉ số HbA1c 5.9%.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Khoai từ", "cat": "RAU CỦ", "lvl": 2, "limit": "150g / lần", "note": "Củ có tinh bột, giới hạn định lượng.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Củ sen", "cat": "RAU CỦ", "lvl": 2, "limit": "100g – 150g / lần", "note": "Củ có tinh bột, giới hạn định lượng.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Củ cải trắng", "cat": "RAU CỦ", "lvl": 2, "limit": "1 củ vừa", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cà rốt", "cat": "RAU CỦ", "lvl": 2, "limit": "1 – 2 củ nhỏ", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bắp ngô", "cat": "RAU CỦ", "lvl": 2, "limit": "1 trái nhỏ", "note": "Có tinh bột, ăn lượng vừa phải.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu Hà Lan", "cat": "RAU CỦ", "lvl": 2, "limit": "1 chén nhỏ", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rau muống", "cat": "RAU CỦ", "lvl": 2, "limit": "1 – 2 chén", "note": "Ăn hàng ngày được trong giới hạn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Giá đỗ", "cat": "RAU CỦ", "lvl": 2, "limit": "1 chén", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nấm bào ngư", "cat": "RAU CỦ", "lvl": 2, "limit": "Giới hạn lượng nhất định", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nấm đùi gà", "cat": "RAU CỦ", "lvl": 2, "limit": "Giới hạn lượng nhất định", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nấm kim châm", "cat": "RAU CỦ", "lvl": 2, "limit": "Giới hạn lượng nhất định", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nấm mèo (mộc nhĩ)", "cat": "RAU CỦ", "lvl": 2, "limit": "Giới hạn lượng nhất định", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Khoai tây", "cat": "RAU CỦ", "lvl": 3, "limit": "1 củ nhỏ / lần", "note": "GI cao hơn khoai lang, dễ làm tăng đường huyết.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Củ dền đỏ", "cat": "RAU CỦ", "lvl": 3, "limit": "100g / lần", "note": "Ăn 1-2 lần mỗi tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bắp Mỹ ngọt", "cat": "RAU CỦ", "lvl": 3, "limit": "1 trái nhỏ", "note": "Chứa nhiều đường ngọt, ăn hạn chế.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bí đỏ", "cat": "RAU CỦ", "lvl": 3, "limit": "150g / lần", "note": "Bí đỏ rất tốt nhưng với tiền tiểu đường không nên ăn hàng ngày.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Măng tươi", "cat": "RAU CỦ", "lvl": 3, "limit": "1 bát nhỏ", "note": "Ăn 1-2 lần mỗi tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nấm rơm", "cat": "RAU CỦ", "lvl": 3, "limit": "100g – 150g / lần", "note": "Ăn hàng tuần được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Dưa cải chua", "cat": "RAU CỦ", "lvl": 4, "limit": "Vài đũa", "note": "Rất nhiều muối, tăng gánh nặng cho Thận độ 2.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Củ cải muối", "cat": "RAU CỦ", "lvl": 4, "limit": "Vài đũa", "note": "Rất nhiều muối.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Kim chi", "cat": "RAU CỦ", "lvl": 4, "limit": "Vài đũa", "note": "Rất nhiều muối.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Dưa giá", "cat": "RAU CỦ", "lvl": 4, "limit": "Vài đũa", "note": "Rất nhiều muối.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Măng chua", "cat": "RAU CỦ", "lvl": 4, "limit": "1 bát nhỏ", "note": "Giới hạn 1-2 lần/tháng.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Măng khô", "cat": "RAU CỦ", "lvl": 4, "limit": "1 bát nhỏ", "note": "Giới hạn 1-2 lần/tháng.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Bắp hộp", "cat": "RAU CỦ", "lvl": 4, "limit": "Lượng nhỏ (1-2 lần/tháng)", "note": "Đồ đóng hộp nhiều natri bảo quản.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Đậu hộp", "cat": "RAU CỦ", "lvl": 4, "limit": "Lượng nhỏ (1-2 lần/tháng)", "note": "Đồ đóng hộp nhiều natri bảo quản.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Nấm hương (đông cô)", "cat": "RAU CỦ", "lvl": 4, "limit": "Lượng nhỏ (1-2 lần/tháng)", "note": "Purine cao hơn các loại nấm khác.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Rau củ hư, mốc", "cat": "RAU CỦ", "lvl": 5, "limit": "Cấm tuyệt đối", "note": "Nguy hiểm, sinh độc tố độc hại.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Củ cải muối quá mặn (công nghiệp)", "cat": "RAU CỦ", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Quá nhiều natri, phá hủy chức năng lọc của thận.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Dưa muối đóng gói nhiều natri", "cat": "RAU CỦ", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Nhiều natri công nghiệp hại thận.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Khoai tây chiên gói (Snack)", "cat": "RAU CỦ", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Chiên công nghiệp, nhiều chất béo bão hòa và muối.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Snack rau củ chiên", "cat": "RAU CỦ", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Nhiều dầu mỡ bão hòa, hại gan nhiễm mỡ.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Táo (đỏ/xanh - Mỹ/Việt)", "cat": "TRÁI CÂY", "lvl": 1, "limit": "Ăn uống thoải mái", "note": "Một trong những loại quả tốt nhất cho người bị gout.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Dâu tây", "cat": "TRÁI CÂY", "lvl": 1, "limit": "Ăn uống thoải mái", "note": "Tốt cho sức khỏe.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bưởi", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Phần vừa phải hàng ngày", "note": "Tốt cho sức khỏe.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cam", "cat": "TRÁI CÂY", "lvl": 2, "limit": "1 trái / ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Quýt", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Phần vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thanh long trắng", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thanh long đỏ", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Lê xanh", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Lê Hàn Quốc", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Lê đường", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Ăn hàng ngày được.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Ổi (bỏ hạt)", "cat": "TRÁI CÂY", "lvl": 2, "limit": "Lượng vừa phải hàng ngày", "note": "Rất tốt cho người tiền tiểu đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Mận miền Nam (roi)", "cat": "TRÁI CÂY", "lvl": 2, "limit": "1 – 2 quả / lần", "note": "Tốt hơn xoài và dưa hấu.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Chuối", "cat": "TRÁI CÂY", "lvl": 3, "limit": "1 quả nhỏ / ngày", "note": "Ăn hạn chế 1-2 lần/tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thơm / dứa (ít chín)", "cat": "TRÁI CÂY", "lvl": 3, "limit": "≤ 2 lát / lần", "note": "Ăn giới hạn định lượng.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Dưa hấu", "cat": "TRÁI CÂY", "lvl": 3, "limit": "1 – 2 miếng vừa", "note": "Dù nhiều nước nhưng GI khá cao, dễ tăng đường huyết.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Dưa lưới", "cat": "TRÁI CÂY", "lvl": 3, "limit": "1 – 2 lát", "note": "Ăn hạn chế hàng tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Xoài chín", "cat": "TRÁI CÂY", "lvl": 3, "limit": "1/2 quả nhỏ hoặc 100g", "note": "Xoài chín chứa rất nhiều đường ngọt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Mận Hà Nội (plum)", "cat": "TRÁI CÂY", "lvl": 3, "limit": "5 – 7 quả / lần", "note": "Ăn hạn chế hàng tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Lựu", "cat": "TRÁI CÂY", "lvl": 3, "limit": "1/2 quả", "note": "Khá tốt nhưng lượng đường hơi cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trái cây sấy", "cat": "TRÁI CÂY", "lvl": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Đường cô đặc, làm tăng HbA1c.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trái cây ngâm đường", "cat": "TRÁI CÂY", "lvl": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Lượng đường ẩn cực cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Chuối chín vàng đậm", "cat": "TRÁI CÂY", "lvl": 4, "limit": "Hạn chế tối đa (1-2 lần/tháng)", "note": "Lượng đường chuyển hóa cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thơm (dứa) chín ngọt nhiều", "cat": "TRÁI CÂY", "lvl": 4, "limit": "2 – 3 lát", "note": "Đường fructôzơ cao.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Mít", "cat": "TRÁI CÂY", "lvl": 4, "limit": "3 – 5 múi", "note": "Mít chứa khá nhiều đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nước ép trái cây đóng chai", "cat": "TRÁI CÂY", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Chứa đường tinh luyện hấp thu nhanh, tăng axit uric.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Sầu riêng", "cat": "TRÁI CÂY", "lvl": 5, "limit": "1 – 2 múi nhỏ, vài tháng 1 lần", "note": "Rất nhiều năng lượng, đường, chất béo. Xấu cho HbA1c, gan nhiễm mỡ.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Phở gà (hàng quán)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Ăn cái, ít nước", "note": "Nước hầm xương nhiều purin, muối cao.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Hủ tiếu xương (ít nước)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Ăn cái, ít nước", "note": "Hạn chế húp nước béo.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Bánh mì ốp la", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Không pate, mỡ, đồ chua mặn", "note": "Lựa chọn ăn sáng tương đối an toàn.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bánh mì thịt nạc", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Không pate, mỡ, đồ chua mặn", "note": "Hàng quán chứa nhiều gia vị muối ẩn.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Cơm phần cá hấp", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Định lượng vừa đủ", "note": "Cá hấp nạc lành tính.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Cơm phần thịt nạc luộc", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Định lượng vừa đủ", "note": "Đạm luộc giảm bớt purin.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bún chay, Hủ tiếu chay, Cơm chay ít chiên", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 2, "limit": "Ăn hàng ngày được", "note": "Lành tính cho người bị gout.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Hủ tiếu không giò", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Ăn cái, bỏ bớt nước (1-2 lần/tuần)", "note": "Giảm thiểu nước hầm xương.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Phở bò tái nạc", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Không gầu, không bò viên", "note": "Thịt bò đỏ có purine, ăn tần suất thấp.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Bánh mì xíu mại", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Ít viên, ít nước xốt", "note": "Hạn chế dầu mỡ.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Bánh mì chả cá / thịt chả", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "1 ổ vừa phải (1-2 lần/tuần)", "note": "Chả cá hàng quán có mặn.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Mì hoành thánh, Mì quảng", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "1 tô nhỏ (1-2 lần/tuần)", "note": "Nước dùng béo, nhiều muối.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Cơm tấm sườn nạc", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "1 đĩa vừa phải (1-2 lần/tuần)", "note": "Hạn chế mỡ hành.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Cơm chiên hải sản, Cơm chiên gà", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Hạn chế dầu mỡ chiên", "note": "Nhiều calo, không tốt gan nhiễm mỡ.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Xôi đậu, Xôi bắp", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Ăn lượng nhỏ (1-2 lần/tuần)", "note": "Đồ nếp tăng tinh bột, tăng HbA1c.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bún bò Huế, Bún riêu, Bún mọc, Bún chả cá, Bún thịt nướng", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "1 tô (1-2 lần/tuần)", "note": "Nước dùng chứa nhiều bột ngọt, gia vị giữ nước gánh thận.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Bánh ướt thịt nạc, Bánh cuốn", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Ăn 1-2 lần mỗi tuần", "note": "Kiểm soát nước mắm đi kèm.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Lẩu cá, Lẩu gà", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 3, "limit": "Giới hạn 1 bữa / tuần", "note": "Không húp nước lẩu cuối nồi vì chứa cực nhiều purine đọng.", "isStarch": false, "isHighPurine": true, "isSalty": true },
-  { "name": "Mì ăn liền", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Không ăn hết nước (1-2 lần/tháng)", "note": "Rất nhiều muối và chất bảo quản.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Bánh mì heo quay", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Heo quay nhiều mỡ, muối mặn.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Cơm gà xối mỡ, Cơm tấm sườn bì chả", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Quá nhiều chất béo bão hòa, calo.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Bún mắm, Bún Thái, Mì vịt tiềm, Lẩu bò, Lẩu Thái, Bánh canh giò heo/cua", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Chỉ ăn 1-2 lần một tháng", "note": "Cực kỳ nhiều purine và natri mặn. Tránh khi gout cấp.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Snack công nghiệp (≤30g)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Ăn ít dưới 30g", "note": "Nhiều muối gánh thận.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Chocolate (10–20g)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "10-20g (Ưu tiên đen, tránh sữa/kem)", "note": "Ăn ít thưởng thức.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Bánh kem nhiều kem béo", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Hạn chế tối đa", "note": "Tăng mỡ gan và đường huyết.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Xôi mặn, Xôi gà, Heo quay, Vịt quay", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Đồ béo, nhiều purin từ thịt quay.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Xúc xích, Lạp xưởng công nghiệp, Thịt nguội, Thịt hộp", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Hạn chế tối đa", "note": "Tẩm ướp quá mặn, chứa phosphate/hàn the phá thận độ 2.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Chả lụa (hàng quán nhiều hàn the)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Hạn chế tối đa", "note": "Nhiều muối natri ẩn.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Đồ đông lạnh tẩm ướp sẵn quá mặn", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Hạn chế tối đa", "note": "Hại thận.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Pizza, Gà rán, Khoai tây chiên, Hamburger (tránh sốt mayo)", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 4, "limit": "Chỉ ăn 1-2 lần một tháng", "note": "Tránh combo Gà rán + Khoai tây + Nước ngọt làm tăng vọt axit uric và đường.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Bún đậu mắm tôm, Cá pháo mắm tôm", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Mắm tôm cực mặn và purin men tàn phá khớp và thận.", "isStarch": true, "isHighPurine": true, "isSalty": true },
-  { "name": "Mắm sống, Mắm nêm đậm, Mắm cá, Mắm ruốc đậm mặn", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Lượng muối quá khủng khiếp, phá thận.", "isStarch": false, "isHighPurine": true, "isSalty": true },
-  { "name": "Lẩu mắm", "cat": "ĐỒ ĂN CHẾ BIẾN SẴN", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Nguy hiểm cho người bệnh gout.", "isStarch": false, "isHighPurine": true, "isSalty": true },
-  { "name": "Nước lọc", "cat": "ĐỒ UỐNG", "lvl": 1, "limit": "Uống thoải mái không cần lo", "note": "Rất tốt, giúp đào thải axit uric.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nước ấm + hạt é", "cat": "ĐỒ UỐNG", "lvl": 1, "limit": "Uống thoải mái không cần lo", "note": "Thanh lọc cơ thể lành tính.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trà lá khô nhạt", "cat": "ĐỒ UỐNG", "lvl": 1, "limit": "Uống thoải mái", "note": "Nên uống nhạt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Lá vối, chè tươi", "category": "ĐỒ UỐNG", "lvl": 1, "limit": "Uống thoải mái", "note": "Rất tốt cho người đào thải axit uric.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cà phê đen", "cat": "ĐỒ UỐNG", "lvl": 2, "limit": "1 – 2 ly / ngày", "note": "Hỗ trợ giảm nguy cơ gout nếu uống không đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Sữa tươi không đường", "cat": "ĐỒ UỐNG", "lvl": 2, "limit": "1 ly / ngày", "note": "Đạm sữa giảm axit uric máu.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Sữa chua không đường", "cat": "ĐỒ UỐNG", "lvl": 2, "limit": "1 hũ / ngày", "note": "Tốt cho hệ tiêu hóa.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Sữa hạt", "cat": "ĐỒ UỐNG", "lvl": 3, "limit": "1 ly / ngày (1-2 lần/tuần)", "note": "Theo dõi lượng đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nước sâm rất ít ngọt", "cat": "ĐỒ UỐNG", "lvl": 3, "limit": "Hạn chế ngọt", "note": "Uống ít.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trà sữa, Kem ly/hộp", "cat": "ĐỒ UỐNG", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Nhiều đường ẩn tăng chất béo.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nước bù khoáng Revive", "cat": "ĐỒ UỐNG", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Có ga và đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Rượu, Bia", "cat": "ĐỒ UỐNG", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Bia rượu chặn đứng khả năng đào thải axit uric của thận.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Nước ngọt có đường", "cat": "ĐỒ UỐNG", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Đường fructose thúc đẩy gan sản sinh axit uric.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Hành, tỏi, tiêu, ớt", "cat": "GIA VỊ", "lvl": 1, "limit": "Ăn thoải mái không cần lo", "note": "Gia vị tự nhiên lành tính.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đường vàng", "cat": "GIA VỊ", "lvl": 2, "limit": "≤ 1 muỗng / ngày", "note": "Giới hạn tối đa để kiểm soát tiểu đường.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Muối (ít)", "cat": "GIA VỊ", "lvl": 2, "limit": "Nêm cực nhạt", "note": "Bảo vệ chức năng lọc của Thận độ 2.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Bơ, phô mai", "cat": "GIA VỊ", "lvl": 2, "limit": "Rất ít", "note": "Tránh béo cho gan nhiễm mỡ.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Hạt nêm, Bột ngọt", "cat": "GIA VỊ", "lvl": 3, "limit": "1-2 lần/tuần (Hạn chế)", "note": "Gia vị công nghiệp gây giữ nước.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Nước mắm thường, Dưa muối mặn", "cat": "GIA VỊ", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Chứa lượng muối cao hại thận.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Mắm tôm, mắm tép, mắm ruốc, mắm sống", "cat": "GIA VỊ", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Purine và muối quá cao.", "isStarch": false, "isHighPurine": true, "isSalty": true },
-  { "name": "Cháo loãng", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 1, "limit": "Ăn thoải mái", "note": "Dễ tiêu hóa.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Khoai lang luộc", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 1, "limit": "Ăn thoải mái", "note": "Tinh bột chậm tốt.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu hũ trắng, Tàu hũ non", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 1, "limit": "Ăn uống thoải mái", "note": "Đạm thực vật đã qua chế biến, purin giảm, an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cơm trắng", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 2, "limit": "1 chén nhỏ / bữa", "note": "Giới hạn tinh bột tinh luyện cho HbA1c 5.9%.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bún, phở, miến", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 2, "limit": "1 tô nhỏ / lần", "note": "Lượng vừa phải.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Bánh mì nguyên cám", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 2, "limit": "≤ 1 ổ nhỏ / ngày", "note": "Tinh bột nguyên cám tốt cho đường huyết.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu xanh (bỏ vỏ càng tốt)", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 2, "limit": "Lượng nhỏ hàng ngày", "note": "An toàn vừa phải.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Hạt macca, hạnh nhân, óc chó", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 2, "limit": "< 15 hạt / ngày", "note": "Chất béo tốt nhưng không ăn quá nhiều.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu đen (1/2 chén), Đậu nành", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 3, "limit": "1-2 lần mỗi tuần", "note": "Đậu hạt chứa lượng purine trung bình.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Hạt mè, hạt điều, hạt dưa, hạt bí, hạt hướng dương", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 3, "limit": "1 nắm nhỏ < 20g", "note": "Ăn chơi hàng tuần.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu hũ chiên", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 3, "limit": "1 miếng / lần", "note": "Có dầu chiên mỡ, hạn chế cho gan.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Đậu phộng, hạt dẻ", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Hạn chế tối đa.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Ngũ cốc rang ít đường muối tẩm vị", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 4, "limit": "Hạn chế tối đa", "note": "Tránh gia vị ẩn.", "isStarch": true, "isHighPurine": false, "isSalty": true },
-  { "name": "Bánh ngọt tinh luyện, Xôi nếp", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Tăng mạnh đường huyết HbA1c.", "isStarch": true, "isHighPurine": false, "isSalty": false },
-  { "name": "Hạt chế biến nhiều muối, dầu chiên, bột ngọt, đường, mật ong", "cat": "NGŨ CỐC – ĐẬU – HẠT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Hại tổng hợp cả gan, thận, tiểu đường.", "isStarch": false, "isHighPurine": false, "isSalty": true },
-  { "name": "Thịt thăn heo nạc (luộc/hấp/áp chảo không dầu)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn uống thoải mái vừa sức", "note": "Ít purin, ít gánh thận, không tăng đường huyết.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thịt gà bỏ da (luộc/hấp/áp chảo không dầu)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn uống thoải mái vừa sức", "note": "Đạm trắng an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cá rô (cá nước ngọt ít purin)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn thoải mái vừa phải", "note": "Đạm cá nước ngọt an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cá basa (cá nước ngọt ít purin)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn thoải mái vừa phải", "note": "Đạm cá nước ngọt an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cá lóc (cá nước ngọt ít purin)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn thoải mái vừa phải", "note": "Đạm cá nước ngọt an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cá trê (cá nước ngọt ít purin)", "cat": "ĐỘNG VẬT", "lvl": 1, "limit": "Ăn thoải mái vừa phải", "note": "Đạm cá nước ngọt an toàn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thịt gà bỏ da (định lượng ngày)", "cat": "ĐỘNG VẬT", "lvl": 2, "limit": "≤ 150g / ngày", "note": "Giới hạn lượng đạm.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thịt nạc heo/gà từng bữa", "cat": "ĐỘNG VẬT", "lvl": 2, "limit": "100g – 150g / lần", "note": "Định lượng chuẩn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trứng gà", "cat": "ĐỘNG VẬT", "lvl": 2, "limit": "1 quả / ngày", "note": "Không chứa purin, đạm rất tốt.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Trứng cút", "cat": "ĐỘNG VẬT", "lvl": 2, "limit": "3 – 4 quả / ngày", "note": "Không chứa purin.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thịt bò (thịt đỏ)", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "≤ 70g / ngày (1-2 lần/tuần)", "note": "Thịt đỏ chứa purine cao, tăng axit uric máu.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Cá thu (cá biển)", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "≤ 70g (1 khoanh mỏng)", "note": "Ăn giới hạn 1-2 lần/tuần.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Cá nục, cá bớp, cá chim, cá đuối", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "≤ 100g / lần (1-2 lần/tuần)", "note": "Cá biển có purine cần kiểm soát.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Tôm tươi", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "3 – 4 con / lần", "note": "Hải sản ăn hạn chế.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Mực tươi", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "≤ 50g / lần", "note": "Hải sản ăn hạn chế.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Trứng vịt, trứng ngỗng", "cat": "ĐỘNG VẬT", "lvl": 3, "limit": "1 – 2 quả / tuần", "note": "Ăn giới hạn.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Thịt ba rọi, da, mỡ động vật", "cat": "ĐỘNG VẬT", "lvl": 4, "limit": "1-2 lần một tháng", "note": "Nhiều chất béo bão hòa, cực xấu cho gan nhiễm mỡ.", "isStarch": false, "isHighPurine": false, "isSalty": false },
-  { "name": "Cá ngừ", "cat": "ĐỘNG VẬT", "lvl": 4, "limit": "≤ 70g (1-2 lần/tháng)", "note": "Purine biển rất cao.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Cá hồi", "cat": "ĐỘNG VẬT", "lvl": 4, "limit": "≤ 70g (1-2 lần/tháng)", "note": "Hạn chế tối đa.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Gan, cật, óc (bò, heo)", "cat": "ĐỘNG VẬT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Nội tạng giàu purine nhất, gây bùng phát gout cấp ngay lập tức.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Lòng, phèo, bao tử, tim (bò, heo)", "cat": "ĐỘNG VẬT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Giàu cholesterol và purine khủng khiếp.", "isStarch": false, "isHighPurine": true, "isSalty": false },
-  { "name": "Cá khô, mực khô, tôm khô (ăn quá nhiều)", "cat": "ĐỘNG VẬT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Hải sản sấy khô purine cô đặc ở mức báo động đỏ.", "isStarch": false, "isHighPurine": true, "isSalty": true },
-  { "name": "Cá muối, cá hộp", "cat": "ĐỘNG VẬT", "lvl": 5, "limit": "Tuyệt đối tránh", "note": "Quá nhiều muối phá hủy thận nhanh chóng.", "isStarch": false, "isHighPurine": true, "isSalty": true }
-        ];
-
+        // ================= LOGIC FETCH DATA TỪ FILE GOUT.JSON NGOÀI =================
+        let FOOD_DATABASE = [];
         let selectedLevel = 0;
+
+        async function initFoodDatabase() {
+            const grid = document.getElementById('food-grid');
+            try {
+                // Fetch tệp dữ liệu cùng cấp thư mục
+                const response = await fetch('gout.json');
+                if (!response.ok) {
+                    throw new Error(`Không thể đọc file dữ liệu (Status: ${response.status})`);
+                }
+                FOOD_DATABASE = await response.json();
+                filterByLevel(0); // Hiển thị dữ liệu ngay sau khi nạp thành công
+            } catch (error) {
+                console.error("Lỗi Fetch JSON:", error);
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-rose-600 border border-rose-200 bg-rose-50 rounded-2xl p-4 text-base font-medium">
+                        ⚠️ Không thể fetch dữ liệu từ tệp <strong>gout.json</strong>.<br>
+                        <span class="text-sm text-slate-500 mt-2 block">
+                            Mẹo: Trình duyệt chặn fetch cục bộ qua giao thức <code>file:///</code> (CORS Policy). <br>
+                            Hãy chạy bằng một Local Server (như Live Server trên VS Code hoặc Python server) để tính năng Fetch hoạt động hoàn hảo.
+                        </span>
+                    </div>`;
+            }
+        }
 
         function getLvlBadges(lvl) {
             switch(lvl) {
@@ -536,27 +343,31 @@
             selectedLevel = lvl;
             for(let i=0; i<=5; i++) {
                 const btn = document.getElementById(`lvl-btn-${i}`);
-                if(i === lvl) {
-                    btn.classList.add('ring-2', 'ring-offset-2', 'ring-emerald-600');
-                } else {
-                    btn.classList.remove('ring-2', 'ring-offset-2', 'ring-emerald-600');
+                if (btn) {
+                    if(i === lvl) {
+                        btn.classList.add('ring-2', 'ring-offset-2', 'ring-emerald-600');
+                    } else {
+                        btn.classList.remove('ring-2', 'ring-offset-2', 'ring-emerald-600');
+                    }
                 }
             }
             filterFoods();
         }
 
-        // ================= HÀM LỌC VÀ HIỂN THỊ CARD THỰC PHẨM LINH HOẠT =================
         function filterFoods() {
             const searchVal = document.getElementById('food-search').value.toLowerCase().trim();
             const catVal = document.getElementById('category-filter').value;
             const grid = document.getElementById('food-grid');
             
+            if (FOOD_DATABASE.length === 0) return;
             grid.innerHTML = '';
 
+            // Lưu ý map chuẩn tên thuộc tính 'level' hoặc 'lvl' từ file JSON của anh
             const filtered = FOOD_DATABASE.filter(f => {
+                const fLevel = f.level !== undefined ? f.level : f.lvl;
                 const matchSearch = f.name.toLowerCase().includes(searchVal);
-                const matchCat = (catVal === 'all' || f.cat === catVal);
-                const matchLvl = (selectedLevel === 0 || f.lvl === selectedLevel);
+                const matchCat = (catVal === 'all' || f.category === catVal || f.cat === catVal);
+                const matchLvl = (selectedLevel === 0 || fLevel === selectedLevel);
                 return matchSearch && matchCat && matchLvl;
             });
 
@@ -566,11 +377,12 @@
             }
 
             filtered.forEach(f => {
-                const b = getLvlBadges(f.lvl);
+                const fLevel = f.level !== undefined ? f.level : f.lvl;
+                const fCat = f.category !== undefined ? f.category : f.cat;
+                const b = getLvlBadges(fLevel);
                 const card = document.createElement('div');
                 card.className = "p-5 bg-white border border-slate-100 rounded-2xl shadow-xs flex flex-col justify-between gap-3 hover:shadow-md transition-all";
                 
-                // Gắn nhãn bổ sung cảnh báo nguy cơ trực quan
                 let warningTags = '';
                 if(f.isHighPurine) warningTags += `<span class="text-[11px] font-bold px-1.5 py-0.5 rounded-sm bg-orange-100 text-orange-800">Nhiều Purine</span> `;
                 if(f.isStarch) warningTags += `<span class="text-[11px] font-bold px-1.5 py-0.5 rounded-sm bg-amber-100 text-amber-900">Có Tinh Bột</span> `;
@@ -579,7 +391,7 @@
                 card.innerHTML = `
                     <div class="space-y-2">
                         <div class="flex items-center justify-between gap-2">
-                            <span class="text-xs font-bold tracking-wider uppercase px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">${f.cat}</span>
+                            <span class="text-xs font-bold tracking-wider uppercase px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">${fCat}</span>
                             <span class="text-xs font-bold px-2.5 py-1 rounded-md border ${b.cls}">${b.name}</span>
                         </div>
                         <h4 class="text-lg font-bold text-slate-800">${f.name}</h4>
@@ -588,7 +400,7 @@
                     <div class="pt-2 border-t border-slate-100 text-base space-y-1">
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Định lượng giới hạn:</span>
-                            <p class="${f.lvl === 5 ? 'text-red-600 font-bold' : 'text-slate-800 font-medium'}">${f.limit}</p>
+                            <p class="${fLevel === 5 ? 'text-red-600 font-bold' : 'text-slate-800 font-medium'}">${f.limit}</p>
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Ghi chú sức khỏe:</span>
@@ -600,10 +412,10 @@
             });
         }
 
-        // ĐỒNG BỘ CHẠY KHI KHỞI ĐỘNG TRANG
+        // CHẠY KHI KHỞI ĐỘNG
         document.addEventListener('DOMContentLoaded', () => {
             loadRandomArticle();
-            filterByLevel(0);
+            initFoodDatabase();
         });
     </script>
 </body>
