@@ -366,48 +366,70 @@
 
     async function initApp() {
         const localToday = getLocalTodayString();
-        let jsonSuccess = false;
+        appState.selectedDate = localToday;
         
-        try {
-            const response = await fetch('todohistory.json?v=' + Date.now());
-            if (response.ok) {
-                const jsonData = await response.json();
-                if (Array.isArray(jsonData) && jsonData.length > 0) {
-                    appState.history = jsonData.map(h => ({
-                        date: h.date,
-                        score: h.score,
-                        morningScore: h.morningScore !== undefined ? h.morningScore : h.score,
-                        afternoonScore: h.afternoonScore !== undefined ? h.afternoonScore : h.score,
-                        eveningScore: h.eveningScore !== undefined ? h.eveningScore : h.score
-                    }));
-                    jsonSuccess = true;
-                }
-            }
-        } catch (e) {
-            console.warn("CORS/Fetch error, switching backup array.");
-        }
-
+        // 1. Đọc dữ liệu công việc thực tế của User từ localStorage trước
         const saved = localStorage.getItem('todotoday_chart_v7');
         if (saved) {
             const localState = JSON.parse(saved);
             appState.currentLang = localState.currentLang || "vi";
             appState.selectedDate = localState.selectedDate || localToday;
             appState.dailyBoards = localState.dailyBoards || {};
-            if (!jsonSuccess) appState.history = localState.history || [];
+            appState.history = localState.history || [];
         } else {
-            appState.selectedDate = localToday;
-            if (!jsonSuccess) generateMockData();
+            appState.history = [];
         }
 
-        if (appState.history.some(h => h.date === appState.selectedDate)) {
-            appState.selectedDate = localToday;
+        // 2. NẠP THẲNG DATA TEST 1 NĂM (Không dùng fetch để tránh lỗi file://)
+        // Nếu User mới tinh chưa có lịch sử, hệ thống tự động đổ mảng test này để anh duyệt giao diện
+        if (appState.history.length === 0) { 
+            console.log("🛠️ Đang hiển thị dữ liệu Test 1 năm trực tiếp từ Memory (Không lo lỗi CORS).");
+            
+            const mockOneYearData = [
+                { "date": "2026-06-22", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
+                { "date": "2026-06-21", "score": 70, "morningScore": 80, "afternoonScore": 60, "eveningScore": 70 },
+                { "date": "2026-06-20", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2026-06-19", "score": 60, "morningScore": 50, "afternoonScore": 70, "eveningScore": 60 },
+                { "date": "2026-06-18", "score": 80, "morningScore": 80, "afternoonScore": 80, "eveningScore": 80 },
+                { "date": "2026-06-15", "score": 75, "morningScore": 90, "afternoonScore": 60, "eveningScore": 80 },
+                { "date": "2026-06-14", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
+                { "date": "2026-06-10", "score": 40, "morningScore": 30, "afternoonScore": 50, "eveningScore": 40 },
+                { "date": "2026-06-05", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
+                { "date": "2026-06-01", "score": 70, "morningScore": 70, "afternoonScore": 70, "eveningScore": 70 },
+                { "date": "2026-05-28", "score": 90, "morningScore": 100, "afternoonScore": 80, "eveningScore": 90 },
+                { "date": "2026-05-20", "score": 65, "morningScore": 60, "afternoonScore": 70, "eveningScore": 60 },
+                { "date": "2026-05-15", "score": 80, "morningScore": 80, "afternoonScore": 85, "eveningScore": 70 },
+                { "date": "2026-05-10", "score": 55, "morningScore": 50, "afternoonScore": 60, "eveningScore": 50 },
+                { "date": "2026-04-25", "score": 75, "morningScore": 80, "afternoonScore": 70, "eveningScore": 80 },
+                { "date": "2026-04-18", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2026-04-12", "score": 60, "morningScore": 50, "afternoonScore": 70, "eveningScore": 60 },
+                { "date": "2026-03-22", "score": 90, "morningScore": 90, "afternoonScore": 95, "eveningScore": 80 },
+                { "date": "2026-03-15", "score": 85, "morningScore": 90, "afternoonScore": 80, "eveningScore": 90 },
+                { "date": "2026-03-07", "score": 50, "morningScore": 40, "afternoonScore": 60, "eveningScore": 50 },
+                { "date": "2026-02-17", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2026-01-19", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
+                { "date": "2025-12-20", "score": 90, "morningScore": 100, "afternoonScore": 80, "eveningScore": 100 },
+                { "date": "2025-11-21", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2025-10-18", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 },
+                { "date": "2025-09-19", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2025-08-25", "score": 90, "morningScore": 95, "afternoonScore": 85, "eveningScore": 95 },
+                { "date": "2025-07-20", "score": 95, "morningScore": 100, "afternoonScore": 90, "eveningScore": 100 },
+                { "date": "2025-06-25", "score": 90, "morningScore": 90, "afternoonScore": 90, "eveningScore": 90 }
+            ];
+
+            appState.history = mockOneYearData;
+            // KHÔNG gọi hàm save() ở đây để đống data test này không bị ghi chết vào LocalStorage của user.
+            // Khi user bấm "Kết toán" ngày đầu tiên, hệ thống sẽ tự động bắt đầu lưu data thực tế của họ.
         }
 
+        // Đảm bảo cấu trúc ngày hiện tại
+        ensureStructure(appState.selectedDate);
+
+        // Cập nhật giao diện ban đầu
         document.getElementById('date-picker').value = appState.selectedDate;
         document.getElementById('date-display-text').innerText = formatToUIDate(appState.selectedDate);
         
         toggleGotoTodayButtonVisibility();
-        ensureStructure(appState.selectedDate);
         buildYearFilterOptions();
         setRandomQuote();
         updateLanguageUI();
@@ -777,6 +799,11 @@
             myChart.data.datasets[0].data = generatedScores;
             myChart.data.datasets[0].label = isVi ? 'Hiệu suất (%)' : 'Score (%)';
             myChart.options.scales.x.ticks.maxTicksLimit = maxTicks;
+            
+            // Đảm bảo đồng bộ cấu hình tương tác khi update chart
+            myChart.options.interaction = { mode: 'index', intersect: false };
+            myChart.options.plugins.tooltip.enabled = true;
+            
             myChart.update();
         } else {
             myChart = new Chart(ctx, {
@@ -788,16 +815,57 @@
                         data: generatedScores,
                         borderColor: '#4f46e5',
                         backgroundColor: 'rgba(79, 70, 229, 0.04)',
-                        borderWidth: 2.5, pointBackgroundColor: '#4f46e5',
-                        pointRadius: daysLimit > 100 ? 1 : 4,
+                        borderWidth: 2,
+                        
+                        // Cấu hình điểm tròn tĩnh và động khi hover
+                        pointRadius: 0, 
+                        pointHoverRadius: 5,
+                        pointBackgroundColor: '#4f46e5',
+                        pointHoverBackgroundColor: '#4f46e5',
+                        pointHoverBorderColor: '#fff',
+                        pointHoverBorderWidth: 2,
+
                         spanGaps: true, tension: 0.15, fill: true
                     }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        // Bật lại tooltip trực quan khi tương tác
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)', // Màu slate-900 sang trọng
+                            titleFont: { size: 12, weight: 'bold' },
+                            bodyFont: { size: 12 },
+                            padding: 10,
+                            cornerRadius: 8,
+                            displayColors: false // Ẩn ô màu vuông nhỏ không cần thiết
+                        }
+                    },
+                    
+                    // 🔥 ĐÂY CHÍNH LÀ CHÌA KHÓA: Trục X sẽ bắt tọa độ theo chiều dọc
+                    interaction: {
+                        mode: 'index',     // Bắt trúng toàn bộ dữ liệu thuộc trục X tại vị trí con trỏ
+                        intersect: false    // Không bắt buộc con trỏ phải chạm khít vào đường line
+                    },
+
                     scales: {
-                        y: { min: 0, max: 100, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } } },
+                        y: { 
+                            min: 0, 
+                            max: 110, 
+                            grid: { color: '#f1f5f9' }, 
+                            ticks: { 
+                                font: { size: 11 },
+                                callback: function(value) {
+                                    if (value > 100) return '';
+                                    return value + '%';
+                                }
+                            } 
+                        },
                         x: { grid: { display: false }, ticks: { maxTicksLimit: maxTicks, font: { size: 10 }, autoSkip: true } }
                     }
                 }
