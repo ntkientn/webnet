@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todotoday - Hệ thống Kết toán Hiệu suất</title>
+    <title>TodoToday - Làm gì hôm nay - v1.1.20260621</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .custom-date-input::-webkit-calendar-picker-indicator {
             background: transparent; bottom: 0; color: transparent; cursor: pointer;
@@ -18,10 +18,10 @@
 <body class="bg-[#f8fafc] text-slate-800 min-h-screen antialiased flex flex-col justify-between text-base">
 
     <div class="w-full bg-white border-b border-slate-200/80 px-4 py-2.5 flex justify-between items-center shadow-sm">
-        <a href="#" class="px-3.5 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all">
+        <a href="#" class="px-3.5 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all">
             ← Back to WebNet
         </a>
-        <button id="lang-btn" onclick="toggleLanguage()" class="px-3.5 py-2 text-sm font-semibold bg-white border border-slate-300 text-slate-700 rounded-xl hover:bg-slate-50 transition-all cursor-pointer">
+        <button id="lang-btn" onclick="toggleLanguage()" class="px-3.5 py-2 text-xs font-semibold bg-white border border-slate-300 text-slate-700 rounded-xl hover:bg-slate-50 transition-all cursor-pointer">
             English 🌐
         </button>
     </div>
@@ -30,8 +30,8 @@
         
         <header class="w-full text-center pt-8 pb-4 relative flex justify-center items-center gap-3">
             <div class="inline-flex items-center gap-2.5 select-none py-1">
-                <span class="text-3xl filter drop-shadow-sm">📝</span>
-                <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Todotoday</span>
+                <span class="text-3xl filter drop-shadow-sm">🎯</span>
+                <span class="text-3xl font-black tracking-tight bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">TodoToday</span>
             </div>
 
             <div class="relative inline-block group">
@@ -39,10 +39,11 @@
                     ?
                 </button>
                 <div class="absolute left-1/2 -translate-x-1/2 top-9 w-72 bg-slate-900 text-white text-xs rounded-xl p-3.5 shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-all duration-300 z-50 line-relaxed space-y-1.5 border border-slate-800">
-                    <div class="font-bold text-indigo-400 flex items-center gap-1">⚡ Hướng dẫn sử dụng:</div>
-                    <p data-vi="1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ." data-en="1. Allocate tasks into Morning (4h), Afternoon (4h), Evening (2h) blocks to complete the 10-hour fund.">1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ.</p>
+                    <div class="font-bold text-indigo-400 flex items-center gap-1">💡 Hướng dẫn sử dụng:</div>
+                    <p data-vi="TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh." data-en="TodoToday is a tool that helps you plan and focus on completing the most important tasks in a day. You can also save your history and track your work performance on a chart according to a customizable time frame.">TodoToday là công cụ giúp bạn lên kế hoạch và tập trung hoàn thành những công việc quan trọng nhất trong 1 ngày. Bạn còn có thể lưu lại lịch sử và theo dõi hiệu suất công việc của mình trên biểu đồ theo khung thời gian tùy chỉnh.</p>
+                    <p data-vi="1. Chọn ngày làm việc (mặc định là hôm nay), phân bổ công việc vào 3 buổi Sáng, Chiều, Tối cho đủ Quỹ thời gian 10 giờ." data-en="1. Select working date (today by default), Allocate tasks into Morning, Afternoon, Evening blocks to complete the 10-hour fund.">1. Phân bổ công việc vào 3 buổi Sáng (4h), Chiều (4h), Tối (2h) cho đủ Quỹ thời gian 10 giờ.</p>
                     <p data-vi="2. Tích chọn checkbox khi hoàn thành công việc để hệ thống tự động tính điểm hiệu suất." data-en="2. Check the box upon completion to auto-calculate your performance score.">2. Tích chọn checkbox khi hoàn thành công việc để hệ thống tự động tính điểm hiệu suất.</p>
-                    <p data-vi="3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi biểu đồ xu hướng." data-en="3. Click 'Save Log' at day-end to commit data and monitor long-term charts.">3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi biểu đồ xu hướng.</p>
+                    <p data-vi="3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi với biểu đồ xu hướng." data-en="3. Click 'Save Log' at day-end to commit data and monitor long-term charts.">3. Nhấn 'Tổng Kết & Lưu' vào cuối ngày để ghi nhận lịch sử và theo dõi biểu đồ xu hướng.</p>
                 </div>
             </div>
         </header>
@@ -57,7 +58,7 @@
                     </div>
                 </div>
                 <div class="md:col-span-2 bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-3 shadow-sm border-l-4 border-l-indigo-500">
-                    <div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center text-amber-500 shrink-0 border border-amber-200 text-sm">💡</div>
+                    <div class="items-center justify-center text-amber-500 shrink-0 text-2xl">✨</div>
                     <div class="min-w-0">
                         <p id="quote-text" class="text-sm font-medium text-slate-600 italic leading-relaxed">"Đừng ước mọi chuyện dễ dàng hơn, hãy ước mình giỏi giang hơn."</p>
                         <p id="quote-author" class="text-xs font-bold text-slate-400 mt-0.5">— Jim Rohn</p>
@@ -74,11 +75,11 @@
                         <input type="date" id="date-picker" onchange="updateDateDisplay()" class="custom-date-input absolute inset-0 opacity-0 w-full h-full z-10">
                     </div>
                     <button id="btn-goto-today" onclick="setToday()" class="hidden px-3.5 py-2.5 text-sm font-bold bg-indigo-50 border border-indigo-100 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all cursor-pointer whitespace-nowrap shadow-sm">
-                        ✨ Hôm nay
+                        <span data-vi="Hôm nay" data-en="Today">Hôm nay</span>
                     </button>
                 </div>
 
-                <div class="flex-1 space-y-2 lg:px-6">
+                <div class="w-full flex-1 space-y-2 lg:px-6">
                     <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden border border-slate-200 shadow-inner">
                         <div id="progress-bar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full w-[0%] transition-all duration-500"></div>
                     </div>
@@ -94,7 +95,7 @@
                         <div id="score-display" class="text-2xl sm:text-3xl font-black text-indigo-600 leading-none">0%</div>
                     </div>
                     <button onclick="triggerSummary()" class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-sm text-white rounded-xl shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all cursor-pointer flex items-center gap-1.5 shadow-indigo-500/10">
-                        <span>✓</span> <span data-vi="Tổng Kết & Lưu" data-en="Save Log">Tổng Kết & Lưu</span>
+                        <span>✓</span> <span data-vi="Tổng Kết & Lưu" data-en="Settle & Save">Tổng Kết & Lưu</span>
                     </button>
                 </div>
             </div>
@@ -119,9 +120,13 @@
 
                         <div class="mt-4 pt-3 border-t border-slate-100">
                             <div class="flex flex-wrap gap-1.5 items-center mb-2.5 text-xs">
-                                <span class="text-slate-400 font-medium" data-vi="Tạo nhanh:" data-en="Quick:">Tạo nhanh:</span>
-                                <span onclick="applyQuickTitle('morning', 'Lập kế hoạch & Review')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Lập kế hoạch</span>
-                                <span onclick="applyQuickTitle('morning', 'Daily Meeting & Task Syncing')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Daily Sync</span>
+                                <span class="text-slate-400 font-medium" data-vi="Tạo nhanh:" data-en="Quick add:">Tạo nhanh:</span>
+                                <span onclick="applyQuickTitle('morning', 'Planning')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Plan</span>
+                                <span onclick="applyQuickTitle('morning', 'Meeting')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Meet</span>
+                                <span onclick="applyQuickTitle('morning', 'Process')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Process</span>
+                                <span onclick="applyQuickTitle('morning', 'Execute')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Execute</span>
+                                <span onclick="applyQuickTitle('morning', 'Practice')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Practice</span>
+                                <span onclick="applyQuickTitle('morning', 'Learn')" class="text-xs text-amber-700 bg-amber-50 hover:bg-amber-600 hover:text-white transition-all px-2 py-0.5 rounded border border-amber-100 cursor-pointer font-medium">#Learn</span>
                             </div>
                             <div class="space-y-2">
                                 <input type="text" id="input-morning-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-amber-500 text-slate-800 shadow-sm">
@@ -152,8 +157,13 @@
                         <div class="mt-4 pt-3 border-t border-slate-100">
                             <div class="flex flex-wrap gap-1.5 items-center mb-2.5 text-xs">
                                 <span class="text-slate-400 font-medium" data-vi="Tạo nhanh:" data-en="Quick:">Tạo nhanh:</span>
-                                <span onclick="applyQuickTitle('afternoon', 'Kiểm định QA/QC & Test lỗi')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#QA/QC Test</span>
-                                <span onclick="applyQuickTitle('afternoon', 'Xử lý dự án')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Xử lý dự án</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Meeting')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Meet</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Review')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Review</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Check')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Check</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Report')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Report</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Learn')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Learn</span>
+                                <span onclick="applyQuickTitle('afternoon', 'Practice')" class="text-xs text-sky-700 bg-sky-50 hover:bg-sky-600 hover:text-white transition-all px-2 py-0.5 rounded border border-sky-100 cursor-pointer font-medium">#Practice</span>
+
                             </div>
                             <div class="space-y-2">
                                 <input type="text" id="input-afternoon-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-sky-500 text-slate-800 shadow-sm">
@@ -184,8 +194,13 @@
                         <div class="mt-4 pt-3 border-t border-slate-100">
                             <div class="flex flex-wrap gap-1.5 items-center mb-2.5 text-xs">
                                 <span class="text-slate-400 font-medium" data-vi="Tạo nhanh:" data-en="Quick:">Tạo nhanh:</span>
-                                <span onclick="applyQuickTitle('evening', 'Đọc sách & Nghiên cứu')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Đọc sách</span>
-                                <span onclick="applyQuickTitle('evening', 'Học tiếng Anh')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Học tiếng Anh</span>
+                                <span onclick="applyQuickTitle('evening', 'Learn')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Learn</span>
+                                <span onclick="applyQuickTitle('evening', 'Practice')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Practice</span>
+                                <span onclick="applyQuickTitle('evening', 'Clean up')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Clean</span>
+                                <span onclick="applyQuickTitle('evening', 'Home tasks')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Home</span>
+                                <span onclick="applyQuickTitle('evening', 'Personal tasks')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Personal</span>
+                                <span onclick="applyQuickTitle('evening', 'Workout')" class="text-xs text-purple-700 bg-purple-50 hover:bg-purple-600 hover:text-white transition-all px-2 py-0.5 rounded border border-purple-100 cursor-pointer font-medium">#Workout</span>
+                                
                             </div>
                             <div class="space-y-2">
                                 <input type="text" id="input-evening-title" placeholder="Tiêu đề công việc..." class="w-full text-sm font-semibold px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-purple-500 text-slate-800 shadow-sm">
@@ -257,6 +272,53 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- MODAL CHỈNH SỬA TÍCH HỢP TÍNH NĂNG LIVE UPDATE HIỆU SUẤT TỔNG THỂ -->
+    <div id="edit-modal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 p-4 transition-all">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full shadow-2xl overflow-hidden p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <h3 class="text-base sm:text-lg font-bold text-slate-800" id="modal-title">Chỉnh sửa hiệu suất ngày</h3>
+                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 text-lg font-bold cursor-pointer focus:outline-none">✕</button>
+            </div>
+            
+            <input type="hidden" id="modal-target-date" value="">
+            
+            <!-- VÙNG HIỂN THỊ LIVE UPDATE TỔNG HIỆU SUẤT DỰ KIẾN THEO THỜI GIAN THỰC -->
+            <div class="bg-indigo-50 border border-indigo-100/70 p-3.5 rounded-xl flex justify-between items-center shadow-inner">
+                <span class="text-xs font-bold text-indigo-700/80 uppercase tracking-wide" data-vi="Hiệu suất tổng thể dự kiến:" data-en="Live Estimated Performance:">Hiệu suất tổng thể dự kiến:</span>
+                <span id="modal-live-total-score" class="text-2xl font-black text-indigo-600 tracking-tight">0%</span>
+            </div>
+
+            <div class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-[#854d0e] mb-1.5 uppercase tracking-wide">☀️ Buổi Sáng (Quỹ 4h):</label>
+                    <div class="relative flex items-center">
+                        <input type="number" id="modal-input-morning" min="0" max="100" oninput="calculateModalLiveScore()" class="w-full text-sm font-bold px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500 text-slate-800 shadow-sm pr-8">
+                        <span class="absolute right-3 text-sm font-bold text-slate-400">%</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-[#0369a1] mb-1.5 uppercase tracking-wide">🌤️ Buổi Chiều (Quỹ 4h):</label>
+                    <div class="relative flex items-center">
+                        <input type="number" id="modal-input-afternoon" min="0" max="100" oninput="calculateModalLiveScore()" class="w-full text-sm font-bold px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-sky-500 text-slate-800 shadow-sm pr-8">
+                        <span class="absolute right-3 text-sm font-bold text-slate-400">%</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-[#6b21a8] mb-1.5 uppercase tracking-wide">🌙 Buổi Tối (Quỹ 2h):</label>
+                    <div class="relative flex items-center">
+                        <input type="number" id="modal-input-evening" min="0" max="100" oninput="calculateModalLiveScore()" class="w-full text-sm font-bold px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-purple-500 text-slate-800 shadow-sm pr-8">
+                        <span class="absolute right-3 text-sm font-bold text-slate-400">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
+                <button onclick="closeEditModal()" class="px-4 py-2 text-sm font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all cursor-pointer" data-vi="Hủy bỏ" data-en="Cancel">Hủy bỏ</button>
+                <button onclick="saveEditModalData()" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-sm text-white rounded-xl shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all cursor-pointer shadow-indigo-500/10" data-vi="Cập nhật" data-en="Update">Cập nhật</button>
+            </div>
+        </div>
     </div>
 
     <footer class="w-full text-center py-4 border-t border-slate-200 bg-white text-xs font-medium text-slate-400 mt-8">
@@ -337,6 +399,10 @@
             if (!jsonSuccess) generateMockData();
         }
 
+        if (appState.history.some(h => h.date === appState.selectedDate)) {
+            appState.selectedDate = localToday;
+        }
+
         document.getElementById('date-picker').value = appState.selectedDate;
         document.getElementById('date-display-text').innerText = formatToUIDate(appState.selectedDate);
         
@@ -371,6 +437,10 @@
 
     function setToday() {
         const localToday = getLocalTodayString();
+        if (appState.history.some(h => h.date === localToday)) {
+            alert("The selected date has data in History already. You can go to History and edit the log / Ngày được chọn đã có dữ liệu trong Lịch sử. Bạn có thể vào tab Lịch sử để chỉnh sửa.");
+            return;
+        }
         document.getElementById('date-picker').value = localToday;
         appState.selectedDate = localToday;
         document.getElementById('date-display-text').innerText = formatToUIDate(localToday);
@@ -383,6 +453,13 @@
     function updateDateDisplay() {
         const pickerVal = document.getElementById('date-picker').value;
         if (!pickerVal) return;
+        
+        if (appState.history.some(h => h.date === pickerVal)) {
+            alert("The selected date has data in History already. You can go to History and edit the log / Ngày được chọn đã có dữ liệu trong Lịch sử. Bạn có thể vào tab Lịch sử để chỉnh sửa.");
+            document.getElementById('date-picker').value = appState.selectedDate;
+            return;
+        }
+
         appState.selectedDate = pickerVal;
         document.getElementById('date-display-text').innerText = formatToUIDate(pickerVal);
         toggleGotoTodayButtonVisibility();
@@ -449,7 +526,6 @@
             totalDoneHours += calcs.done;
             const sessionScore = Math.round((calcs.done / limit) * 100);
 
-            // Đưa điểm % trực tiếp vào Khung tiêu đề của Buổi tương ứng
             document.getElementById(`score-box-${session}`).innerText = `${sessionScore}%`;
             document.getElementById(`status-${session}`).innerText = isVi ? `Còn trống ${left}h` : `${left}h left`;
             
@@ -516,9 +592,8 @@
 
         const duplicateIndex = appState.history.findIndex(h => h.date === targetDate);
         if (duplicateIndex !== -1) {
-            const overwrite = confirm(isVi ? `⚠️ Ngày [${formatToUIDate(targetDate)}] đã có lịch sử.\nAnh muốn ghi đè số liệu không?` : "Overwrite log?");
-            if (!overwrite) return;
-            appState.history.splice(duplicateIndex, 1);
+            alert("The selected date has data in History already. You can go to History and edit the log / Ngày được chọn đã có dữ liệu trong Lịch sử. Bạn có thể vào tab Lịch sử để chỉnh sửa.");
+            return;
         }
 
         appState.history.unshift({ 
@@ -581,34 +656,63 @@
                         </div>
                     </td>
                     <td class="py-3.5 px-5 text-right">
-                        <button onclick="editHistoryScore('${log.date}')" class="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white border border-indigo-100 px-2.5 py-1 rounded-lg transition-all cursor-pointer">✏️</button>
+                        <button onclick="openEditModal('${log.date}')" class="text-xs font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-600 hover:text-white border border-indigo-100 px-2.5 py-1 rounded-lg transition-all cursor-pointer">✏️</button>
                     </td>
                 </tr>`;
         });
     }
 
-    function editHistoryScore(dateStr) {
+    /* ĐIỀU KHIỂN VÀ THEO DÕI LIVE UPDATE TRÊN HỘP THOẠI MODAL MỚI */
+    function openEditModal(dateStr) {
         const isVi = appState.currentLang === "vi";
         const targetLog = appState.history.find(h => h.date === dateStr);
         if (!targetLog) return;
 
-        const currentM = targetLog.morningScore !== undefined ? targetLog.morningScore : targetLog.score;
-        const currentA = targetLog.afternoonScore !== undefined ? targetLog.afternoonScore : targetLog.score;
-        const currentE = targetLog.eveningScore !== undefined ? targetLog.eveningScore : targetLog.score;
+        document.getElementById('modal-target-date').value = dateStr;
+        document.getElementById('modal-title').innerText = isVi ? `Chỉnh sửa hiệu suất ngày [${formatToUIDate(dateStr)}]` : `Edit Score for [${formatToUIDate(dateStr)}]`;
+        
+        document.getElementById('modal-input-morning').value = targetLog.morningScore !== undefined ? targetLog.morningScore : targetLog.score;
+        document.getElementById('modal-input-afternoon').value = targetLog.afternoonScore !== undefined ? targetLog.afternoonScore : targetLog.score;
+        document.getElementById('modal-input-evening').value = targetLog.eveningScore !== undefined ? targetLog.eveningScore : targetLog.score;
+        
+        // Gọi tính toán hiển thị điểm tổng thể ngay khi mở bảng lên
+        calculateModalLiveScore();
+        
+        document.getElementById('edit-modal').classList.remove('hidden');
+    }
 
-        const mStr = prompt(isVi ? `Hiệu suất SÁNG ngày [${formatToUIDate(dateStr)}] (0-100):` : `Morning score (0-100):`, currentM);
-        if (mStr === null) return;
-        const aStr = prompt(isVi ? `Hiệu suất CHIỀU ngày [${formatToUIDate(dateStr)}] (0-100):` : `Afternoon score (0-100):`, currentA);
-        if (aStr === null) return;
-        const eStr = prompt(isVi ? `Hiệu suất TỐI ngày [${formatToUIDate(dateStr)}] (0-100):` : `Evening score (0-100):`, currentE);
-        if (eStr === null) return;
+    function closeEditModal() {
+        document.getElementById('edit-modal').classList.add('hidden');
+    }
 
-        const nM = parseInt(mStr);
-        const nA = parseInt(aStr);
-        const nE = parseInt(eStr);
+    /* HÀM LIVE UPDATE: Tự động chạy khi có hành động gõ phím hoặc tăng giảm số lượng */
+    function calculateModalLiveScore() {
+        let nM = parseInt(document.getElementById('modal-input-morning').value) || 0;
+        let nA = parseInt(document.getElementById('modal-input-afternoon').value) || 0;
+        let nE = parseInt(document.getElementById('modal-input-evening').value) || 0;
+
+        // Giới hạn khoảng nhập dữ liệu an toàn tạm thời khi render live score
+        if (nM < 0) nM = 0; if (nM > 100) nM = 100;
+        if (nA < 0) nA = 0; if (nA > 100) nA = 100;
+        if (nE < 0) nE = 0; if (nE > 100) nE = 100;
+
+        // Trọng số quỹ 10 giờ cố định: Sáng 40%, Chiều 40%, Tối 20%
+        const liveTotal = Math.round((nM * 4 + nA * 4 + nE * 2) / 10);
+        document.getElementById('modal-live-total-score').innerText = `${liveTotal}%`;
+    }
+
+    function saveEditModalData() {
+        const isVi = appState.currentLang === "vi";
+        const dateStr = document.getElementById('modal-target-date').value;
+        const targetLog = appState.history.find(h => h.date === dateStr);
+        if (!targetLog) return;
+
+        const nM = parseInt(document.getElementById('modal-input-morning').value);
+        const nA = parseInt(document.getElementById('modal-input-afternoon').value);
+        const nE = parseInt(document.getElementById('modal-input-evening').value);
 
         if (isNaN(nM) || nM < 0 || nM > 100 || isNaN(nA) || nA < 0 || nA > 100 || isNaN(nE) || nE < 0 || nE > 100) {
-            return alert(isVi ? "❌ Số liệu nhập vào không hợp lệ!" : "❌ Invalid values!");
+            return alert(isVi ? "❌ Số liệu nhập vào không hợp lệ (Phải từ 0 đến 100)!" : "❌ Invalid values (Must be between 0 and 100)!");
         }
 
         targetLog.morningScore = nM;
@@ -616,7 +720,10 @@
         targetLog.eveningScore = nE;
         targetLog.score = Math.round((nM * 4 + nA * 4 + nE * 2) / 10);
 
-        save(); renderHistoryView(); updateChartRange();
+        save();
+        closeEditModal();
+        renderHistoryView();
+        updateChartRange();
     }
 
     function changeChartRange(days, btnElement) {
@@ -811,6 +918,11 @@
         document.querySelectorAll('[data-vi]').forEach(el => { el.innerText = isVi ? el.getAttribute('data-vi') : el.getAttribute('data-en'); });
         document.getElementById('tab-today').innerText = isVi ? "Bảng Công Việc" : "Task Board";
         document.getElementById('tab-history').innerText = isVi ? "Lịch sử" : "History Dashboard";
+        
+        const cancelBtn = document.querySelector('#edit-modal button[data-vi="Hủy bỏ"]');
+        const updateBtn = document.querySelector('#edit-modal button[data-vi="Cập nhật"]');
+        if(cancelBtn) cancelBtn.innerText = isVi ? "Hủy bỏ" : "Cancel";
+        if(updateBtn) updateBtn.innerText = isVi ? "Cập nhật" : "Update";
     }
 
     function setRandomQuote() {
