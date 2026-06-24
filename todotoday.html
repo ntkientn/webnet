@@ -431,32 +431,69 @@
     // 1. HÀM KHỞI CHẠY KHÔNG CÒN DATA TEST MẪU
     async function initApp() {
         const localToday = getLocalTodayString();
-        appState.selectedDate = localToday;
         
-        // Đọc dữ liệu thực tế của User từ localStorage
+        // 1. Đọc dữ liệu từ localStorage
         const saved = localStorage.getItem('todotoday_chart_v7');
         if (saved) {
             const localState = JSON.parse(saved);
             appState.currentLang = localState.currentLang || "vi";
-            appState.selectedDate = localState.selectedDate || localToday;
             appState.dailyBoards = localState.dailyBoards || {};
             appState.history = localState.history || [];
+            
+            // CƠ CHẾ QUÉT: Tự động dò tìm ngày đang có Task chưa kết toán (In Progress)
+            let unsettledDate = null;
+            for (const dateKey in appState.dailyBoards) {
+                const dayData = appState.dailyBoards[dateKey];
+                if (dayData && (
+                    (dayData.morning && dayData.morning.length > 0) ||
+                    (dayData.afternoon && dayData.afternoon.length > 0) ||
+                    (dayData.evening && dayData.evening.length > 0)
+                )) {
+                    unsettledDate = dateKey; 
+                    break; 
+                }
+            }
+
+            // Quyết định ngày làm việc: Ưu tiên ngày có việc dở dang, nếu không có thì lấy ngày hôm nay
+            if (unsettledDate) {
+                appState.selectedDate = unsettledDate;
+            } else {
+                appState.selectedDate = localState.selectedDate || localToday;
+            }
+
         } else {
-            // Trắng hoàn toàn đối với user mới tinh
+            // Mặc định cho user mới tinh
+            appState.selectedDate = localToday;
+            appState.dailyBoards = {};
             appState.history = [];
         }
 
+        // Khởi tạo cấu trúc mảng cho ngày được chọn nếu chưa có
         ensureStructure(appState.selectedDate);
 
-        // Cập nhật giao diện
-        document.getElementById('date-picker').value = appState.selectedDate;
-        document.getElementById('date-display-text').innerText = formatToUIDate(appState.selectedDate);
-        
-        toggleGotoTodayButtonVisibility();
-        buildYearFilterOptions();
-        setRandomQuote();
-        updateLanguageUI();
-        renderBoard();
+        // 2. ĐOẠN FIX CỐT LÕI: Đồng bộ UI hiển thị theo ĐÚNG ngày đã chốt ở trên
+        try {
+            const picker = document.getElementById('date-picker');
+            const displayText = document.getElementById('date-display-text');
+            
+            if (picker) {
+                picker.value = appState.selectedDate; // Đảm bảo ô input lịch hiển thị đúng ngày 23/6
+            }
+            if (displayText && typeof formatToUIDate === "function") {
+                displayText.innerText = formatToUIDate(appState.selectedDate); // Đảm bảo chữ tiêu đề hiển thị đúng ngày 23/6
+            }
+        } catch(e) {
+            console.error("Lỗi đồng bộ UI ngày:", e);
+        }
+
+        // Vẽ dữ liệu task lên màn hình
+        renderBoard(); 
+
+        // 3. XỬ LÝ CÁC HÀM UI PHỤ TRỢ (Bọc an toàn bằng try-catch)
+        try { if(typeof toggleGotoTodayButtonVisibility === 'function') toggleGotoTodayButtonVisibility(); } catch(e) {}
+        try { if(typeof buildYearFilterOptions === 'function') buildYearFilterOptions(); } catch(e) {}
+        try { if(typeof setRandomQuote === 'function') setRandomQuote(); } catch(e) {}
+        try { if(typeof updateLanguageUI === 'function') updateLanguageUI(); } catch(e) {}
     }
 
     // 2. TÍNH NĂNG XUẤT DỮ LIỆU (EXPORT JSON)
@@ -769,6 +806,29 @@
             afternoonScore,
             eveningScore
         });
+
+        // --- THỰC HIỆN CASE 3 CỦA ANH TẠI ĐÂY ---
+        const localToday = getLocalTodayString();
+        
+        // 1. Xóa dữ liệu bảng tạm thời của ngày vừa kết toán để giải phóng Web
+        if (appState.dailyBoards[appState.selectedDate]) {
+            delete appState.dailyBoards[appState.selectedDate];
+        }
+        
+        // 2. Đưa ngày làm việc hiện tại quay lại ngày hôm nay hệ thống (Default current date)
+        appState.selectedDate = localToday;
+        ensureStructure(appState.selectedDate);
+
+        // 3. Đồng bộ trạng thái mới tinh này xuống LocalStorage lập tức
+        save(); 
+
+        // 4. Đồng bộ lại các ô hiển thị ngày trên giao diện
+        document.getElementById('date-picker').value = appState.selectedDate;
+        document.getElementById('date-display-text').innerText = formatToUIDate(appState.selectedDate);
+        
+        // 5. Chạy lại render để đưa ứng dụng về Case 1 sạch sẽ
+        toggleGotoTodayButtonVisibility();
+        renderBoard();
         
         save(); buildYearFilterOptions();
         alert(isVi ? `Đã kết toán thành công ngày ${formatToUIDate(targetDate)}:\n- Tổng thể: ${totalScore}%\n- Sáng: ${morningScore}% | Chiều: ${afternoonScore}% | Tối: ${eveningScore}%` : "Saved log successfully!");
