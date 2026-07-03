@@ -15,62 +15,30 @@
         }
 
         /* ======================================================================
-           🔥 CHẾ ĐỘ FOCUS TRÊN MOBILE: TỰ ĐỘNG PHÓNG TO KHỐI ĐANG NHẬP, ẨN KHỐI KHÁC
+           🔥 HIỆU ỨNG FOCUS HIGHLIGHT: BẮT CHÍNH XÁC ID KHỐI, KHÔNG LO LỆCH CLASS CHA
            ====================================================================== */
         @media (max-width: 768px) {
-            /* 1. Thiết lập Grid chứa 3 khối thành dạng Flex để dễ kiểm soát ẩn/hiện */
-            body:has(input:focus), body:has(select:focus) {
-                overflow: hidden; /* Khóa cuộn trang chính khi đang gõ phím */
+            /* Cấu hình hiệu ứng mượt mà cho cả 3 block lớn chứa Sáng, Chiều, Tối */
+            .grid:has(#tasks-morning) > div {
+                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                will-change: opacity, transform, box-shadow;
             }
 
-            /* Container chứa 3 khối Sáng - Chiều - Tối */
-            .grid.grid-cols-1.md\:grid-cols-3 {
-                display: flex !important;
-                flex-direction: column;
+            /* 1. Khi có bất kỳ ô input/select nào TRONG TOÀN BỘ KHU VỰC được click (Focus) */
+            .grid:has(#tasks-morning):has(input:focus, select:focus) > div {
+                opacity: 0.4; /* Làm mờ hẳn các khối xung quanh xuống 40% để tạo độ sâu */
+                filter: grayscale(30%); /* Giảm nhẹ sắc độ màu của các khối bị mờ */
+            }
+
+            /* 2. Riêng KHỐI ĐANG CHỨA Ô INPUT ĐƯỢC FOCUS (Focus-within) */
+            .grid:has(#tasks-morning) > div:focus-within {
+                opacity: 1 !important; /* Giữ độ sáng rõ 100% */
+                filter: grayscale(0%) !important;
+                transform: scale(1.03); /* Phóng to nhẹ 3% để "nhô" hẳn lên trên */
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+                border-color: rgba(0, 0, 0, 0.15) !important;
                 position: relative;
-            }
-
-            /* 2. Khi có bất kỳ ô input nào trong form được click chọn (Focus) */
-            .grid.grid-cols-1.md\:grid-cols-3 > div {
-                transition: all 0.25s ease-in-out;
-            }
-
-            /* Ẩn hoàn toàn 2 khối còn lại đi để nhường diện tích màn hình */
-            .grid.grid-cols-1.md\:grid-cols-3:has(input:focus) > div:not(:focus-within) {
-                opacity: 0 !important;
-                visibility: hidden !important;
-                height: 0 !important;
-                min-height: 0 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                overflow: hidden;
-                border: none !important;
-                position: absolute;
-            }
-
-            /* 3. Phóng to và đẩy khối đang thao tác lên cố định (On-Top) sát bàn phím */
-            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within {
-                position: fixed !important;
-                top: 70px; /* Né thanh chọn ngày ở trên */
-                left: 12px;
-                right: 12px;
-                bottom: 12px; /* Đẩy sát phần hiển thị trên bàn phím ảo */
-                z-index: 9999 !important;
-                width: calc(100% - 24px) !important;
-                height: auto !important;
-                min-height: unset !important;
-                display: flex !important;
-                flex-direction: column !important;
-                justify-content: space-between !important;
-                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
-            }
-
-            /* Tối ưu hóa vùng hiển thị danh sách task bên trong khối đang mở rộng */
-            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-morning,
-            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-afternoon,
-            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-evening {
-                max-height: calc(100vh - 320px) !important; /* Tự co giãn danh sách task không bị tràn */
-                overflow-y: auto !important;
+                z-index: 50; /* Đẩy hẳn lên lớp trên cùng, che nhẹ viền của 2 khối kia */
             }
         }
     </style>
