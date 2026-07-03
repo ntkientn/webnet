@@ -13,6 +13,66 @@
             background: transparent; bottom: 0; color: transparent; cursor: pointer;
             height: auto; left: 0; position: absolute; right: 0; top: 0; width: auto;
         }
+
+        /* ======================================================================
+           🔥 CHẾ ĐỘ FOCUS TRÊN MOBILE: TỰ ĐỘNG PHÓNG TO KHỐI ĐANG NHẬP, ẨN KHỐI KHÁC
+           ====================================================================== */
+        @media (max-width: 768px) {
+            /* 1. Thiết lập Grid chứa 3 khối thành dạng Flex để dễ kiểm soát ẩn/hiện */
+            body:has(input:focus), body:has(select:focus) {
+                overflow: hidden; /* Khóa cuộn trang chính khi đang gõ phím */
+            }
+
+            /* Container chứa 3 khối Sáng - Chiều - Tối */
+            .grid.grid-cols-1.md\:grid-cols-3 {
+                display: flex !important;
+                flex-direction: column;
+                position: relative;
+            }
+
+            /* 2. Khi có bất kỳ ô input nào trong form được click chọn (Focus) */
+            .grid.grid-cols-1.md\:grid-cols-3 > div {
+                transition: all 0.25s ease-in-out;
+            }
+
+            /* Ẩn hoàn toàn 2 khối còn lại đi để nhường diện tích màn hình */
+            .grid.grid-cols-1.md\:grid-cols-3:has(input:focus) > div:not(:focus-within) {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                min-height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: hidden;
+                border: none !important;
+                position: absolute;
+            }
+
+            /* 3. Phóng to và đẩy khối đang thao tác lên cố định (On-Top) sát bàn phím */
+            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within {
+                position: fixed !important;
+                top: 70px; /* Né thanh chọn ngày ở trên */
+                left: 12px;
+                right: 12px;
+                bottom: 12px; /* Đẩy sát phần hiển thị trên bàn phím ảo */
+                z-index: 9999 !important;
+                width: calc(100% - 24px) !important;
+                height: auto !important;
+                min-height: unset !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+            }
+
+            /* Tối ưu hóa vùng hiển thị danh sách task bên trong khối đang mở rộng */
+            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-morning,
+            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-afternoon,
+            .grid.grid-cols-1.md\:grid-cols-3 > div:focus-within #tasks-evening {
+                max-height: calc(100vh - 320px) !important; /* Tự co giãn danh sách task không bị tràn */
+                overflow-y: auto !important;
+            }
+        }
     </style>
 </head>
 <body class="overflow-x-hidden w-full bg-slate-100 bg-[#f8fafc] text-slate-800 min-h-screen antialiased flex flex-col justify-between text-base">
