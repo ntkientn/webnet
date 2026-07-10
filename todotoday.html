@@ -135,7 +135,7 @@
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" data-vi="HIỆU SUẤT:" data-en="PERFORMANCE:">HIỆU SUẤT:</span>
                         <div id="score-display" class="text-2xl sm:text-3xl font-black text-indigo-600 leading-none">0%</div>
                     </div>
-                    <button onclick="triggerSummary()" class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-sm text-white rounded-xl shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all cursor-pointer flex items-center gap-1.5 shadow-indigo-500/10">
+                    <button onclick="handleSettleClick()" class="px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-sm text-white rounded-xl shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all cursor-pointer flex items-center gap-1.5 shadow-indigo-500/10">
                         <span>✓</span> <span data-vi="Tổng Kết & Lưu" data-en="Settle & Save">Tổng Kết & Lưu</span>
                     </button>
                 </div>
@@ -412,6 +412,46 @@
             <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-slate-100">
                 <button onclick="closeEditModal()" class="px-4 py-2 text-sm font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all cursor-pointer" data-vi="Hủy bỏ" data-en="Cancel">Hủy bỏ</button>
                 <button onclick="saveEditModalData()" class="px-5 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 font-bold text-sm text-white rounded-xl shadow-md hover:from-indigo-600 hover:to-purple-700 transition-all cursor-pointer shadow-indigo-500/10" data-vi="Cập nhật" data-en="Update">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settle Confirmation Modal -->
+    <div id="settle-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <!-- Lớp nền tối phía sau (Overlay) -->
+        <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"></div>
+
+        <!-- Hộp nội dung Popup (Modal Content) -->
+        <div class="relative bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-100 transform transition-all">
+            <!-- Tiêu đề & Icon cảnh báo -->
+            <div class="flex items-start gap-3 mb-4">
+                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-xl text-amber-600">
+                    ⚠️
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Xác nhận chốt số liệu hôm nay?</h3>
+                    <p class="text-sm text-slate-500 mt-0.5">Hành động này sẽ tổng kết và đóng ngày hiện tại.</p>
+                </div>
+            </div>
+
+            <!-- Nội dung ghi chú (Note rõ ràng theo ý anh) -->
+            <div class="bg-amber-50/50 border-l-4 border-amber-500 p-4 rounded-r-xl space-y-2 mb-6">
+                <p class="text-sm text-amber-900 leading-relaxed">
+                    📌 <strong>Khi đã Settle:</strong> Toàn bộ dữ liệu của ngày hôm nay sẽ được tổng kết để chuyển sang ngày mới. Bạn <span class="underline font-semibold">không thể</span> thêm, xóa hoặc sửa các task trực tiếp tại màn hình này nữa.
+                </p>
+                <p class="text-xs text-amber-800 leading-relaxed opacity-90">
+                    💡 <em>Tuy nhiên:</em> Bạn vẫn có thể vào mục <strong>Lịch sử (History)</strong> bất cứ lúc nào để chỉnh sửa lại các số liệu đã tổng kết nếu cần.
+                </p>
+            </div>
+
+            <!-- Các nút bấm tương tác -->
+            <div class="flex items-center justify-end gap-3">
+                <button onclick="closeSettleModal()" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 border border-slate-200 transition-colors cursor-pointer">
+                    Hủy bỏ
+                </button>
+                <button onclick="confirmSettleAndSave()" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm shadow-emerald-600/10 transition-colors cursor-pointer">
+                    Xác nhận & Lưu
+                </button>
             </div>
         </div>
     </div>
@@ -837,7 +877,10 @@
         }
     }
 
-    function triggerSummary() {
+    function confirmSettleAndSave() {
+        // 0. Đóng popup ngay lập tức để chuyển mượt giao diện
+        closeSettleModal();
+
         const isVi = appState.currentLang === "vi";
         
         // 1. Tính điểm và thống kê số task
@@ -866,7 +909,7 @@
         if (existingIndex >= 0) appState.history[existingIndex] = historyRecord;
         else appState.history.push(historyRecord);
 
-        // 3. XÓA SẠCH DATA TRÊN BẢNG TẠM THỜI (CASE 3)
+        // 3. XÓA SẠCH DATA TRÊN BẢNG TẠM THỜI
         if (appState.dailyBoards[currentDate]) {
             delete appState.dailyBoards[currentDate];
         }
@@ -898,7 +941,7 @@
         ensureStructure(appState.selectedDate);
         save();
 
-        // 6. Cập nhật UI An Toàn tuyệt đối
+        // 6. Cập nhật UI
         try {
             const datePickerEl = document.getElementById('date-picker');
             if (datePickerEl) datePickerEl.value = appState.selectedDate;
@@ -909,12 +952,12 @@
             }
 
             if (typeof toggleGotoTodayButtonVisibility === 'function') toggleGotoTodayButtonVisibility();
-            renderBoard(); // Sẽ vẽ ra một bảng trắng tinh của ngày targetDate
+            renderBoard(); // Vẽ lại bảng trắng tinh của ngày mới
         } catch(e) {
             console.error("Lỗi cập nhật UI:", e);
         }
 
-        // 7. THÔNG BÁO CHO USER RÕ RÀNG
+        // 7. THÔNG BÁO THÀNH CÔNG
         alert(isVi 
             ? "Hệ thống đã kết toán thành công! Dữ liệu đã lưu vào lịch sử và bảng công việc đã được làm mới."
             : "Settlement successful! Data saved to history and the task board has been cleared.");
@@ -1359,6 +1402,19 @@
         
         // Toggle qua lại giữa ẩn và hiện
         tooltip.classList.toggle('hidden');
+    }
+
+    // 1. Hàm này gắn trực tiếp vào thuộc tính onclick="..." của nút Settle & Save ngoài màn hình chính
+    function handleSettleClick() {
+        // Chỉ đơn giản là gỡ class 'hidden' để hiện popup lên
+        const modal = document.getElementById('settle-modal');
+        modal.classList.remove('hidden');
+    }
+
+    // 2. Hàm đóng popup khi user bấm "Hủy bỏ" hoặc bấm ra ngoài
+    function closeSettleModal() {
+        const modal = document.getElementById('settle-modal');
+        modal.classList.add('hidden');
     }
 
     // Bổ sung tính năng thông minh: Click ra ngoài khu vực bảng hướng dẫn thì tự động đóng lại
