@@ -457,26 +457,33 @@
     </div>
 
     <!-- Nhắc nhở user vận động sau 1-2 giờ làm việc -->
-    <div class="mt-8 mb-12 mx-auto bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 w-full max-w-7xl md:px-8">
-        <div class="flex items-center gap-3 mb-4">
-            <div class="bg-indigo-100 p-2 rounded-xl text-indigo-600 text-3xl">
-                <!-- Icon nhỏ (dùng SVG hoặc Emoji) -->
-                <span>👨‍⚕️</span>
+    <div class="max-w-7xl mx-auto px-4 w-full">
+        <div class="mt-8 mb-12 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200/60 w-full">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-indigo-100 p-2 rounded-xl text-indigo-600 text-2xl md:text-2xl">
+                    <span>👨‍⚕️💬 </span>
+                </div>
+                <h3 class="font-bold text-slate-500 text-sm md:text-base italic" data-vi="Hãy vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe." data-en="Take a break for exercise every 1-2 hours to stay energized and healthy.">
+                    Hãy vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe tốt.
+                </h3>
             </div>
-            <h3 class="font-bold text-slate-700 text-base" data-vi="* Hãy tạm nghỉ và vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe." data-en="* Take a break for exercise every 1-2 hours to stay energized and healthy.">
-                * Hãy vận động sau mỗi 1-2 giờ làm việc để nạp lại năng lượng và giữ sức khỏe.
-            </h3>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 text-2xl">
-            <button onclick="openExerciseModal('todotoday_8baitap.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
-                <span class="text-indigo-500 group-hover:scale-110 transition-transform">👨‍🏫</span>
-                <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-700" data-vi="8 bài tập tại bàn làm việc" data-en="8 Desk Exercises">8 bài tập tại bàn làm việc</span>
-            </button>
-            <button onclick="openExerciseModal('todotoday_baitapcovaigay.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
-                <span class="text-indigo-500 group-hover:scale-110 transition-transform">🙆‍♂️</span>
-                <span class="text-sm font-medium text-slate-600 group-hover:text-indigo-700" data-vi="Bài tập Cổ Vai Gáy" data-en="Neck & Shoulder Relief">Bài tập Cổ Vai Gáy</span>
-            </button>            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-4" data-vi="Chọn bài tập bạn thấy phù hợp dưới đây" data-en="Choose an exercise you find suitable below">
+                Chọn tập 1 bài bạn thấy phù hợp dưới đây
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-2xl">
+                <button onclick="openExerciseModal('todotoday_8baitap.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
+                    <span class="text-indigo-500 group-hover:scale-110 transition-transform">👨‍🏫</span>
+                    <span class="text-base font-medium text-slate-600 group-hover:text-indigo-700" data-vi="8 bài tập tại bàn làm việc" data-en="8 Desk Exercises">8 bài tập tại bàn làm việc</span>
+                </button>
+                <button onclick="openExerciseModal('todotoday_baitapcovaigay.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
+                    <span class="text-indigo-500 group-hover:scale-110 transition-transform">🙆‍♂️</span>
+                    <span class="text-base font-medium text-slate-600 group-hover:text-indigo-700" data-vi="Bài tập Cổ Vai Gáy" data-en="Neck & Shoulder Relief">Bài tập Cổ Vai Gáy</span>
+                </button>
+                <button onclick="openExerciseModal('todotoday_vandongkhilamviec.jpg')" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all text-left group">
+                    <span class="text-indigo-500 group-hover:scale-110 transition-transform">👨‍💼</span>
+                    <span class="text-base font-medium text-slate-600 group-hover:text-indigo-700" data-vi="Bài vận động cho nhân viên văn phòng" data-en="Exercise for office workers">Bài vận động cho nhân viên văn phòng</span>
+                </button>  
+            </div>
         </div>
     </div>
     <!-- Modal hướng dẫn bài tập -->
