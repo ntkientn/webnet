@@ -521,6 +521,13 @@ function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mo
 function closeSidebar(){document.getElementById('sidebar').classList.remove('mobile-open');document.getElementById('overlay').classList.remove('show')}
 
 function loadPanel(id){
+  // 1. Tự động cuộn trang lên trên cùng ngay khi click chọn item
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  
+  // (Phòng trường hợp layout cuộn bên trong khung #main trên một số thiết bị)
+  const mainEl = document.getElementById('main');
+  if (mainEl) mainEl.scrollTop = 0;
+
   document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.toggle('active',el.dataset.panel===id));
   currentPanel=id;
   closeSidebar();
