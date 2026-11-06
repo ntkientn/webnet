@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gieo ngẫu nhiên 3 xúc xắc</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#1e1b4b',
+                        },
+                        accent: {
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* 3D Dice Styling */
+        .dice-container {
+            perspective: 1000px;
+            width: 70px;
+            height: 70px;
+        }
+
+        @media (min-width: 640px) {
+            .dice-container {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        .dice-cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .dice-cube.rolling {
+            animation: rollAnimation 0.6s linear infinite;
+        }
+
+        @keyframes rollAnimation {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            25% { transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg); }
+            50% { transform: rotateX(270deg) rotateY(180deg) rotateZ(180deg); }
+            75% { transform: rotateX(90deg) rotateY(270deg) rotateZ(270deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #ffffff, #e2e8f0);
+            border: 2px solid #cbd5e1;
+            border-radius: 14px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.3);
+            display: grid;
+            grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+            padding: 6px;
+            box-sizing: border-box;
+        }
+
+        /* Face Positions */
+        .face-1 { transform: translateZ(35px); }
+        .face-2 { transform: rotateY(180deg) translateZ(35px); }
+        .face-3 { transform: rotateY(-90deg) translateZ(35px); }
+        .face-4 { transform: rotateY(90deg) translateZ(35px); }
+        .face-5 { transform: rotateX(90deg) translateZ(35px); }
+        .face-6 { transform: rotateX(-90deg) translateZ(35px); }
+
+        @media (min-width: 640px) {
+            .face-1 { transform: translateZ(40px); }
+            .face-2 { transform: rotateY(180deg) translateZ(40px); }
+            .face-3 { transform: rotateY(-90deg) translateZ(40px); }
+            .face-4 { transform: rotateY(90deg) translateZ(40px); }
+            .face-5 { transform: rotateX(90deg) translateZ(40px); }
+            .face-6 { transform: rotateX(-90deg) translateZ(40px); }
+        }
+
+        /* Rotations for showing final values */
+        .show-1 { transform: rotateX(0deg) rotateY(0deg); }
+        .show-2 { transform: rotateX(0deg) rotateY(-180deg); }
+        .show-3 { transform: rotateX(0deg) rotateY(90deg); }
+        .show-4 { transform: rotateX(0deg) rotateY(-90deg); }
+        .show-5 { transform: rotateX(-90deg) rotateY(0deg); }
+        .show-6 { transform: rotateX(90deg) rotateY(0deg); }
+
+        /* Dots */
+        .pip {
+            width: 12px;
+            height: 12px;
+            background-color: #1e293b;
+            border-radius: 50%;
+            align-self: center;
+            justify-self: center;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+        }
+        
+        @media (min-width: 640px) {
+            .pip {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        .pip.red {
+            background-color: #ef4444;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-6 lg:p-10">
+
+    <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Header -->
+        <header class="glass-panel rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-brand-600/20 text-brand-500 rounded-xl border border-brand-500/30">
+                    <i class="fa-solid fa-dice-d6 text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">Gieo ngẫu nhiên 3 xúc xắc</h1>
+                    <p class="text-xs text-slate-400 mt-0.5">Phân tích thống kê tần suất & Dự đoán tổ hợp bộ 3 số</p>
+                </div>
+            </div>
+            
+            <button onclick="resetData()" class="w-full sm:w-auto px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 rounded-xl border border-rose-500/30 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Đặt lại dữ liệu</span>
+            </button>
+        </header>
+
+        <!-- Control & Visual Dice Stage -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Controls Panel -->
+            <div class="lg:col-span-5 glass-panel rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-6">
+                <div>
+                    <h2 class="text-base font-bold text-white flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-sliders text-brand-500"></i> Chọn số lần thả xúc xắc
+                    </h2>
+
+                    <!-- Presets -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                        <button onclick="setQuickCount(10)" class="count-btn py-3 rounded-xl font-bold text-sm border bg-slate-800/80 border-slate-700 hover:border-brand-500 text-slate-200 transition">10 Lần</button>
+                        <button onclick="setQuickCount(20)" class="count-btn py-3 rounded-xl font-bold text-sm border bg-slate-800/80 border-slate-700 hover:border-brand-500 text-slate-200 transition">20 Lần</button>
+                        <button onclick="setQuickCount(50)" class="count-btn py-3 border-brand-500 bg-brand-600/20 rounded-xl font-bold text-sm border text-brand-300 transition">50 Lần</button>
+                        <button onclick="setQuickCount(100)" class="count-btn py-3 rounded-xl font-bold text-sm border bg-slate-800/80 border-slate-700 hover:border-brand-500 text-slate-200 transition">100 Lần</button>
+                    </div>
+
+                    <!-- Custom Input -->
+                    <div class="space-y-1.5">
+                        <label for="customCountInput" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Tùy chỉnh số lần (1 - 500):</label>
+                        <div class="relative">
+                            <input type="number" id="customCountInput" min="1" max="500" value="50" 
+                                   class="w-full bg-slate-900/90 border border-slate-700 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 rounded-xl py-2.5 px-4 text-white text-sm outline-none transition">
+                            <span class="absolute right-4 top-2.5 text-xs text-slate-500">lần</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button id="rollBtn" onclick="triggerSimulation()" 
+                        class="w-full py-4 bg-gradient-to-r from-brand-600 via-brand-500 to-accent-cyan hover:opacity-95 text-white font-bold rounded-xl shadow-lg shadow-brand-500/25 flex items-center justify-center gap-3 text-base transition transform active:scale-[0.98]">
+                    <i class="fa-solid fa-play text-lg"></i>
+                    <span>THẢ XÚC XẮC NGAY</span>
+                </button>
+            </div>
+
+            <!-- Visual Dice Stage -->
+            <div class="lg:col-span-7 glass-panel rounded-2xl p-5 sm:p-6 flex flex-col items-center justify-center min-h-[240px] relative overflow-hidden space-y-4">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-500/5 to-transparent pointer-events-none"></div>
+
+                <!-- Dice Arena -->
+                <div class="flex items-center justify-center gap-4 sm:gap-8 my-2">
+                    
+                    <!-- Dice 1 -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-xs font-bold text-slate-400 tracking-widest">XX 1</span>
+                        <div class="dice-container">
+                            <div id="diceCube1" class="dice-cube show-1">
+                                <div class="dice-face face-1"><div class="pip red col-start-2 row-start-2"></div></div>
+                                <div class="dice-face face-2"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-3"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-4"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-5"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-6"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-2"></div><div class="pip col-start-3 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                            </div>
+                        </div>
+                        <span id="lastVal1" class="text-lg font-extrabold text-brand-400">1</span>
+                    </div>
+
+                    <!-- Dice 2 -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-xs font-bold text-slate-400 tracking-widest">XX 2</span>
+                        <div class="dice-container">
+                            <div id="diceCube2" class="dice-cube show-2">
+                                <div class="dice-face face-1"><div class="pip red col-start-2 row-start-2"></div></div>
+                                <div class="dice-face face-2"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-3"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-4"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-5"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-6"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-2"></div><div class="pip col-start-3 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                            </div>
+                        </div>
+                        <span id="lastVal2" class="text-lg font-extrabold text-brand-400">2</span>
+                    </div>
+
+                    <!-- Dice 3 -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-xs font-bold text-slate-400 tracking-widest">XX 3</span>
+                        <div class="dice-container">
+                            <div id="diceCube3" class="dice-cube show-3">
+                                <div class="dice-face face-1"><div class="pip red col-start-2 row-start-2"></div></div>
+                                <div class="dice-face face-2"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-3"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-4"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-5"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-2 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                                <div class="dice-face face-6"><div class="pip col-start-1 row-start-1"></div><div class="pip col-start-3 row-start-1"></div><div class="pip col-start-1 row-start-2"></div><div class="pip col-start-3 row-start-2"></div><div class="pip col-start-1 row-start-3"></div><div class="pip col-start-3 row-start-3"></div></div>
+                            </div>
+                        </div>
+                        <span id="lastVal3" class="text-lg font-extrabold text-brand-400">3</span>
+                    </div>
+                </div>
+
+                <div class="text-xs font-medium text-slate-400">Đã gieo tổng cộng: <span id="totalRollsCount" class="text-white font-bold">0</span> lượt</div>
+            </div>
+        </div>
+
+        <!-- Collapsible Section: Detailed Log Per Roll (Right below stage) -->
+        <div class="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
+            <button onclick="toggleDetails()" class="w-full p-4 bg-slate-800/60 hover:bg-slate-800 flex justify-between items-center text-left transition">
+                <span class="font-bold text-sm text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-brand-400"></i>
+                    Chi tiết từng lượt gieo (<span id="rollCountBadge">0</span> lượt)
+                </span>
+                <span id="collapseToggleBtn" class="text-xs font-semibold px-3 py-1 bg-slate-700 text-slate-300 rounded-lg flex items-center gap-1.5">
+                    <span>Xem chi tiết</span>
+                    <i id="collapseChevron" class="fa-solid fa-chevron-down transition-transform"></i>
+                </span>
+            </button>
+
+            <div id="detailsCollapsible" class="hidden border-t border-slate-700/60 p-4 space-y-3">
+                <div class="overflow-x-auto max-h-60 rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900/90 text-slate-400 font-semibold uppercase tracking-wider sticky top-0 border-b border-slate-800">
+                            <tr>
+                                <th class="py-2.5 px-3">Lượt #</th>
+                                <th class="py-2.5 px-3">Xúc xắc 1</th>
+                                <th class="py-2.5 px-3">Xúc xắc 2</th>
+                                <th class="py-2.5 px-3">Xúc xắc 3</th>
+                                <th class="py-2.5 px-3">Bộ 3 số (Gốc)</th>
+                                <th class="py-2.5 px-3">Bộ chuẩn hóa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" class="divide-y divide-slate-800/60 bg-slate-900/40 font-mono">
+                            <tr>
+                                <td colspan="6" class="py-6 text-center text-slate-500 font-sans">Bấm "THẢ XÚC XẮC NGAY" để tạo dữ liệu lượt gieo!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Detailed Dice Statistics -->
+        <div class="space-y-4">
+            <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-chart-column text-accent-cyan"></i> Thống Kê Chi Tiết Từng Xúc Xắc
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Stat Card Dice 1 -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 border-t-4 border-t-brand-500 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-700/60 mb-3">
+                            <span class="font-bold text-white flex items-center gap-2 text-sm">
+                                <span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span> Xúc Xắc 1
+                            </span>
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-brand-500/10 text-brand-400 rounded-full border border-brand-500/20">XX 1</span>
+                        </div>
+
+                        <!-- Highlights Top 1, 2, 3 prominent badges -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-400 font-bold uppercase tracking-tight">Top 1</div>
+                                <div id="top1-d1" class="text-lg font-black text-amber-300">--</div>
+                            </div>
+                            <div class="bg-slate-700/30 border border-slate-600/40 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-slate-300 font-bold uppercase tracking-tight">Top 2</div>
+                                <div id="top2-d1" class="text-lg font-black text-slate-200">--</div>
+                            </div>
+                            <div class="bg-amber-700/10 border border-amber-600/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-tight">Top 3</div>
+                                <div id="top3-d1" class="text-lg font-black text-amber-500">--</div>
+                            </div>
+                        </div>
+
+                        <!-- Frequencies Breakdown -->
+                        <div id="freq-d1" class="space-y-2.5 text-xs">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Card Dice 2 -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 border-t-4 border-t-accent-cyan flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-700/60 mb-3">
+                            <span class="font-bold text-white flex items-center gap-2 text-sm">
+                                <span class="w-2.5 h-2.5 rounded-full bg-accent-cyan"></span> Xúc Xắc 2
+                            </span>
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-accent-cyan/10 text-accent-cyan rounded-full border border-accent-cyan/20">XX 2</span>
+                        </div>
+
+                        <!-- Highlights Top 1, 2, 3 prominent badges -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-400 font-bold uppercase tracking-tight">Top 1</div>
+                                <div id="top1-d2" class="text-lg font-black text-amber-300">--</div>
+                            </div>
+                            <div class="bg-slate-700/30 border border-slate-600/40 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-slate-300 font-bold uppercase tracking-tight">Top 2</div>
+                                <div id="top2-d2" class="text-lg font-black text-slate-200">--</div>
+                            </div>
+                            <div class="bg-amber-700/10 border border-amber-600/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-tight">Top 3</div>
+                                <div id="top3-d2" class="text-lg font-black text-amber-500">--</div>
+                            </div>
+                        </div>
+
+                        <div id="freq-d2" class="space-y-2.5 text-xs">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stat Card Dice 3 -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 border-t-4 border-t-accent-emerald flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-700/60 mb-3">
+                            <span class="font-bold text-white flex items-center gap-2 text-sm">
+                                <span class="w-2.5 h-2.5 rounded-full bg-accent-emerald"></span> Xúc Xắc 3
+                            </span>
+                            <span class="text-xs font-semibold px-2 py-0.5 bg-accent-emerald/10 text-accent-emerald rounded-full border border-accent-emerald/20">XX 3</span>
+                        </div>
+
+                        <!-- Highlights Top 1, 2, 3 prominent badges -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-400 font-bold uppercase tracking-tight">Top 1</div>
+                                <div id="top1-d3" class="text-lg font-black text-amber-300">--</div>
+                            </div>
+                            <div class="bg-slate-700/30 border border-slate-600/40 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-slate-300 font-bold uppercase tracking-tight">Top 2</div>
+                                <div id="top2-d3" class="text-lg font-black text-slate-200">--</div>
+                            </div>
+                            <div class="bg-amber-700/10 border border-amber-600/30 rounded-xl p-2 text-center">
+                                <div class="text-[10px] text-amber-500 font-bold uppercase tracking-tight">Top 3</div>
+                                <div id="top3-d3" class="text-lg font-black text-amber-500">--</div>
+                            </div>
+                        </div>
+
+                        <div id="freq-d3" class="space-y-2.5 text-xs">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Deduplicated Tiered Combination Matrix -->
+        <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-accent-amber"></i> Kết Luận Các Bộ 3 Số Khả Năng Ra
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">Loại trùng hoàn toàn (VD: 2-3-6 & 3-6-2 là 1). Bộ số đã có ở cấp cao sẽ không lặp lại ở cấp thấp hơn.</p>
+                </div>
+                <button onclick="copyCombinations()" class="self-start sm:self-auto text-xs px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-copy text-accent-cyan"></i> Sao chép kết quả
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Tier 1: Highest -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-emerald-500/30">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Cao Nhất</h3>
+                                <p class="text-[10px] text-slate-400">Top 1 XX1 × Top 1 XX2 × Top 1 XX3</p>
+                            </div>
+                        </div>
+                        <span id="count-highest" class="text-xs font-bold px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded-full">0 bộ</span>
+                    </div>
+
+                    <div id="list-highest" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tier 2: High -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-brand-500/30">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold text-xs">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Cao</h3>
+                                <p class="text-[10px] text-slate-400">1 con Top 1 + 2 con Top 2 còn lại</p>
+                            </div>
+                        </div>
+                        <span id="count-high" class="text-xs font-bold px-2 py-0.5 bg-brand-500/20 text-brand-400 rounded-full">0 bộ</span>
+                    </div>
+
+                    <div id="list-high" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tier 3: Medium -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-amber-500/30">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Trung Bình</h3>
+                                <p class="text-[10px] text-slate-400">1 Top 1 + 2 Top 3 HOẶC các con Top 2, Top 3</p>
+                            </div>
+                        </div>
+                        <span id="count-medium" class="text-xs font-bold px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded-full">0 bộ</span>
+                    </div>
+
+                    <div id="list-medium" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-slate-500 py-4">
+            Mô Phỏng Gieo Ngẫu Nhiên 3 Xúc Xắc &bull; HTML5 Single-Page App &bull; GitHub Pages Ready
+        </footer>
+
+    </div>
+
+    <!-- Notification Toast Modal -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white border border-slate-700 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 pointer-events-none z-50">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-accent-emerald text-lg"></i>
+        <span id="toastMsg" class="text-sm font-medium">Thông báo</span>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // State Management
+        let rollsHistory = [];
+        let simulationCount = 50;
+        let isDetailsOpen = false;
+
+        // Statistics data per dice
+        let stats = {
+            d1: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+            d2: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+            d3: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] }
+        };
+
+        // SVG Dice Face Icons Generator (Mặt 1-6)
+        function getDiceSvg(val) {
+            const pipsMap = {
+                1: [[2, 2]],
+                2: [[1, 1], [3, 3]],
+                3: [[1, 1], [2, 2], [3, 3]],
+                4: [[1, 1], [3, 1], [1, 3], [3, 3]],
+                5: [[1, 1], [3, 1], [2, 2], [1, 3], [3, 3]],
+                6: [[1, 1], [3, 1], [1, 2], [3, 2], [1, 3], [3, 3]]
+            };
+            const coords = pipsMap[val] || [];
+            let pipsSvg = '';
+            coords.forEach(([c, r]) => {
+                const cx = c * 7;
+                const cy = r * 7;
+                const fill = val === 1 ? '#ef4444' : '#1e293b';
+                pipsSvg += `<circle cx="${cx}" cy="${cy}" r="2.2" fill="${fill}" />`;
+            });
+
+            return `<svg class="w-6 h-6 inline-block shadow-sm rounded-md border border-slate-300" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="28" height="28" rx="6" fill="#F8FAFC"/>
+                ${pipsSvg}
+            </svg>`;
+        }
+
+        // Toggle Details Collapsible
+        function toggleDetails() {
+            isDetailsOpen = !isDetailsOpen;
+            const container = document.getElementById('detailsCollapsible');
+            const chevron = document.getElementById('collapseChevron');
+            const btnText = document.querySelector('#collapseToggleBtn span');
+
+            if (isDetailsOpen) {
+                container.classList.remove('hidden');
+                chevron.classList.add('rotate-180');
+                btnText.innerText = 'Thu gọn';
+            } else {
+                container.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+                btnText.innerText = 'Xem chi tiết';
+            }
+        }
+
+        // Handle Quick Count Presets
+        function setQuickCount(val) {
+            simulationCount = val;
+            document.getElementById('customCountInput').value = val;
+            
+            document.querySelectorAll('.count-btn').forEach(btn => {
+                btn.className = 'count-btn py-3 rounded-xl font-bold text-sm border bg-slate-800/80 border-slate-700 hover:border-brand-500 text-slate-200 transition';
+            });
+            event.currentTarget.className = 'count-btn py-3 border-brand-500 bg-brand-600/20 rounded-xl font-bold text-sm border text-brand-300 transition';
+        }
+
+        document.getElementById('customCountInput').addEventListener('input', (e) => {
+            let val = parseInt(e.target.value);
+            if (val > 500) val = 500;
+            if (val >= 1) simulationCount = val;
+            
+            document.querySelectorAll('.count-btn').forEach(btn => {
+                btn.className = 'count-btn py-3 rounded-xl font-bold text-sm border bg-slate-800/80 border-slate-700 hover:border-brand-500 text-slate-200 transition';
+            });
+        });
+
+        // Trigger Main Simulation Loop
+        function triggerSimulation() {
+            const btn = document.getElementById('rollBtn');
+            const dice1 = document.getElementById('diceCube1');
+            const dice2 = document.getElementById('diceCube2');
+            const dice3 = document.getElementById('diceCube3');
+
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Add rolling animation class
+            dice1.classList.add('rolling');
+            dice2.classList.add('rolling');
+            dice3.classList.add('rolling');
+
+            setTimeout(() => {
+                // Execute Simulation logic
+                runSimulation(simulationCount);
+
+                // Stop rolling animation
+                dice1.classList.remove('rolling');
+                dice2.classList.remove('rolling');
+                dice3.classList.remove('rolling');
+
+                // Get last roll values
+                const lastRoll = rollsHistory[rollsHistory.length - 1];
+                setCubeFace(dice1, 'lastVal1', lastRoll.v1);
+                setCubeFace(dice2, 'lastVal2', lastRoll.v2);
+                setCubeFace(dice3, 'lastVal3', lastRoll.v3);
+
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                showToast(`Đã gieo thành công ${simulationCount} lượt!`);
+            }, 600);
+        }
+
+        function setCubeFace(element, textId, val) {
+            element.className = `dice-cube show-${val}`;
+            document.getElementById(textId).innerText = val;
+        }
+
+        // Core Mathematical & Statistical Engine
+        function runSimulation(count) {
+            rollsHistory = [];
+            stats = {
+                d1: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+                d2: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+                d3: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] }
+            };
+
+            for (let i = 1; i <= count; i++) {
+                const v1 = Math.floor(Math.random() * 6) + 1;
+                const v2 = Math.floor(Math.random() * 6) + 1;
+                const v3 = Math.floor(Math.random() * 6) + 1;
+
+                stats.d1.counts[v1]++;
+                stats.d2.counts[v2]++;
+                stats.d3.counts[v3]++;
+
+                const comboSorted = [v1, v2, v3].sort((a, b) => a - b).join('-');
+
+                rollsHistory.push({
+                    index: i,
+                    v1, v2, v3,
+                    raw: `${v1}-${v2}-${v3}`,
+                    normalized: comboSorted
+                });
+            }
+
+            // Calculate Ranks for each dice with Tie Handling
+            calculateDiceRanks(stats.d1);
+            calculateDiceRanks(stats.d2);
+            calculateDiceRanks(stats.d3);
+
+            // Render Results to UI
+            renderStatsUI();
+            computeCombinationsTierMatrix();
+            renderLogsTable();
+        }
+
+        // Rank Calculation Logic with Tie Handling
+        function calculateDiceRanks(diceStat) {
+            const freqMap = {};
+            for (let face = 1; face <= 6; face++) {
+                const cnt = diceStat.counts[face];
+                if (!freqMap[cnt]) freqMap[cnt] = [];
+                freqMap[cnt].push(face);
+            }
+
+            const sortedFreqs = Object.keys(freqMap).map(Number).sort((a, b) => b - a);
+
+            diceStat.top1 = sortedFreqs[0] !== undefined ? freqMap[sortedFreqs[0]] : [];
+            diceStat.top2 = sortedFreqs[1] !== undefined ? freqMap[sortedFreqs[1]] : [];
+            diceStat.top3 = sortedFreqs[2] !== undefined ? freqMap[sortedFreqs[2]] : [];
+        }
+
+        // Render Statistics Progress Bars & Rankings
+        function renderStatsUI() {
+            document.getElementById('totalRollsCount').innerText = rollsHistory.length;
+            document.getElementById('rollCountBadge').innerText = rollsHistory.length;
+
+            const renderDicePanel = (diceStat, freqContainerId, top1Id, top2Id, top3Id, colorClass) => {
+                const container = document.getElementById(freqContainerId);
+                container.innerHTML = '';
+
+                const total = rollsHistory.length;
+
+                for (let face = 1; face <= 6; face++) {
+                    const count = diceStat.counts[face];
+                    const percent = total > 0 ? ((count / total) * 100).toFixed(1) : 0;
+
+                    const barHtml = `
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center text-slate-300">
+                                <span class="font-medium flex items-center gap-2">
+                                    ${getDiceSvg(face)}
+                                </span>
+                                <span class="text-xs"><strong class="text-white font-bold">${count}</strong> lần (${percent}%)</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full ${colorClass} transition-all duration-500" style="width: ${percent}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += barHtml;
+                }
+
+                // Format Top ranks text
+                document.getElementById(top1Id).innerText = diceStat.top1.length > 0 ? diceStat.top1.join(', ') : '--';
+                document.getElementById(top2Id).innerText = diceStat.top2.length > 0 ? diceStat.top2.join(', ') : '--';
+                document.getElementById(top3Id).innerText = diceStat.top3.length > 0 ? diceStat.top3.join(', ') : '--';
+            };
+
+            renderDicePanel(stats.d1, 'freq-d1', 'top1-d1', 'top2-d1', 'top3-d1', 'bg-brand-500');
+            renderDicePanel(stats.d2, 'freq-d2', 'top1-d2', 'top2-d2', 'top3-d2', 'bg-accent-cyan');
+            renderDicePanel(stats.d3, 'freq-d3', 'top1-d3', 'top2-d3', 'top3-d3', 'bg-accent-emerald');
+        }
+
+        // Deduplicated & Tiered Combination Classifier (Updated Logic)
+        function computeCombinationsTierMatrix() {
+            const highestSets = new Set();
+            const highSets = new Set();
+            const mediumSets = new Set();
+
+            const d1_t1 = stats.d1.top1;
+            const d1_t2 = stats.d1.top2;
+            const d1_t3 = stats.d1.top3;
+            const d1_t23 = [...d1_t2, ...d1_t3];
+
+            const d2_t1 = stats.d2.top1;
+            const d2_t2 = stats.d2.top2;
+            const d2_t3 = stats.d2.top3;
+            const d2_t23 = [...d2_t2, ...d2_t3];
+
+            const d3_t1 = stats.d3.top1;
+            const d3_t2 = stats.d3.top2;
+            const d3_t3 = stats.d3.top3;
+            const d3_t23 = [...d3_t2, ...d3_t3];
+
+            const makeKey = (a, b, c) => [a, b, c].sort((x, y) => x - y).join('-');
+
+            // 1. KHẢ NĂNG CAO NHẤT: Top 1 XX1 x Top 1 XX2 x Top 1 XX3
+            for (let a of d1_t1) {
+                for (let b of d2_t1) {
+                    for (let c of d3_t1) {
+                        highestSets.add(makeKey(a, b, c));
+                    }
+                }
+            }
+
+            // 2. KHẢ NĂNG CAO: Top 1 của 1 XX bất kỳ + Top 2 của 2 XX còn lại
+            // Case A: Top1 XX1 + Top2 XX2 + Top2 XX3
+            for (let a of d1_t1) {
+                for (let b of d2_t2) {
+                    for (let c of d3_t2) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key)) highSets.add(key);
+                    }
+                }
+            }
+            // Case B: Top1 XX2 + Top2 XX1 + Top2 XX3
+            for (let b of d2_t1) {
+                for (let a of d1_t2) {
+                    for (let c of d3_t2) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key)) highSets.add(key);
+                    }
+                }
+            }
+            // Case C: Top1 XX3 + Top2 XX1 + Top2 XX2
+            for (let c of d3_t1) {
+                for (let a of d1_t2) {
+                    for (let b of d2_t2) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key)) highSets.add(key);
+                    }
+                }
+            }
+
+            // 3. KHẢ NĂNG TRUNG BÌNH: 
+            // - Điều kiện 1: 1 Top 1 của 1 XX + Top 3 của 2 XX còn lại
+            // - Điều kiện 2: Cả 3 con thuộc Top 2 hoặc Top 3 của 3 XX
+            
+            // DK 1A: Top 1 XX1 + Top3 XX2 + Top3 XX3
+            for (let a of d1_t1) {
+                for (let b of d2_t3) {
+                    for (let c of d3_t3) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key) && !highSets.has(key)) mediumSets.add(key);
+                    }
+                }
+            }
+            // DK 1B: Top 1 XX2 + Top3 XX1 + Top3 XX3
+            for (let b of d2_t1) {
+                for (let a of d1_t3) {
+                    for (let c of d3_t3) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key) && !highSets.has(key)) mediumSets.add(key);
+                    }
+                }
+            }
+            // DK 1C: Top 1 XX3 + Top3 XX1 + Top3 XX2
+            for (let c of d3_t1) {
+                for (let a of d1_t3) {
+                    for (let b of d2_t3) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key) && !highSets.has(key)) mediumSets.add(key);
+                    }
+                }
+            }
+
+            // DK 2: 3 con thuộc Top 2 hoặc Top 3 của 3 XX
+            for (let a of d1_t23) {
+                for (let b of d2_t23) {
+                    for (let c of d3_t23) {
+                        const key = makeKey(a, b, c);
+                        if (!highestSets.has(key) && !highSets.has(key)) {
+                            mediumSets.add(key);
+                        }
+                    }
+                }
+            }
+
+            // Render Combinations UI
+            renderComboList('list-highest', 'count-highest', Array.from(highestSets), 'emerald');
+            renderComboList('list-high', 'count-high', Array.from(highSets), 'indigo');
+            renderComboList('list-medium', 'count-medium', Array.from(mediumSets), 'amber');
+        }
+
+        function renderComboList(containerId, countId, combos, theme) {
+            const container = document.getElementById(containerId);
+            const countBadge = document.getElementById(countId);
+
+            container.innerHTML = '';
+            countBadge.innerText = `${combos.length} bộ`;
+
+            if (combos.length === 0) {
+                container.innerHTML = `<span class="text-xs text-slate-500 italic py-2">Không có bộ thỏa mãn</span>`;
+                return;
+            }
+
+            const colorMap = {
+                emerald: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 hover:border-emerald-400',
+                indigo: 'bg-brand-500/10 text-brand-300 border-brand-500/30 hover:border-brand-400',
+                amber: 'bg-amber-500/10 text-amber-300 border-amber-500/30 hover:border-amber-400'
+            };
+
+            combos.forEach(combo => {
+                const tag = document.createElement('span');
+                tag.className = `px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-1 ${colorMap[theme]}`;
+                tag.innerHTML = `<i class="fa-solid fa-cube text-[10px] opacity-60"></i> ${combo}`;
+                container.appendChild(tag);
+            });
+        }
+
+        // Render Logs History Table
+        function renderLogsTable() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            if (rollsHistory.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-500 font-sans">Chưa có dữ liệu.</td></tr>`;
+                return;
+            }
+
+            // Display in reverse order (newest on top)
+            const displayList = [...rollsHistory].reverse();
+
+            displayList.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-800/40 transition';
+                tr.innerHTML = `
+                    <td class="py-2 px-3 text-slate-400">#${item.index}</td>
+                    <td class="py-2 px-3 font-bold text-brand-400">${item.v1}</td>
+                    <td class="py-2 px-3 font-bold text-accent-cyan">${item.v2}</td>
+                    <td class="py-2 px-3 font-bold text-accent-emerald">${item.v3}</td>
+                    <td class="py-2 px-3 text-slate-300">${item.raw}</td>
+                    <td class="py-2 px-3 text-accent-amber font-bold">${item.normalized}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copyCombinations() {
+            const h = document.getElementById('list-highest').innerText.replace(/\n/g, ' ');
+            const hi = document.getElementById('list-high').innerText.replace(/\n/g, ' ');
+            const m = document.getElementById('list-medium').innerText.replace(/\n/g, ' ');
+
+            const textToCopy = `=== KHẢ NĂNG CAO NHẤT ===\n${h}\n\n=== KHẢ NĂNG CAO ===\n${hi}\n\n=== KHẢ NĂNG TRUNG BÌNH ===\n${m}`;
+
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            showToast('Đã sao chép các bộ số vào clipboard!');
+        }
+
+        function resetData() {
+            rollsHistory = [];
+            stats = {
+                d1: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+                d2: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] },
+                d3: { counts: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, top1: [], top2: [], top3: [] }
+            };
+            renderStatsUI();
+            computeCombinationsTierMatrix();
+            renderLogsTable();
+            showToast('Đã xóa tất cả dữ liệu!');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Init simulation on load
+        window.onload = function () {
+            runSimulation(50);
+        };
+    </script>
+</body>
+</html>
