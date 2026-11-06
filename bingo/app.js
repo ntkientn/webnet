@@ -216,21 +216,18 @@ function computeCombinationsTierMatrix() {
     const d1_t1 = stats.d1.top1;
     const d1_t2 = stats.d1.top2;
     const d1_t3 = stats.d1.top3;
-    const d1_t23 = [...d1_t2, ...d1_t3];
 
     const d2_t1 = stats.d2.top1;
     const d2_t2 = stats.d2.top2;
     const d2_t3 = stats.d2.top3;
-    const d2_t23 = [...d2_t2, ...d2_t3];
 
     const d3_t1 = stats.d3.top1;
     const d3_t2 = stats.d3.top2;
     const d3_t3 = stats.d3.top3;
-    const d3_t23 = [...d3_t2, ...d3_t3];
 
     const makeKey = (a, b, c) => [a, b, c].sort((x, y) => x - y).join('-');
 
-    // Tier 1: Top 1 XX1 x Top 1 XX2 x Top 1 XX3
+    // 1. Khả Năng Cao Nhất: Top 1 XX1 × Top 1 XX2 × Top 1 XX3
     for (let a of d1_t1) {
         for (let b of d2_t1) {
             for (let c of d3_t1) {
@@ -239,7 +236,8 @@ function computeCombinationsTierMatrix() {
         }
     }
 
-    // Tier 2: 1 Top 1 of any XX + Top 2 of remaining 2 XXs
+    // 2. Khả Năng Cao: Top 1 của 1 XX + 2 con Top 2 của 2 XX còn lại
+    // TH1: XX1 (Top 1) + XX2 (Top 2) + XX3 (Top 2)
     for (let a of d1_t1) {
         for (let b of d2_t2) {
             for (let c of d3_t2) {
@@ -248,6 +246,7 @@ function computeCombinationsTierMatrix() {
             }
         }
     }
+    // TH2: XX2 (Top 1) + XX1 (Top 2) + XX3 (Top 2)
     for (let b of d2_t1) {
         for (let a of d1_t2) {
             for (let c of d3_t2) {
@@ -256,6 +255,7 @@ function computeCombinationsTierMatrix() {
             }
         }
     }
+    // TH3: XX3 (Top 1) + XX1 (Top 2) + XX2 (Top 2)
     for (let c of d3_t1) {
         for (let a of d1_t2) {
             for (let b of d2_t2) {
@@ -265,7 +265,8 @@ function computeCombinationsTierMatrix() {
         }
     }
 
-    // Tier 3: 1 Top 1 + 2 Top 3 OR all from Top 2/3
+    // 3. Khả Năng Trung Bình: Top 1 của 1 XX + 2 con Top 3 của 2 XX còn lại
+    // TH1: XX1 (Top 1) + XX2 (Top 3) + XX3 (Top 3)
     for (let a of d1_t1) {
         for (let b of d2_t3) {
             for (let c of d3_t3) {
@@ -274,6 +275,7 @@ function computeCombinationsTierMatrix() {
             }
         }
     }
+    // TH2: XX2 (Top 1) + XX1 (Top 3) + XX3 (Top 3)
     for (let b of d2_t1) {
         for (let a of d1_t3) {
             for (let c of d3_t3) {
@@ -282,22 +284,12 @@ function computeCombinationsTierMatrix() {
             }
         }
     }
+    // TH3: XX3 (Top 1) + XX1 (Top 3) + XX2 (Top 3)
     for (let c of d3_t1) {
         for (let a of d1_t3) {
             for (let b of d2_t3) {
                 const key = makeKey(a, b, c);
                 if (!highestSets.has(key) && !highSets.has(key)) mediumSets.add(key);
-            }
-        }
-    }
-
-    for (let a of d1_t23) {
-        for (let b of d2_t23) {
-            for (let c of d3_t23) {
-                const key = makeKey(a, b, c);
-                if (!highestSets.has(key) && !highSets.has(key)) {
-                    mediumSets.add(key);
-                }
             }
         }
     }
