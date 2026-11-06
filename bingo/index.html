@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo Dice</title>
+    <title>Gieo ngẫu nhiên 3 xúc xắc</title>
 
     <!-- Prominent High-Contrast White Dice (Face 6) Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='4' y='4' width='92' height='92' rx='20' fill='%23ffffff' stroke='%23334155' stroke-width='8'/><circle cx='30' cy='26' r='9' fill='%230f172a'/><circle cx='30' cy='50' r='9' fill='%230f172a'/><circle cx='30' cy='74' r='9' fill='%230f172a'/><circle cx='70' cy='26' r='9' fill='%230f172a'/><circle cx='70' cy='50' r='9' fill='%230f172a'/><circle cx='70' cy='74' r='9' fill='%230f172a'/></svg>">
@@ -376,18 +376,53 @@
                 </div>
 
             </div>
-        </div>
 
-        <footer class="text-center text-xs text-slate-500 py-4">
-            Bingo Dice &bull; HTML5 & Tailwind CSS &bull; © 2026 Kien NT • All rights reserved.
-        </footer>
+            <!-- NÂNG CẤP MỚI: Thống kê đặc tính các bộ số (Tổng, Cặp số trùng, Bộ bão 3 số) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                <!-- 1. Thống kê Tổng các bộ số -->
+                <div class="glass-panel rounded-2xl p-4 space-y-3 border-t-2 border-t-cyan-500">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/60">
+                        <span class="font-bold text-xs uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-calculator"></i> Tổng Các Bộ Số
+                        </span>
+                        <span id="count-sums" class="text-[10px] font-semibold px-2 py-0.5 bg-cyan-500/10 text-cyan-300 rounded-full border border-cyan-500/20">0 tổng</span>
+                    </div>
+                    <div id="list-sums" class="flex flex-wrap gap-1.5 min-h-[40px] text-xs"></div>
+                </div>
+
+                <!-- 2. Thống kê Cặp số trùng (Đôi) -->
+                <div class="glass-panel rounded-2xl p-4 space-y-3 border-t-2 border-t-amber-500">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/60">
+                        <span class="font-bold text-xs uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-clone"></i> Cặp Số Trùng (Đôi)
+                        </span>
+                        <span id="count-doubles" class="text-[10px] font-semibold px-2 py-0.5 bg-amber-500/10 text-amber-300 rounded-full border border-amber-500/20">0 cặp</span>
+                    </div>
+                    <div id="list-doubles" class="flex flex-wrap gap-1.5 min-h-[40px] text-xs"></div>
+                </div>
+
+                <!-- 3. Thống kê Bộ 3 số trùng (Bão) -->
+                <div class="glass-panel rounded-2xl p-4 space-y-3 border-t-2 border-t-emerald-500">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-700/60">
+                        <span class="font-bold text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-cubes"></i> Bộ 3 Trùng (Bão)
+                        </span>
+                        <span id="count-triples" class="text-[10px] font-semibold px-2 py-0.5 bg-emerald-500/10 text-emerald-300 rounded-full border border-emerald-500/20">0 bão</span>
+                    </div>
+                    <div id="list-triples" class="flex flex-wrap gap-1.5 min-h-[40px] text-xs"></div>
+                </div>
+            </div>
+
+        </div>
 
     </div>
 
-    <!-- Notification Toast Modal -->
-    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-800 text-white border border-slate-700 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 pointer-events-none z-50">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-accent-emerald text-lg"></i>
-        <span id="toastMsg" class="text-sm font-medium">Thông báo</span>
+    <!-- Toast notification HTML block -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50">
+        <div class="bg-slate-800 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span id="toastMsg">Thông báo</span>
+        </div>
     </div>
 
     <!-- External Script -->
