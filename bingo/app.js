@@ -297,6 +297,74 @@ function computeCombinationsTierMatrix() {
     renderComboList('list-highest', 'count-highest', Array.from(highestSets), 'gold');
     renderComboList('list-high', 'count-high', Array.from(highSets), 'silver');
     renderComboList('list-medium', 'count-medium', Array.from(mediumSets), 'bronze');
+
+    // Analyze characteristics across all predicted sets
+    const allPredictedSets = [...Array.from(highestSets), ...Array.from(highSets), ...Array.from(mediumSets)];
+    analyzeCombinationCharacteristics(allPredictedSets);
+}
+
+// Analyze Sums, Double Pairs, and Triple Sets across predicted combinations
+function analyzeCombinationCharacteristics(combos) {
+    const sumCounts = {};
+    const doubleCounts = {};
+    const tripleCounts = {};
+
+    combos.forEach(comboStr => {
+        const nums = comboStr.split('-').map(Number);
+        
+        // 1. Calculate Sum
+        const sum = nums.reduce((a, b) => a + b, 0);
+        sumCounts[sum] = (sumCounts[sum] || 0) + 1;
+
+        // Count digit frequencies inside the trio
+        const freq = {};
+        nums.forEach(n => freq[n] = (freq[n] || 0) + 1);
+
+        // 2. Check Triple (3 same numbers e.g. 6-6-6)
+        Object.entries(freq).forEach(([num, count]) => {
+            if (count === 3) {
+                const key = `${num}-${num}-${num}`;
+                tripleCounts[key] = (tripleCounts[key] || 0) + 1;
+            } else if (count === 2) {
+                // 3. Check Double Pair (2 same numbers e.g. 3-3)
+                const key = `${num}-${num}`;
+                doubleCounts[key] = (doubleCounts[key] || 0) + 1;
+            }
+        });
+    });
+
+    renderSummaryItems('list-sums', 'count-sums', sumCounts, 'Tổng', 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30');
+    renderSummaryItems('list-doubles', 'count-doubles', doubleCounts, 'Cặp', 'bg-amber-500/10 text-amber-300 border-amber-500/30');
+    renderSummaryItems('list-triples', 'count-triples', tripleCounts, 'Bộ Bão', 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30');
+}
+
+// Render Summary Badges with Frequencies
+function renderSummaryItems(containerId, countId, dataObj, labelPrefix, badgeClass) {
+    const container = document.getElementById(containerId);
+    const countBadge = document.getElementById(countId);
+
+    container.innerHTML = '';
+    const keys = Object.keys(dataObj);
+    countBadge.innerText = `${keys.length} ${labelPrefix.toLowerCase()}`;
+
+    if (keys.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500 italic py-1">Không có xuất hiện</span>`;
+        return;
+    }
+
+    // Sort by count descending, then by value
+    const sorted = keys.sort((a, b) => {
+        if (dataObj[b] !== dataObj[a]) return dataObj[b] - dataObj[a];
+        return a.localeCompare(b, undefined, { numeric: true });
+    });
+
+    sorted.forEach(key => {
+        const count = dataObj[key];
+        const badge = document.createElement('span');
+        badge.className = `px-2.5 py-1 rounded-lg border font-mono font-semibold flex items-center gap-1.5 transition ${badgeClass}`;
+        badge.innerHTML = `<span>${key}</span> <span class="text-[10px] opacity-75 font-normal">(${count} lần)</span>`;
+        container.appendChild(badge);
+    });
 }
 
 // Render Combination Cards
