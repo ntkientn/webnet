@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo Dice</title>
+    <title>Gieo ngẫu nhiên 3 xúc xắc</title>
+
+    <!-- Inline SVG Favicon (Glassmorphism Neon Dice) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230f172a'/><rect x='10' y='10' width='80' height='80' rx='20' fill='%231e293b' stroke='%236366f1' stroke-width='4'/><circle cx='30' cy='30' r='8' fill='%2306b6d4'/><circle cx='50' cy='50' r='8' fill='%2310b981'/><circle cx='70' cy='70' r='8' fill='%23f59e0b'/><circle cx='70' cy='30' r='8' fill='%236366f1'/><circle cx='30' cy='70' r='8' fill='%236366f1'/></svg>">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -163,6 +167,17 @@
         ::-webkit-scrollbar-thumb {
             background: #334155;
             border-radius: 3px;
+        }
+
+        /* Gold Medal Glow Effect */
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), inset 0 0 15px rgba(251, 191, 36, 0.15);
+        }
+        .silver-glow {
+            box-shadow: 0 0 20px rgba(148, 163, 184, 0.2), inset 0 0 10px rgba(203, 213, 225, 0.1);
+        }
+        .bronze-glow {
+            box-shadow: 0 0 15px rgba(180, 83, 9, 0.15);
         }
     </style>
 </head>
@@ -432,9 +447,9 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-cubes text-accent-amber"></i> Kết Luận Các Bộ 3 Số Khả Năng Ra
+                        <i class="fa-solid fa-trophy text-amber-400"></i> Kết Luận Các Bộ 3 Số Khả Năng Ra
                     </h2>
-                    <p class="text-xs text-slate-400 mt-0.5">Loại trùng hoàn toàn (VD: 2-3-6 & 3-6-2 là 1). Bộ số đã có ở cấp cao sẽ không lặp lại ở cấp thấp hơn.</p>
+                    <p class="text-xs text-slate-400 mt-0.5">Phân cấp theo chuẩn Vàng - Bạc - Đồng. Bộ số đã có ở cấp cao sẽ không xuất hiện ở cấp thấp hơn.</p>
                 </div>
                 <button onclick="copyCombinations()" class="self-start sm:self-auto text-xs px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition flex items-center gap-2">
                     <i class="fa-solid fa-copy text-accent-cyan"></i> Sao chép kết quả
@@ -443,62 +458,64 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                <!-- Tier 1: Highest -->
-                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-emerald-500/30">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
-                                <i class="fa-solid fa-crown"></i>
+                <!-- Tier 1: Highest (Gold Medal / Huy Chương Vàng) -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4 relative overflow-hidden border-2 border-amber-400/60 gold-glow bg-gradient-to-b from-amber-500/10 via-slate-900/80 to-slate-900/95">
+                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-amber-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-300 via-amber-500 to-amber-700 text-slate-950 flex items-center justify-center font-black text-lg shadow-lg shadow-amber-500/30">
+                                <i class="fa-solid fa-medal"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Cao Nhất</h3>
-                                <p class="text-[10px] text-slate-400">Top 1 XX1 × Top 1 XX2 × Top 1 XX3</p>
+                                <h3 class="font-extrabold text-amber-300 text-base sm:text-lg uppercase tracking-wide flex items-center gap-1.5">
+                                    Khả Năng Cao Nhất
+                                </h3>
+                                <p class="text-[11px] text-amber-200/70 font-medium">Top 1 XX1 × Top 1 XX2 × Top 1 XX3</p>
                             </div>
                         </div>
-                        <span id="count-highest" class="text-xs font-bold px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded-full">0 bộ</span>
+                        <span id="count-highest" class="text-xs font-black px-2.5 py-1 bg-amber-400/20 text-amber-300 rounded-full border border-amber-400/40">0 bộ</span>
                     </div>
 
-                    <div id="list-highest" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
+                    <div id="list-highest" class="flex flex-wrap gap-2.5 min-h-[90px] align-content-start">
                         <!-- Populated by JS -->
                     </div>
                 </div>
 
-                <!-- Tier 2: High -->
-                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-brand-500/30">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-500/10 rounded-full blur-xl pointer-events-none"></div>
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold text-xs">
-                                <i class="fa-solid fa-star"></i>
+                <!-- Tier 2: High (Silver Medal / Huy Chương Bạc) -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-slate-300/40 silver-glow bg-gradient-to-b from-slate-400/10 via-slate-900/80 to-slate-900/95">
+                    <div class="absolute -right-6 -top-6 w-28 h-28 bg-slate-400/15 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-600/50">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-100 via-slate-300 to-slate-500 text-slate-950 flex items-center justify-center font-bold text-base shadow-md">
+                                <i class="fa-solid fa-medal"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Cao</h3>
+                                <h3 class="font-bold text-slate-200 text-sm sm:text-base uppercase tracking-wide">Khả Năng Cao</h3>
                                 <p class="text-[10px] text-slate-400">1 con Top 1 + 2 con Top 2 còn lại</p>
                             </div>
                         </div>
-                        <span id="count-high" class="text-xs font-bold px-2 py-0.5 bg-brand-500/20 text-brand-400 rounded-full">0 bộ</span>
+                        <span id="count-high" class="text-xs font-bold px-2.5 py-1 bg-slate-400/20 text-slate-300 rounded-full border border-slate-400/30">0 bộ</span>
                     </div>
 
-                    <div id="list-high" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
+                    <div id="list-high" class="flex flex-wrap gap-2 min-h-[85px] align-content-start">
                         <!-- Populated by JS -->
                     </div>
                 </div>
 
-                <!-- Tier 3: Medium -->
-                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-amber-500/30">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none"></div>
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">
-                                <i class="fa-solid fa-layer-group"></i>
+                <!-- Tier 3: Medium (Bronze Medal / Huy Chương Đồng) -->
+                <div class="glass-panel rounded-2xl p-5 space-y-4 relative overflow-hidden border border-amber-700/40 bronze-glow bg-gradient-to-b from-amber-800/10 via-slate-900/80 to-slate-900/95">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-amber-700/15 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between pb-3 border-b border-amber-800/40">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 text-amber-100 flex items-center justify-center font-semibold text-sm shadow-md">
+                                <i class="fa-solid fa-medal"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-white text-xs sm:text-sm">Khả Năng Trung Bình</h3>
-                                <p class="text-[10px] text-slate-400">1 Top 1 + 2 Top 3 HOẶC các con Top 2, Top 3</p>
+                                <h3 class="font-bold text-amber-500 text-xs sm:text-sm uppercase tracking-wide">Khả Năng Trung Bình</h3>
+                                <p class="text-[10px] text-slate-400">1 Top 1 + 2 Top 3 HOẶC Top 2, 3</p>
                             </div>
                         </div>
-                        <span id="count-medium" class="text-xs font-bold px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded-full">0 bộ</span>
+                        <span id="count-medium" class="text-xs font-bold px-2 py-0.5 bg-amber-800/20 text-amber-400 rounded-full border border-amber-700/30">0 bộ</span>
                     </div>
 
                     <div id="list-medium" class="flex flex-wrap gap-2 min-h-[80px] align-content-start">
@@ -511,7 +528,7 @@
 
         <!-- Footer -->
         <footer class="text-center text-xs text-slate-500 py-4">
-            Bingo Dice &bull; HTML5 Single-Page App &bull; Kien NT
+            Mô Phỏng Gieo Ngẫu Nhiên 3 Xúc Xắc &bull; HTML5 Single-Page App &bull; GitHub Pages Ready
         </footer>
 
     </div>
@@ -845,11 +862,6 @@
             }
 
             // Render Combinations UI
-            renderComboList('list-highest', 'count-highest', Array.from(highestSets), 'emerald');
-            renderComboList('list-high', 'count-high', Array.from(highSets), 'indigo');
-            renderComboList('list-medium', 'count-medium', Array.from(mediumSets), 'amber');
-        }
-
         function renderComboList(containerId, countId, combos, theme) {
             const container = document.getElementById(containerId);
             const countBadge = document.getElementById(countId);
@@ -862,16 +874,17 @@
                 return;
             }
 
-            const colorMap = {
-                emerald: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 hover:border-emerald-400',
-                indigo: 'bg-brand-500/10 text-brand-300 border-brand-500/30 hover:border-brand-400',
-                amber: 'bg-amber-500/10 text-amber-300 border-amber-500/30 hover:border-amber-400'
+            const styleMap = {
+                gold: 'px-4 py-2 text-lg sm:text-xl font-extrabold bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-600/20 text-amber-300 border-2 border-amber-400/50 hover:border-amber-300 shadow-md shadow-amber-500/10 rounded-2xl',
+                silver: 'px-3.5 py-1.5 text-base sm:text-lg font-bold bg-gradient-to-r from-slate-400/20 to-slate-200/10 text-slate-100 border border-slate-300/40 hover:border-slate-200 rounded-xl',
+                bronze: 'px-3 py-1.5 text-xs sm:text-sm font-semibold bg-amber-800/20 text-amber-400 border border-amber-700/40 hover:border-amber-500 rounded-xl'
             };
 
             combos.forEach(combo => {
                 const tag = document.createElement('span');
-                tag.className = `px-3 py-1.5 rounded-xl border text-xs font-mono font-bold transition flex items-center gap-1 ${colorMap[theme]}`;
-                tag.innerHTML = `<i class="fa-solid fa-cube text-[10px] opacity-60"></i> ${combo}`;
+                tag.className = `font-mono transition transform hover:-translate-y-0.5 flex items-center gap-1.5 ${styleMap[theme]}`;
+                const iconClass = theme === 'gold' ? 'text-amber-400 text-sm' : (theme === 'silver' ? 'text-slate-300 text-xs' : 'text-amber-600 text-xs');
+                tag.innerHTML = `<i class="fa-solid fa-cube ${iconClass}"></i> ${combo}`;
                 container.appendChild(tag);
             });
         }
@@ -881,10 +894,11 @@
             const tbody = document.getElementById('historyTableBody');
             tbody.innerHTML = '';
 
-            if (rollsHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-500 font-sans">Chưa có dữ liệu.</td></tr>`;
-                return;
-            }
+            // Render Combinations UI
+            renderComboList('list-highest', 'count-highest', Array.from(highestSets), 'gold');
+            renderComboList('list-high', 'count-high', Array.from(highSets), 'silver');
+            renderComboList('list-medium', 'count-medium', Array.from(mediumSets), 'bronze');
+        }
 
             // Display in reverse order (newest on top)
             const displayList = [...rollsHistory].reverse();
