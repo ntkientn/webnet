@@ -55,44 +55,23 @@ body::after{
 #header,#sidebar,#main,#overlay{position:relative;z-index:1}
 
 /* HEADER */
-/* ── HEADER CẤU TRÚC MỚI (DESKTOP) ── */
-/* ── HEADER CẤU TRÚC MỚI (DESKTOP) ── */
 #header {
   position: fixed; top: 0; left: 0; right: 0;
   height: var(--header);
   background: rgba(22, 24, 33, 0.92); backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(79, 142, 247, 0.15);
   display: flex; 
-  flex-direction: row;          /* Thụt thẳng hàng ngang trên Desktop */
+  flex-direction: row;
   align-items: center; 
   justify-content: space-between;
   z-index: 200; padding: 0 1.2rem;
 }
 
-/* Trên Desktop: Hiển thị dòng chứa nút Back tự nhiên, đứng song song với dòng chính */
-.hdr-top-row { 
-  display: flex; 
-  align-items: center;
-}
 .hdr-main-row {
   display: flex; align-items: center; justify-content: space-between; flex: 1; position: relative;
 }
 .hdr-left, .hdr-right { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
 .hdr-center { position: absolute; left: 50%; transform: translateX(-50%); text-align: center; }
-/* STYLE TEXT CLICKABLE CHO BUTTON BACKNET */
-.btn-backnet {
-  font-size: .8rem; font-weight: 500; color: var(--txt2);
-  display: inline-flex; align-items: center; gap: 4px;
-  transition: color .15s; white-space: nowrap; position: relative;
-}
-.btn-backnet:hover { color: var(--accent); }
-.btn-backnet::after {
-  content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 1px;
-  bottom: -2px; left: 0; background-color: var(--accent);
-  transform-origin: bottom right; transition: transform 0.2s ease-out;
-}
-.btn-backnet:hover::after { transform: scaleX(1); transform-origin: bottom left; }
-
 .logo{
   font-family:'Playfair Display',serif;font-size:1.35rem;
   font-weight:700;white-space:nowrap;letter-spacing:-.3px;
@@ -257,45 +236,59 @@ body::after{
   margin-left:var(--sidebar);
   background:rgba(14,16,24,.95);
   border-top:1px solid var(--border);
-  padding:.7rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:.5rem;
-  font-size:.75rem;color:var(--txt3);
+  padding:.9rem 2rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:.25rem;
+  font-size:.78rem;
+  color:var(--txt3);
   position:relative;z-index:1;
   transition:margin .3s;
-  white-space:nowrap;
 }
-.footer-left{display:flex;align-items:center;gap:.6rem;flex-shrink:0;min-width:0;overflow:hidden}
-.footer-name{color:var(--txt2);font-weight:500}
-.footer-ver{background:var(--bg4);border:1px solid var(--border2);padding:2px 8px;border-radius:12px;font-size:.65rem;font-family:'IBM Plex Mono',monospace,sans-serif;flex-shrink:0}
-.footer-right{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
-.footer-powered{display:flex;align-items:center;gap:.3rem}
-.footer-badge{display:inline-flex;align-items:center;gap:.2rem;background:var(--bg4);border:1px solid var(--border2);padding:2px 8px;border-radius:12px;font-size:.68rem;color:var(--txt2);font-weight:500;transition:.13s}
-.footer-badge:hover{color:var(--txt)}
-.footer-sep{color:var(--border2)}
+.footer-brand-line{
+  color:var(--txt2);
+  font-size:.84rem;
+}
+.footer-brand-line strong{
+  font-family:'Playfair Display',serif;
+  color:var(--txt);
+  font-weight:600;
+  letter-spacing:.2px;
+}
+.footer-webnet-link{
+  color:var(--accent);
+  font-weight:600;
+  position:relative;
+  transition:color .15s;
+}
+.footer-webnet-link:hover{
+  color:#79acff;
+}
+.footer-webnet-link::after{
+  content:'';position:absolute;width:100%;transform:scaleX(0);height:1px;
+  bottom:-2px;left:0;background-color:var(--accent);
+  transform-origin:bottom right;transition:transform .2s ease-out;
+}
+.footer-webnet-link:hover::after{
+  transform:scaleX(1);transform-origin:bottom left;
+}
+.footer-copy-line{
+  font-size:.74rem;
+  color:var(--txt3);
+}
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  /* Tăng chiều cao Header trên mobile thành 90px để chứa đủ 2 dòng độc lập */
   :root {
-    --header: 90px;
+    --header: 56px;
     --sidebar: 260px;
   }
   
   #header {
-    padding: 0.4rem 1rem;
-    flex-direction: column;    /* Chuyển thành xếp chồng 2 dòng trên mobile */
-    justify-content: flex-start;
-    gap: 4px;
-  }
-
-  /* HIỂN THỊ PHÂN DÒNG TRÊN MOBILE */
-  .hdr-top-row {
-    display: flex;
-    justify-content: flex-start; 
-    width: 100%;
-    padding-bottom: 2px;
-    border-bottom: 1px solid rgba(255,255,255,0.03); 
+    padding: 0 1rem;
   }
   
   .hdr-main-row {
@@ -305,7 +298,6 @@ body::after{
     width: 100%;
   }
   
-  /* Trả các phần tử dòng 2 về luồng tự nhiên (Hủy Absolute của desktop) */
   .hdr-center {
     position: static;
     transform: none;
@@ -319,10 +311,9 @@ body::after{
     text-align: left;
   }
   .logo small {
-    font-size: .6rem; /* Thu nhỏ slogan thay vì ẩn hẳn để layout cân đối */
+    font-size: .6rem;
   }
 
-  /* Hiện lại Date chip và căn chỉnh cho gọn ở góc phải dòng 2 */
   .hdr-right {
     display: flex;
     margin-left: auto;
@@ -336,7 +327,6 @@ body::after{
     display: block;
   }
 
-  /* Điều chỉnh các phần layout phụ thuộc vào vị trí header */
   #sidebar {
     left: calc(-1 * var(--sidebar));
     top: var(--header);
@@ -346,13 +336,9 @@ body::after{
   #main { margin-left: 0; padding-top: var(--header); }
   
   #footer {
-    margin-left: 0; flex-direction: column; align-items: flex-start;
-    padding: .65rem 1rem; gap: .35rem;
+    margin-left: 0;
+    padding: .8rem 1rem;
   }
-  .footer-left { gap: .45rem; font-size: .7rem; }
-  .footer-ver { font-size: .62rem; }
-  .footer-right { font-size: .68rem; }
-  .footer-badge { font-size: .63rem; padding: 1px 6px; }
   #overlay.show { display: block; }
   .content-area { padding: 1.2rem; }
   .art-grid, .ins-grid, .markets-grid { grid-template-columns: 1fr; }
@@ -362,14 +348,8 @@ body::after{
 </head>
 <body>
 
-<!-- HEADER CẤU TRÚC MỚI: PHÂN TẦNG CHO MOBILE -->
+<!-- HEADER -->
 <div id="header">
-  <!-- Dòng 1: Chỉ dành riêng cho Back to WebNet -->
-  <div class="hdr-top-row">
-    <a href="https://ntkientn.github.io/webnet/" class="btn-backnet">< Back to WebNet</a>
-  </div>
-  
-  <!-- Dòng 2: Thanh điều hướng chính (Menu, Logo, Date) -->
   <div class="hdr-main-row">
     <div class="hdr-left">
       <button id="hamburger" onclick="toggleSidebar()">☰</button>
@@ -469,15 +449,12 @@ body::after{
 
 <!-- FOOTER -->
 <footer id="footer">
-  <div class="footer-left">
-    <span>© 2026</span>
-    <span class="footer-name">Nguyen Trung Kien</span>
-    <span class="footer-sep">·</span>
-    <span>All rights reserved</span>
-    <span class="footer-sep">·</span>
-    <span class="footer-ver">v1.2.20260605</span>
+  <div class="footer-brand-line">
+    <strong>Kien News Hub</strong> — Part of <a href="https://ntkientn.github.io/webnet" class="footer-webnet-link">My WebNet</a>
   </div>
-  
+  <div class="footer-copy-line">
+    © 2026 Kien NT • All rights reserved.
+  </div>
 </footer>
 
 <script>
@@ -526,18 +503,16 @@ async function fetchFeed(url) {
     }
   } catch {}
 
-  // ── Proxy 2: allorigins.win (domain khác hoàn toàn) ────────────
+  // ── Proxy 2: allorigins.win — dùng /raw để lấy thẳng XML ───────
   try {
     const r = await fetch(
-      `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
       { signal: AbortSignal.timeout(10000) }
     );
     if (r.ok) {
-      const d = await r.json();
-      if (d.contents) {
-        const items = parseRSSXML(d.contents);
-        if (items.length) return items;
-      }
+      const text = await r.text();
+      const items = parseRSSXML(text);
+      if (items.length) return items;
     }
   } catch {}
 
